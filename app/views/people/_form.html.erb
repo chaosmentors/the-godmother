@@ -1,8 +1,8 @@
 <%= bootstrap_form_with(model: person, local: true) do |form| %>
   <div class="form-row">
     <div class="form-group col-md-4">
-      <%= form.text_field :pronoun, { type: "text", class: "form-control", placeholder: "e.g. She/They/Xe/He/…" } %>
-      <small id="pronoun-help" class="form-text text-muted">This information helps us to form balanced groups.</small>
+      <%= form.text_field :pronoun, { type: "text", class: "form-control", placeholder: "e.g. She/They/Xe/He/… | z.B. Er/Sie/Xier/.." } %>
+      <small id="pronoun-help" class="form-text text-muted">This information helps us to form balanced groups.| Diese Information hilft uns ausgeglichene Gruppen zu bilden.</small>
     </div>
 
     <div class="form-group col-md-8">
@@ -12,23 +12,23 @@
 
   <div class="form-group">
     <%= form.text_field :email, { type: "email", class: "form-control" } %>
-    <small id="email-help" class="form-text text-muted">We will send you e-mail. So, this has to be a real address. For real. You know? Real.</small>
+    <small id="email-help" class="form-text text-muted">We will send you e-mail. So, this has to be a real address. For real. You know? Real.| Wir schicken dir Emails. Diese Adresse muss also echt sein. Wirklich.</small>
   </div>
 
   <div class="form-group">
-    <%= form.text_area :about, { rows: 8, class: "form-control", placeholder: "Something about yourself, why you registered at the chaos mentors and what your interests are." } %>
+    <%= form.text_area :about, { rows: 8, class: "form-control", placeholder: "Something about yourself, why you registered at the chaos mentors and what your interests are.| Gib uns eine kurze Beschreibung zu dir, warum du dich registriert hast, was dich interessiert, ..." } %>
   </div>
 
   <div class="form-group">
     <%= form.text_field :tag_list, { placeholder: "e.g.: english, german, coding, antifa, security, freifunk, feminism, …", data: raw(tags) } %>
-    <small id="pronoun-help" class="form-text text-muted">Please give yourself a few tags, describing the languages you speak and your interests. This helps us to form fitting groups.</small>
+    <small id="pronoun-help" class="form-text text-muted">Please give yourself a few tags, describing the languages you speak and your interests. This helps us to form fitting groups. | Bitte such dir ein paar Tags zu Sprachen die du kannst und deinen Interessen aus. Wir bilden damit eine Gruppe die zu dir passt :)</small>
   </div>
   <% if action_name == 'new' || action_name == 'create' -%>
     <div class="form-group">
       <label>
         Question: <%= @captcha.last %>
       </label><br>
-      <label for="address">Answer</label>
+      <label for="address">Answer | Antwort</label>
       <input class="form-control" type="text" name="address" />
       <small id="pronoun-help" class="form-text text-muted">Sorry, too many spam bots out there.</small>
     </div>
