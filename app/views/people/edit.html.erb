@@ -1,3 +1,10 @@
 <h1>Editing <%= @person.role_name.to_s.humanize -%></h1>
+You can fill this form in English or German. | Dieses Formular kann auf Englisch oder Deutsch ausgefüllt werden.
+
+If you have any questions, have a look in the <a href="/faq" title="FAQ Page">Frequently Asked Questions (FAQ)</a>. You can also 
+<a href="/contact" title="contact page">contact</a> us directly if you have a less frequently asked question ;)
+
+Falls du Fragen hast, kanns du unter den <a href="/faq" title="FAQ Seite">häuffigen Fragen (FAQ)</a> vielleicht eine Antwort finden.
+Wenn du da keine Antwort findest, kannst du uns gerne auch direkt <a href="/contact" title="contact page">kontaktieren</a>.
 
 <%= render 'form', person: @person %>
