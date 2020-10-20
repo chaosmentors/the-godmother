@@ -1,4 +1,4 @@
-FROM ruby:2.7.1
+FROM ruby:2.7.2
 RUN apt-get update -qq && apt-get install -y postgresql-client nodejs sqlite3
 
 RUN mkdir /myapp
