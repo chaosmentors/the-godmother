@@ -35,6 +35,9 @@
             <%= link_to 'All', people_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
+            <%= link_to 'Godmothers', { controller: 'people', action: 'index', g: true, s: 3 }, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
             <%= link_to 'Mentors', { controller: 'people', action: 'index', r: 2, s: 3 }, class: "nav-link" %>
           </li>
           <li class="nav-item">

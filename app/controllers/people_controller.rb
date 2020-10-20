@@ -36,6 +36,10 @@ class PeopleController < ApplicationController
     if params[:s]
       @people = @people.where(state: params[:s])
     end
+
+    if params[:g]
+      @people = @people.where(isGodmother: params[:g])
+    end
   end
 
 # GET /people/1
