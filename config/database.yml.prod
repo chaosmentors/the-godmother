@@ -4,3 +4,5 @@ development: &default
   database: prod_godmother
   host: postgresql
   port: 5432
+  username: godmother
+  password: g0dmother
