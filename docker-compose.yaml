@@ -18,7 +18,7 @@ services:
       - postgresql-data:/var/lib/postgres
     environment:
       - POSTGRES_USER=godmother
-      - POSTGRES_PASS=g0dmother
+      - POSTGRES_PASSWORD=g0dmother
       - POSTGRES_NAME=godmother_production
       - POSTGRES_EXTENSION=pg_trgm,btree_gist
   
