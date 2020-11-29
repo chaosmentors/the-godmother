@@ -17,10 +17,10 @@ services:
     volumes:
       - postgresql-data:/var/lib/postgres
     environment:
-      - DB_USER=godmother
-      - DB_PASS=g0dmother
-      - DB_NAME=godmother_production
-      - DB_EXTENSION=pg_trgm,btree_gist
+      - POSTGRES_USER=godmother
+      - POSTGRES_PASS=g0dmother
+      - POSTGRES_NAME=godmother_production
+      - POSTGRES_EXTENSION=pg_trgm,btree_gist
   
 volumes:
   postgresql-data:
