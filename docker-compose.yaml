@@ -7,3 +7,20 @@ services:
       - .:/myapp
     ports:
       - "3000:3000"
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: "postgres:latest"
+    container_name: postgres
+    restart: always
+    volumes:
+      - postgresql-data:/var/lib/postgres
+    environment:
+      - DB_USER=godmother
+      - DB_PASS=g0dmother
+      - DB_NAME=godmother_production
+      - DB_EXTENSION=pg_trgm,btree_gist
+  
+  volumes:
+    postgresql-data:
