@@ -22,5 +22,5 @@ services:
       - DB_NAME=godmother_production
       - DB_EXTENSION=pg_trgm,btree_gist
   
-  volumes:
-    postgresql-data:
+volumes:
+  postgresql-data:
