@@ -38,7 +38,7 @@ class PeopleController < ApplicationController
     end
 
     if params[:g]
-      @people = @people.where(isGodmother: params[:g])
+      @people = @people.where(isgodmother: params[:g])
     end
   end
 
@@ -164,7 +164,7 @@ class PeopleController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def person_params
-    params.require(:person).permit(:tag_list, :role_id, :random_id, :verification_token, :name, :pronoun, :email, :about, :password, :password_confirmation, :is_godmother)
+    params.require(:person).permit(:tag_list, :role_id, :random_id, :verification_token, :name, :pronoun, :email, :about, :password, :password_confirmation, :isgodmother)
   end
 
   def new_captcha

@@ -12,8 +12,8 @@ class Person < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :about, presence: true
-  validates :password, length: { in: 14..72 }, if: Proc.new { |p| p.isGodmother && p.password != nil }
-  validates :password, confirmation: true, if: Proc.new { |p| p.isGodmother }
+  validates :password, length: { in: 14..72 }, if: Proc.new { |p| p.isgodmother && p.password != nil }
+  validates :password, confirmation: true, if: Proc.new { |p| p.isgodmother }
   validates :password_confirmation, presence: true, unless: Proc.new { |p| p.password.blank? }
 
   ROLES = {
@@ -45,9 +45,9 @@ class Person < ApplicationRecord
       self.role = r
       case self.role
       when 1
-        self.isGodmother = false
+        self.isgodmother = false
       when 3
-        self.isGodmother = true
+        self.isgodmother = true
       end
     end
   end
@@ -59,9 +59,9 @@ class Person < ApplicationRecord
       self.role = r
       case self.role
       when 1
-        self.isGodmother = false
+        self.isgodmother = false
       when 3
-        self.isGodmother = true
+        self.isgodmother = true
       end
     else
       self.role = 1
@@ -110,17 +110,17 @@ class Person < ApplicationRecord
   end
 
   def is_godmother
-    self.isGodmother
+    self.isgodmother
   end
 
   def is_godmother=(g)
     case self.role
     when 1
-      self.isGodmother = false
+      self.isgodmother = false
     when 2
-      self.isGodmother = g
+      self.isgodmother = g
     when 3
-      self.isGodmother = true
+      self.isgodmother = true
     end
   end
 

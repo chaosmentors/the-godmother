@@ -24,7 +24,7 @@
     <small id="pronoun-help" class="form-text text-muted">Please give yourself a few tags, describing the languages you speak and your interests. This helps us to form fitting groups.</small>
   </div>
 
-  <% if current_person.isGodmother? %>
+  <% if !current_person.nil? and current_person.isgodmother?  %>
     <div class="form-group">
       <%= form.select :role_id, [
         ["Mentee", 1],
@@ -34,7 +34,7 @@
     </div>
   <% end %>
 
-  <% if current_person.isGodmother? && @person != current_person  && @person.role == 2 %>
+  <% if !current_person.nil? and (current_person.isgodmother? && @person != current_person  && @person.role == 2) %>
     <div class="form-group">      
       <%= form.check_box :is_godmother %>
     </div>

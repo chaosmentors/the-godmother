@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 	helper_method :current_person
 
 	def godmother?
-	  if current_person && current_person.isGodmother
+	  if current_person && current_person.isgodmother
       true
     else
       false

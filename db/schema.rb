@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2020_08_16_193644) do
     t.integer "state", default: 1
     t.string "password_digest"
     t.integer "group_id"
-    t.boolean "isGodmother"
+    t.boolean "isgodmother"
     t.index ["email"], name: "index_people_on_email", unique: true
     t.index ["random_id"], name: "index_people_on_random_id", unique: true
     t.index ["verification_token"], name: "index_people_on_verification_token", unique: true
