@@ -69,3 +69,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# create a cookie warning banner in compliance to EU laws
+gem 'cookies_eu'

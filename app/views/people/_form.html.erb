@@ -61,3 +61,4 @@
   $.availableTags = <%= raw tags.to_json %>;
 <% end %>
 <%= javascript_include_tag 'people' %>
+<%= render 'cookies_eu/consent_banner', link: '/cookies', target: '_blank' %> 
