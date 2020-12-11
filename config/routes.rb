@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'home', to: 'static#home'
   get 'contact', to: 'static#contact'
   get 'privacy', to: 'static#privacy'
+  get 'imprint', to: 'static#imprint'
 
   resources :people, param: :random_id
   get 'verify_email/:verification_token', to: 'people#verify_email'
