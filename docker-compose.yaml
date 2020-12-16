@@ -17,7 +17,7 @@ services:
     container_name: postgres
     restart: always
     volumes:
-      - ./data:/var/lib/postgres
+      - /home/ec2-user/data:/var/lib/postgres
     environment:
       - POSTGRES_USER=godmother
       - POSTGRES_PASSWORD=g0dmother
