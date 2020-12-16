@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   resources :groups
   get 'done/:id', to: 'groups#done'
+  get 'static/setCookie', to: 'static#setCookie'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

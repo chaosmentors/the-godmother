@@ -15,7 +15,7 @@ You've come to the right place and we would like to help you to have an exciting
 
 <p>You have until December 8th to register. Please register as soon as possible as we will begin to create the groups before the 8th of December. Tell us a bit about yourself, for example what attracted you to Congress, why you turned to the chaos mentors, what you are interested in and if you have specific needs. This way, we can find a suitable godparent for you and put together a group with similar interests. Your chaos mentor will contact you and your group before the congress so you can get to know each other. At the congress you are an affinity group and can explore the congress together.</p>
 
-<% if Rails.configuration.x.basic.registration_open -%>
+<% if Rails.configuration.x.basic.registration_open && sessionEnabled -%>
   <div class="form-row">
     <div class="form-group col-md-6">
       <a href="/people/new?r=mentee" role="button" class="btn btn-primary btn-lg btn-block active">Register as mentee</a>
@@ -26,4 +26,12 @@ You've come to the right place and we would like to help you to have an exciting
   </div>
 <% end %>
 
-<%= render 'cookies_eu/consent_banner', link: '/cookies', target: '_blank' %> 
+<% if !sessionEnabled %>
+  <p>You need to consent to our <a href="/cookies">cookie policy</a> before you can register!</p>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <%= button_to 'Accept Cookies', { :action => "setCookie" }, :method => :get %>
+    </div>
+  </div>
+<% end %>
+
