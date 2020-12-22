@@ -1,12 +1,12 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'from@example.com'
+  default from: 'godmother@hackers.org.il'
   layout 'mailer'
   smtp_settings = {
-    :address              => "smtp.ccchb.de",
+    :address              => "email-smtp.eu-central-1.amazonaws.com",
     :port                 => 587,
-    :domain               => "ccchb.de",
-    :user_name            => "chaosmentors@ccchb.de",
-    :password             => "g3Y763BDgVQxOmrV2H5g",
+    :domain               => "hackers.orc.il",
+    :user_name            => "AKIAXRBPVYW3RPUECRV5",
+    :password             => "BF/so+oNx5eOWy63QSv2Z4XEkZRR7Im3o7dTtxRDEcil",
     :authentication       => "plain",
     :enable_starttls_auto => true
   }
