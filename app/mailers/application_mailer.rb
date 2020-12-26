@@ -5,8 +5,8 @@ class ApplicationMailer < ActionMailer::Base
     :address              => "email-smtp.eu-central-1.amazonaws.com",
     :port                 => 587,
     :domain               => "hackers.org.il",
-    :user_name            => "AKIAXRBPVYW3RPUECRV5",
-    :password             => "BF/so+oNx5eOWy63QSv2Z4XEkZRR7Im3o7dTtxRDEcil",
+    :user_name            => "USERNAME HERE",
+    :password             => "PASSWORDHERE",
     :authentication       => "plain",
     :enable_starttls_auto => true
   }
