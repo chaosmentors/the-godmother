@@ -40,6 +40,17 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.perform_deliveries = true
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'email-smtp.eu-central-1.amazonaws.com',
+    port:                 587,
+    domain:               'hackers.org.il',
+    user_name:            '<username>',
+    password:             '<password>',
+    authentication:       'login',
+    enable_starttls_auto: true 
+  }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
