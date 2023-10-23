@@ -1,9 +1,9 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.x.basic.app_url = "https://godmother.hackers.org.il"
+  config.x.basic.app_url = "https://godmother.orca-central.de"
   config.x.basic.list_address = "chaosmentors@lists.ccc.de"
   config.x.basic.registration_open = true
-  #config.web_console.whitelisted_ips = '172.18.0.0/16'
+  config.web_console.whitelisted_ips = '192.168.127.0/24'
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -42,12 +42,12 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              'email-smtp.eu-central-1.amazonaws.com',
+    address:              'smtp.orca-central.de',
     port:                 587,
-    domain:               'hackers.org.il',
-    user_name:            '<username>',
-    password:             '<password>',
-    authentication:       'login',
+    domain:               'orca-central.de',
+    user_name:            'godmother@orca-central.de',
+    password:             'D%jDfLQR5JfdnZh7KP99',
+    authentication:       'plain',
     enable_starttls_auto: true 
   }
 
@@ -74,4 +74,11 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  config.action_controller.forgery_protection_origin_check = false
+  config.hosts = [
+    IPAddr.new("0.0.0.0/0"),
+    IPAddr.new("::/0"),
+    "localhost",
+    "godmother.orca-central.de"
+  ]
 end

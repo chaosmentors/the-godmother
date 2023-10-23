@@ -2,7 +2,7 @@ development: &default
   adapter: postgresql
   encoding: unicode
   database: prod_godmother
-  host: postgresql
+  host: localhost
   port: 5432
   username: godmother
   password: g0dmother
