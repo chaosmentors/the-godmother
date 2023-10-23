@@ -42,11 +42,11 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              'smtp.orca-central.de',
+    address:              'smtp.somewhere',
     port:                 587,
-    domain:               'orca-central.de',
-    user_name:            'godmother@orca-central.de',
-    password:             'D%jDfLQR5JfdnZh7KP99',
+    domain:               'somewhere.de',
+    user_name:            'godmother@somewhere.de',
+    password:             'changeme',
     authentication:       'plain',
     enable_starttls_auto: true 
   }
