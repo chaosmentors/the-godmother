@@ -31,3 +31,4 @@
 /config/master.key
 config/database.yml
 config/environments/production.rb
+config/environments/development.rb
