@@ -32,6 +32,10 @@
         ["Godmother Only", 3]
       ] %>
     </div>
+  <% else %>
+    <div class="form-group">
+      <%= form.hidden_field :role_id %>
+    </div>
   <% end %>
 
   <% if !current_person.nil? and (current_person.isgodmother? && @person != current_person  && @person.role == 2) %>
