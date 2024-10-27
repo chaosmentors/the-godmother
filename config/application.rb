@@ -14,7 +14,7 @@ module TheGodmother
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
-    config.autoload_lib(ignore: %w(assets tasks))
+    config.autoload_lib(ignore: %w[assets tasks])
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -23,5 +23,24 @@ module TheGodmother
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.x.basic.app_url = Rails.application.credentials.dig(Rails.env.to_sym, :app_url)
+    config.x.default_from = Rails.application.credentials.dig(Rails.env.to_sym, :default_from)
+    config.x.basic.list_address = Rails.application.credentials.dig(Rails.env.to_sym, :list_address)
+
+    # ActionMailer Config
+    config.action_mailer.perform_deliveries = true
+    config.action_mailer.delivery_method = :smtp
+
+    smtp_settings = Rails.application.credentials.dig(Rails.env.to_sym, :smtp_settings)
+    config.action_mailer.smtp_settings = {
+      address:              smtp_settings[:address],
+      port:                 smtp_settings[:port],
+      domain:               smtp_settings[:domain],
+      user_name:            smtp_settings[:user_name],
+      password:             smtp_settings[:password],
+      authentication:       smtp_settings[:authentication],
+      enable_starttls_auto: smtp_settings[:enable_starttls_auto]
+    }
   end
 end
