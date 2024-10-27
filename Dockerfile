@@ -17,7 +17,7 @@ ENV RAILS_ENV=development
 ENTRYPOINT ["entrypoint.sh"]
 
 # Start the main process.
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["bin/dev"]
 
 FROM base AS production
 

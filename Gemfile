@@ -69,3 +69,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # create a cookie warning banner in compliance to EU laws
 gem 'cookies_eu'
+
+gem "tailwindcss-rails", "~> 3.0"

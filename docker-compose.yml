@@ -3,6 +3,7 @@ services:
     build:
       context: .
       target: development
+    tty: true
     volumes:
       - .:/app
     ports:
