@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_10_27_105033) do
-
+ActiveRecord::Schema[7.0].define(version: 2024_10_27_110202) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "groups", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "people", force: :cascade do |t|
@@ -25,8 +24,8 @@ ActiveRecord::Schema.define(version: 2024_10_27_105033) do
     t.string "pronoun"
     t.string "email"
     t.text "about"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "verification_token"
     t.string "random_id"
     t.integer "role", default: 1
@@ -42,16 +41,16 @@ ActiveRecord::Schema.define(version: 2024_10_27_105033) do
   create_table "taggings", force: :cascade do |t|
     t.bigint "tag_id"
     t.bigint "person_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["person_id"], name: "index_taggings_on_person_id"
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
   end
 
   create_table "tags", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "active"
   end
 
