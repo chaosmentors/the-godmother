@@ -1,4 +1,5 @@
 class StaticController < ApplicationController
+  layout 'public'
   after_action -> { request.session_options[:skip] = true }
 
   def home

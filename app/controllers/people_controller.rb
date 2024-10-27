@@ -19,7 +19,8 @@ class PeopleController < ApplicationController
 		["What is 14 minus 4? (in digits)", "10"],
 		["What comes next? 'Monday Tuesday Wednesday …'", "thursday"]
   ]
-
+  
+  layout 'public', only: [:new, :verify_email]
   before_action :set_person, only: [:show, :edit, :update, :destroy, :change_password, :change_state]
   before_action :require_godmother
   skip_before_action :require_godmother, only: [:new, :create, :verify_email]
