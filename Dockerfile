@@ -1,13 +1,10 @@
 FROM ruby:3.0.6
-RUN apt-get update -qq && apt-get install -y postgresql-client nodejs sqlite3
+RUN apt-get update -qq && apt-get install -y postgresql-client nodejs sqlite3 vim
 
 RUN mkdir /myapp
 WORKDIR /myapp
-COPY Gemfile /myapp/Gemfile
-COPY Gemfile.lock /myapp/Gemfile.lock
-COPY config/database.yml.prod config/database.yml
-RUN bundle install
 COPY . /myapp
+RUN bundle install
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/

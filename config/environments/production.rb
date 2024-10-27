@@ -1,5 +1,9 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  config.x.basic.app_url = Rails.application.credentials.dig(:production, :app_url)
+  config.x.default_from = Rails.application.credentials.dig(:production, :default_from)
+  config.x.basic.list_address = Rails.application.credentials.dig(:production, :list_address)
+  config.x.basic.registration_open = false
 
   # Code is not reloaded between requests.
   config.cache_classes = true
