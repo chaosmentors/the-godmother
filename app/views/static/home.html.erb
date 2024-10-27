@@ -9,13 +9,13 @@
 <p>Feel welcome at the Chaos Communication Congress with the Chaos mentors!<br>
 You've come to the right place and we would like to help you to have an exciting and beautiful stay. As a “Chaospatenkind” you get a godparent assigned and a group that suits you. Before Congress, the godparents are available for your questions, will welcome you on the first day and explore congress with you. Together we will find out where there are interesting workshops and talks for you, and we are there for you as contact point if you need us. Before Congress we also act as the contact person for your questions, concerns, needs or wishes.</p>
 
+<% if Rails.configuration.x.basic.registration_open && sessionEnabled -%>
 <h2>How does it work?</h2>
 
 <p><b>Registration is now open!</b></p>
 
 <p>You have until December 8th to register. Please register as soon as possible as we will begin to create the groups before the 8th of December. Tell us a bit about yourself, for example what attracted you to Congress, why you turned to the chaos mentors, what you are interested in and if you have specific needs. This way, we can find a suitable godparent for you and put together a group with similar interests. Your chaos mentor will contact you and your group before the congress so you can get to know each other. At the congress you are an affinity group and can explore the congress together.</p>
 
-<% if Rails.configuration.x.basic.registration_open && sessionEnabled -%>
   <div class="form-row">
     <div class="form-group col-md-6">
       <a href="/people/new?r=mentee" role="button" class="btn btn-primary btn-lg btn-block active">Register as mentee</a>
@@ -24,6 +24,8 @@ You've come to the right place and we would like to help you to have an exciting
       <a href="/people/new?r=mentor" role="button" class="btn btn-secondary btn-lg btn-block active">Register as mentor</a>
     </div>
   </div>
+<% else %>
+<p><strong>Registration is currently closed. Please come back later.</strong></p>
 <% end %>
 
 <% if !sessionEnabled %>
