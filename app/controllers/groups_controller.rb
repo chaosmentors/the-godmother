@@ -27,6 +27,12 @@ class GroupsController < ApplicationController
   # POST /groups
   def create
     @group = Group.new
+
+    if params[:group].nil? || params[:group][:mentor_ids].blank?
+      flash[:alert] = "You must select at least one mentor."
+      redirect_to new_group_path(@group) and return
+    end
+
     @group.mentor_ids = params[:group][:mentor_ids]
 
     if @group.save
@@ -40,6 +46,11 @@ class GroupsController < ApplicationController
 
   # PATCH/PUT /groups/1
   def update
+    if params[:group].nil? || params[:group][:mentor_ids].blank? || params[:group][:mentee_ids].blank?
+      flash[:alert] = "You must select at least one mentee / mentor."
+      redirect_to edit_group_path(@group) and return
+    end
+
     params[:group][:mentee_ids] ||= []
     params[:group][:mentor_ids] ||= []
 
