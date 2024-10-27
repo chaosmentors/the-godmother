@@ -134,4 +134,12 @@ class Person < ApplicationRecord
     end
   end
 
+  def self.role_options
+    [
+      ["Mentee", 1],
+      ["Mentor", 2],
+      ["Godmother Only", 3]
+    ]
+  end
+  
 end

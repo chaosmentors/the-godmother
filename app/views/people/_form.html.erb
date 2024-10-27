@@ -26,11 +26,7 @@
 
   <% if !current_person.nil? and current_person.isgodmother?  %>
     <div class="form-group">
-      <%= form.select :role_id, [
-        ["Mentee", 1],
-        ["Mentor", 2],
-        ["Godmother Only", 3]
-      ] %>
+      <%= form.select :role_id, Person.role_options %>
     </div>
   <% else %>
     <div class="form-group">

@@ -40,6 +40,8 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem "bootstrap_form", ">= 4.5.0"
 
+gem 'inline_svg'
+
 gem 'pg'
 
 group :development, :test do

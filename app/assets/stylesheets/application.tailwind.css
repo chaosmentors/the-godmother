@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Mona Sans';
+  src:
+    url('font/Mona-Sans.woff2') format('woff2 supports variations'),
+    url('font/Mona-Sans.woff2') format('woff2-variations');
+  font-weight: 200 900;
+  font-stretch: 75% 125%;
+}
+
+@font-face {
+  font-family: 'VCR OSD Mono';
+  src:
+    url('font/VCROSDMono.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 /*
 
 @layer components {

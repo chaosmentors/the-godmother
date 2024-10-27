@@ -1,0 +1,70 @@
+<%= form_with(model: person, local: true) do |form| %>
+  <div class="grid grid-cols-1 gap-6 not-prose">
+  <div class="block">
+    <%= form.label :pronoun, "Pronoun", class: "block text-sm font-mono" %>
+    <%= form.text_field :pronoun, type: "text", class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400", placeholder: "e.g. She/They/Xe/He/…" %>
+    <small id="pronoun-help" class="text-sm">This information helps us create well-balanced groups.</small>
+  </div>
+
+  <div class="block">
+    <%= form.label :name, "Name", class: "block text-sm font-mono" %>
+    <%= form.text_field :name, type: "text", class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
+  </div>
+
+  <div class="block">
+    <%= form.label :email, "Email", class: "block text-sm font-mono" %>
+    <%= form.text_field :email, type: "email", class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
+    <small id="email-help" class="text-sm">We'll send you an email, so make sure it’s a real address!</small>
+  </div>
+
+  <div class="block">
+    <%= form.label :about, "About", class: "block text-sm font-mono" %>
+    <%= form.text_area :about, rows: 8, class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400", placeholder: "Something about yourself, why you registered at the chaos mentors and what your interests are." %>
+  </div>
+
+  <div class="block">
+    <%= form.label :tag_list, "Tags", class: "block text-sm font-mono" %>
+    <%= form.text_field :tag_list, placeholder: "e.g.: english, german, coding, antifa, security, freifunk, feminism, …", data: raw(tags), class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
+    <small id="tag-list-help" class="text-sm">Add a few tags about the languages you speak and your interests. This helps us create well-matched groups.</small>
+  </div>
+
+  <% if !current_person.nil? and current_person.isgodmother?  %>
+    <div class="block">
+      <%= form.label :role_id, "Role", class: "block text-sm font-mono" %>
+      <%= form.select :role_id, options_for_select(Person.role_options), {}, class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
+    </div>
+  <% else %>
+    <div>
+      <%= form.hidden_field :role_id %>
+    </div>
+  <% end %>
+
+  <% if !current_person.nil? and (current_person.isgodmother? && @person != current_person  && @person.role == 2) %>
+    <div>      
+      <%= form.check_box :is_godmother %>
+    </div>
+  <% end %>
+
+  <% if action_name == 'new' || action_name == 'create' -%>
+    <div class="block">
+      <label class="block text-sm font-mono">
+        Question: <%= @captcha.last %>
+      </label><br>
+      <label class="block text-sm font-mono" for="address">Answer</label>
+      <input class="mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" type="text" name="address" />
+      <small id="pronoun-help" class="form-text text-muted">Sorry, too many spam bots out there.</small>
+    </div>
+    <input value="<%= @captcha.first %>" type="hidden" name="number" />
+  <% end %>
+  </div>
+
+  <%= button_tag(type: 'submit', class: "mt-10 text-white bg-purple font-mono text-sm shadow px-4 py-3 hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] inline-flex gap-2") do %>
+    Register
+  <% end %>
+<% end %>
+
+<%= javascript_tag do %>
+  $.availableTags = <%= raw tags.to_json %>;
+<% end %>
+<%= javascript_include_tag 'people' %>
+<%= render 'cookies_eu/consent_banner', link: '/cookies', target: '_blank' %> 
