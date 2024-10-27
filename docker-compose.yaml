@@ -18,9 +18,9 @@ services:
     volumes:
       - postgresql-data:/var/lib/postgresql
     environment:
-      - POSTGRES_USER=godmother
-      - POSTGRES_PASSWORD=g0dmother
-      - POSTGRES_NAME=godmother_production
+      - POSTGRES_USER=${POSTGRES_USER:-godmother}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-g0dmother}
+      - POSTGRES_DB=${POSTGRES_DB:-dev_godmother}
       - POSTGRES_EXTENSION=pg_trgm,btree_gist
   mail:
     image: "mailhog/mailhog"
