@@ -266,8 +266,6 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    sqlite3 (1.6.7-aarch64-linux)
-    sqlite3 (1.6.7-x86_64-linux)
     stringio (3.1.1)
     thor (1.3.2)
     tilt (2.3.0)
@@ -319,14 +317,13 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   sprockets-rails
-  sqlite3
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
 
 RUBY VERSION
-   ruby 3.0.6p216
+   ruby 3.3.5p100
 
 BUNDLED WITH
    2.4.20

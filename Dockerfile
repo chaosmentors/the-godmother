@@ -1,5 +1,5 @@
-FROM ruby:3.0.6
-RUN apt-get update -qq && apt-get install -y postgresql-client nodejs sqlite3 vim
+FROM ruby:3.3.5
+RUN apt-get update -qq && apt-get install -y postgresql-client nodejs vim
 
 RUN mkdir /myapp
 WORKDIR /myapp
