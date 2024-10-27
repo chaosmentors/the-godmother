@@ -5,6 +5,9 @@ Rails.application.configure do
   config.x.basic.list_address = Rails.application.credentials.dig(:production, :list_address)
   config.x.basic.registration_open = false
 
+  # Enable SSL
+  config.force_ssl = true
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 

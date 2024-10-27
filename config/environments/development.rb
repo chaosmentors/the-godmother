@@ -75,4 +75,5 @@ Rails.application.configure do
     IPAddr.new("::/0"),
     "localhost"
   ]
+  config.web_console.whiny_requests = false
 end
