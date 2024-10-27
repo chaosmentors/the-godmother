@@ -22,6 +22,11 @@ services:
       - POSTGRES_PASSWORD=g0dmother
       - POSTGRES_NAME=godmother_production
       - POSTGRES_EXTENSION=pg_trgm,btree_gist
-  
+  mail:
+    image: "mailhog/mailhog"
+    container_name: mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
 volumes:
   postgresql-data:

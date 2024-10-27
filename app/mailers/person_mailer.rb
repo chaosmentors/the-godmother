@@ -1,5 +1,5 @@
 class PersonMailer < ApplicationMailer
-  default from: "godmother@orca-central.de"
+  default from: Rails.configuration.x.default_from
 
   def verification_email
     @person = params[:person]

@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'godmother@orca-central.de'
+  default from: Rails.configuration.x.default_from
   layout 'mailer'
 end
