@@ -1,0 +1,5 @@
+[local]
+your_server_hostname
+
+[production]
+your_server_hostname

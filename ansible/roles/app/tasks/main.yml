@@ -1,0 +1,82 @@
+---
+- name: Install required system packages
+  apt:
+    pkg:
+      - git
+    state: latest
+    update_cache: true
+  become: yes
+
+- name: Ensure .ssh directory exists
+  file:
+    path: /home/{{ user }}/.ssh
+    state: directory
+    mode: '0700'
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: yes
+
+- name: Copy deploy key to server
+  copy:
+    src: "{{ repo_ssh_key }}"
+    dest: /home/{{ user }}/.ssh/id_rsa
+    mode: '0600'
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  become: yes
+
+- name: Check if repository exists
+  stat:
+    path: /home/{{ user }}/app/.git
+  register: repo_exists
+  become: yes
+  become_user: "{{ user }}"
+
+- name: Clone repository
+  git:
+    repo: "{{ repo }}"
+    dest: /home/{{ user }}/app
+    accept_newhostkey: yes
+    key_file: /home/{{ user }}/.ssh/id_rsa
+  become_user: "{{ user }}"
+  become: yes
+  when: not repo_exists.stat.exists
+
+- name: Soft reset master branch
+  command: "git reset --soft origin/master"
+  args:
+    chdir: /home/{{ user }}/app/
+  become: yes
+  become_user: "{{ user }}"
+
+- name: Stop all running containers
+  command: "docker compose down"
+  args:
+    chdir: /home/{{ user }}/app/
+  become_user: "{{ user }}"
+  become: yes
+  ignore_errors: yes
+
+- name: Create .env file
+  copy:
+    dest: /home/{{ user }}/app/.env
+    content: |
+      POSTGRES_USER={{ db_username }}
+      POSTGRES_PASSWORD={{ db_password }}
+      POSTGRES_DB={{ db_name }}
+  become: yes
+  become_user: "{{ user }}"
+
+- name: Create credentials.yml file
+  template:
+    src: credentials.yml.j2
+    dest: /home/{{ user }}/app/config/credentials.yml
+  become: yes
+  become_user: "{{ user }}"
+
+- name: Build and run app
+  command: "docker compose -f docker-compose.production.yml up --build -d"
+  args:
+    chdir: /home/{{ user }}/app/
+  become: yes
+  become_user: "{{ user }}"

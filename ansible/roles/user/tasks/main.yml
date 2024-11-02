@@ -1,0 +1,32 @@
+---
+- name: Ensure sudo is installed
+  apt:
+    name: sudo
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Ensure sudo group has sudo privileges
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "^%sudo"
+    line: "%sudo ALL=(ALL:ALL) ALL"
+    validate: "/usr/sbin/visudo -cf %s"
+
+- name: Setup sudo user
+  user:
+    name: "{{ user }}"
+    shell: /bin/bash
+    groups: sudo
+    password: '{{ user_password | password_hash("sha512", (user_salt | default(""))[:16] | regex_replace("[^\.\/a-zA-Z0-9]", "x")) }}'
+    state: present
+    update_password: always
+  become: yes
+
+- name: Set authorized key for user
+  authorized_key:
+    user: "{{ user }}"
+    state: present
+    key: "{{ lookup('file', ssh_key_path) }}"
+  become: yes

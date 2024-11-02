@@ -1,0 +1,24 @@
+user: "admin" # User to create on the server
+user_password: "changeme" # Password
+user_salt: "changeme" # Salt
+ssh_key_path: "/home/user/.ssh/id_rsa.pub" # Path to the public key
+
+app_url: "http://localhost:3000" # Domain of the application
+list_address: "mail@example.com" # Address for the mailing list
+validation_mail: "mail@example.com" # Mail for the Let's Encrypt validation
+secret_key_base: "changeme" # Secret key base for the Rails application, can be generated with `rails secret`
+
+smtp_address: 'mail'  # SMTP server
+smtp_port: 1025 # SMTP port
+smtp_domain: '' # SMTP domain
+smtp_user_name: '' # SMTP user
+smtp_password: '' # SMTP password
+smtp_authentication: 'plain' # SMTP authentication
+smtp_enable_starttls_auto: true # SMTP starttls
+
+repo: "git@github.com:chaosmentors/the-godmother.git" # Repository to clone
+repo_ssh_key: "/home/user/.ssh/id_rsa" # Path to the SSH key which has read access to the repository
+
+db_name: "changeme" # Database name
+db_username: "changeme" # Database user
+db_password: "changeme" # Database password

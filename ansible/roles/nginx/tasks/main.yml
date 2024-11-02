@@ -1,0 +1,71 @@
+---
+- name: Install Nginx and Certbot
+  apt:
+    name:
+      - nginx
+      - certbot
+      - python3-certbot-nginx
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Remove default Nginx site configuration
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  become: yes
+
+- name: Set ssl_enabled to false
+  set_fact:
+    ssl_enabled: false
+
+- name: Create Nginx site configuration without SSL
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/app
+  become: yes
+
+- name: Enable Nginx site configuration
+  file:
+    src: /etc/nginx/sites-available/app
+    dest: /etc/nginx/sites-enabled/app
+    state: link
+  become: yes
+
+- name: Restart Nginx
+  service:
+    name: nginx
+    state: restarted
+  become: yes
+
+- name: Obtain SSL certificate
+  command: certbot --nginx -d {{ domain }} --non-interactive --agree-tos --email {{ validation_mail }}
+  become: yes
+  register: certbot_result
+
+- name: Set ssl_enabled to true if certbot succeeded
+  set_fact:
+    ssl_enabled: true
+  when: certbot_result.rc == 0
+
+- name: Create Nginx site configuration with SSL
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/app
+  become: yes
+  when: ssl_enabled | default(false)
+
+- name: Restart Nginx
+  service:
+    name: nginx
+    state: restarted
+  become: yes
+  when: ssl_enabled | default(false)
+
+- name: Set up cron job for auto-renewal
+  cron:
+    name: "Auto-renew Let's Encrypt certificates"
+    job: "0 0,12 * * * /usr/bin/certbot renew --quiet"
+    state: present
+  become: yes
+  when: ssl_enabled | default(false)

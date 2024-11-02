@@ -1,0 +1,10 @@
+---
+- name: "Provision Server and Deploy App"
+  hosts: "{{ host | default('local')}}"
+  vars_files:
+    - vars.yml
+  roles:
+    - role: user
+    - role: docker
+    - role: nginx
+    - role: app

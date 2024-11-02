@@ -1,0 +1,51 @@
+# roles/docker/tasks/main.yml
+---
+- name: Install required system packages
+  apt:
+    pkg:
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+    state: latest
+    update_cache: true
+  become: yes
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  become: yes
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+  become: yes
+
+- name: Install latest docker-ce
+  apt:
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: latest
+    update_cache: true
+  become: yes
+
+- name: Create docker group
+  group:
+    name: docker
+  become: yes
+
+- name: Add User to docker group
+  user:
+    name: "{{ user }}"
+    append: yes
+    groups:
+      - docker
+  become: yes
+
+- name: Reset ssh connection to activate changes to group
+  meta: reset_connection
