@@ -24,15 +24,15 @@ module TheGodmother
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    config.x.basic.app_url = Rails.application.credentials.dig(Rails.env.to_sym, :app_url)
-    config.x.default_from = Rails.application.credentials.dig(Rails.env.to_sym, :default_from)
-    config.x.basic.list_address = Rails.application.credentials.dig(Rails.env.to_sym, :list_address)
+    config.x.basic.app_url = Rails.application.config.x.app_url
+    config.x.default_from = Rails.application.config.x.default_from
+    config.x.basic.list_address = Rails.application.config.x.list_address
 
     # ActionMailer Config
     config.action_mailer.perform_deliveries = true
     config.action_mailer.delivery_method = :smtp
 
-    smtp_settings = Rails.application.credentials.dig(Rails.env.to_sym, :smtp_settings)
+    smtp_settings = Rails.application.config.x.smtp_settings
     config.action_mailer.smtp_settings = {
       address:              smtp_settings[:address],
       port:                 smtp_settings[:port],

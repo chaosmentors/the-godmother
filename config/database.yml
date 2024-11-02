@@ -1,11 +1,11 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  database: <%= Rails.application.credentials.dig(Rails.env.to_sym, :db_name) %>
-  host: <%= Rails.application.credentials.dig(Rails.env.to_sym, :db_host) %>
-  port: <%= Rails.application.credentials.dig(Rails.env.to_sym, :db_port) %>
-  username: <%= Rails.application.credentials.dig(Rails.env.to_sym, :db_username) %>
-  password: <%= Rails.application.credentials.dig(Rails.env.to_sym, :db_password) %>
+  database: "<%= Rails.application.config.x.db_name %>"
+  host: "<%= Rails.application.config.x.db_host %>"
+  port: "<%= Rails.application.config.x.db_port %>"
+  username: "<%= Rails.application.config.x.db_username %>"
+  password: "<%= Rails.application.config.x.db_password %>"
 
 development:
   <<: *default

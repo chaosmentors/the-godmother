@@ -25,7 +25,7 @@ CMD ["rails", "server", "-b", "0.0.0.0"]
 FROM base AS production
 
 RUN bundle install --without development test
-RUN RAILS_ENV=production bundle exec rake assets:precompile
+RUN RAILS_ENV=production SECRET_KEY_BASE=dummy bundle exec rake assets:precompile
 
 # Start the main process.
 CMD ["rails", "server", "-e", "production", "-b", "0.0.0.0"]
