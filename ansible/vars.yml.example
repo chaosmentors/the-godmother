@@ -16,6 +16,10 @@ smtp_password: '' # SMTP password
 smtp_authentication: 'plain' # SMTP authentication
 smtp_enable_starttls_auto: true # SMTP starttls
 
+basic_auth_enabled: false
+basic_auth_user: "changeme"
+basic_auth_password: "changeme"
+
 repo: "git@github.com:chaosmentors/the-godmother.git" # Repository to clone
 repo_ssh_key: "/home/user/.ssh/id_rsa" # Path to the SSH key which has read access to the repository
 

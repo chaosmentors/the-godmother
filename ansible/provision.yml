@@ -5,6 +5,10 @@
     - vars.yml
   roles:
     - role: user
+      tags: [ 'user' ]
     - role: docker
+      tags: [ 'docker' ]
     - role: nginx
+      tags: [ 'nginx' ]
     - role: app
+      tags: [ 'app' ]

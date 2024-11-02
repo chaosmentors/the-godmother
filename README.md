@@ -8,6 +8,7 @@ The God Mother is a tool for organizing mentors and mentees. This is useful for 
   - [Prerequisites](#prerequisites)
   - [Create Configuration](#create-configuration)
   - [Provision the Server](#provision-the-server)
+    - [Enable base auth](#enable-base-auth)
 
 # Intro
 
@@ -61,3 +62,12 @@ ansible-playbook -i ansible/hosts ansible/provision.yml -u root -e host=producti
 ```
 
 After successfully running the playbook, the application will be accessible under the server domain.
+
+### Enable base auth
+
+In `ansible/vars.yml`, set `basic_auth_enabled: true` and define a username and password. Then start the nginx provisioning playbook.
+
+```bash
+ansible-playbook -i ansible/hosts ansible/provision.yml -u root -e host=production --tags nginx
+```
+

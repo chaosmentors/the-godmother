@@ -5,6 +5,7 @@
       - nginx
       - certbot
       - python3-certbot-nginx
+      - apache2-utils # for htpasswd
     state: present
     update_cache: yes
   become: yes
@@ -55,17 +56,13 @@
   become: yes
   when: ssl_enabled | default(false)
 
+- name: Create htpasswd file for basic auth
+  command: htpasswd -bc /etc/nginx/.htpasswd {{ basic_auth_user }} {{ basic_auth_password }}
+  when: basic_auth_enabled | default(false)
+  become: yes
+
 - name: Restart Nginx
   service:
     name: nginx
     state: restarted
   become: yes
-  when: ssl_enabled | default(false)
-
-- name: Set up cron job for auto-renewal
-  cron:
-    name: "Auto-renew Let's Encrypt certificates"
-    job: "0 0,12 * * * /usr/bin/certbot renew --quiet"
-    state: present
-  become: yes
-  when: ssl_enabled | default(false)
