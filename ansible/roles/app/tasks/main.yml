@@ -42,8 +42,15 @@
   become: yes
   when: not repo_exists.stat.exists
 
-- name: Soft reset master branch
-  command: "git reset --soft origin/master"
+- name: Fetch latest changes
+  command: "git fetch origin"
+  args:
+    chdir: /home/{{ user }}/app/
+  become: yes
+  become_user: "{{ user }}"
+
+- name: Update master branch
+  command: "git reset --hard origin/master"
   args:
     chdir: /home/{{ user }}/app/
   become: yes
