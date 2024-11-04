@@ -113,15 +113,14 @@ class Person < ApplicationRecord
     self.isgodmother
   end
 
-  def is_godmother=(g)
-    case self.role
-    when 1
-      self.isgodmother = false
-    when 2
-      self.isgodmother = g
-    when 3
-      self.isgodmother = true
-    end
+  def is_godmother=(is_godmother)
+    role_to_isgodmother = {
+      1 => false,
+      2 => is_godmother,
+      3 => true
+    }
+  
+    self.isgodmother = role_to_isgodmother[self.role]
   end
 
   def align_group_state
