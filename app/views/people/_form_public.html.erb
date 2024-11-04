@@ -28,22 +28,7 @@
     <small id="tag-list-help" class="text-sm">Add a few tags about the languages you speak and your interests. This helps us create well-matched groups.</small>
   </div>
 
-  <% if !current_person.nil? and current_person.isgodmother?  %>
-    <div class="block">
-      <%= form.label :role_id, "Role", class: "block text-sm font-mono" %>
-      <%= form.select :role_id, options_for_select(Person.role_options), {}, class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
-    </div>
-  <% else %>
-    <div>
-      <%= form.hidden_field :role_id %>
-    </div>
-  <% end %>
-
-  <% if !current_person.nil? and (current_person.isgodmother? && @person != current_person  && @person.role == 2) %>
-    <div>      
-      <%= form.check_box :is_godmother %>
-    </div>
-  <% end %>
+  <%= form.hidden_field :role_id %>
 
   <% if action_name == 'new' || action_name == 'create' -%>
     <div class="block">
