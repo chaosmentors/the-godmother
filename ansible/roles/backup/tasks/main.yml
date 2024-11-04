@@ -1,0 +1,41 @@
+---
+- name: Create backup directory
+  file:
+    path: /home/{{ user }}/backup
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0755'
+
+- name: Create backup script
+  copy:
+    dest: /home/{{ user }}/backup/backup.sh
+    content: |
+      #!/bin/bash
+
+      DB_USERNAME="{{ db_username }}"
+      DB_NAME="{{ db_name }}"
+      USER="{{ user }}"
+      BACKUP_DIR="/home/${USER}/backup"
+      TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')
+      BACKUP_FILE="${BACKUP_DIR}/dump_${TIMESTAMP}.sql"
+
+      # Create backup
+      cd /home/${USER}/app
+      docker compose exec postgresql pg_dump -U ${DB_USERNAME} ${DB_NAME} > ${BACKUP_FILE}
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0755'
+
+- name: Ensure backup script is executable
+  file:
+    path: /home/{{ user }}/backup/backup.sh
+    mode: '0755'
+
+- name: Create cron job for backup script
+  cron:
+    name: "Database backup"
+    minute: "0"
+    hour: "*"
+    user: "{{ user }}"
+    job: "/home/{{ user }}/backup/backup.sh"

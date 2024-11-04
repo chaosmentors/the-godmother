@@ -56,8 +56,13 @@
   become: yes
   become_user: "{{ user }}"
 
+- name: Run backup script
+  shell: "/home/{{ user }}/backup/backup.sh"
+  become: yes
+  become_user: "{{ user }}"
+
 - name: Stop all running containers
-  command: "docker compose down"
+  command: "docker compose stop"
   args:
     chdir: /home/{{ user }}/app/
   become_user: "{{ user }}"
