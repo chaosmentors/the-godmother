@@ -24,23 +24,31 @@ module TheGodmother
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    config.x.basic.app_url = Rails.application.config.x.app_url
-    config.x.default_from = Rails.application.config.x.default_from
-    config.x.basic.list_address = Rails.application.config.x.list_address
+    # Load custom configuration
+    config_file = Rails.root.join('config', "credentials.yml")
+    if File.exist?(config_file)
+      app_conf = YAML.load_file(config_file)
 
+      app_conf.each do |key, value|
+        config.x.send("#{key}=", value)
+      end
+
+      Rails.application.credentials.secret_key_base = config.x.secret_key_base
+    end
+    
     # ActionMailer Config
     config.action_mailer.perform_deliveries = true
     config.action_mailer.delivery_method = :smtp
 
-    smtp_settings = Rails.application.config.x.smtp_settings
+    smtp_settings = config.x.smtp_settings
     config.action_mailer.smtp_settings = {
-      address:              smtp_settings[:address],
-      port:                 smtp_settings[:port],
-      domain:               smtp_settings[:domain],
-      user_name:            smtp_settings[:user_name],
-      password:             smtp_settings[:password],
-      authentication:       smtp_settings[:authentication],
-      enable_starttls_auto: smtp_settings[:enable_starttls_auto]
+      address:              smtp_settings["address"],
+      port:                 smtp_settings["port"],
+      domain:               smtp_settings["domain"],
+      user_name:            smtp_settings["user_name"],
+      password:             smtp_settings["password"],
+      authentication:       smtp_settings["authentication"],
+      enable_starttls_auto: smtp_settings["enable_starttls_auto"]
     }
   end
 end
