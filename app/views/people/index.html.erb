@@ -14,7 +14,7 @@
 </h1>
 
 <p>
-  <%= link_to 'New Person', new_person_path %>
+  <%= link_to 'New Person', new_person_path, class: 'btn btn-secondary text-white' %>
 </p>
 
 <p>
@@ -34,6 +34,8 @@
   <thead>
     <tr>
       <th scope="col">Random ID</th>
+      <th scope="col">Role</th>
+      <th scope="col">State</th>
       <th scope="col">Pronoun</th>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
@@ -45,6 +47,12 @@
     <% @people.each do |person| %>
       <tr>
         <td><%= link_to person.random_id, person %></td>
+        <td><%= person.role_name %></td>
+        <td>
+          <span class="badge badge-<%= state_batches[person.state_name] %> float-right">
+            <%= person.state_name.to_s.humanize %>
+          </span>
+        </td>
         <td><%= person.pronoun %></td>
         <td><%= person.name %></td>
         <td><%= person.email %></td>

@@ -20,20 +20,9 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/contact">Contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/privacy">Privacy statement</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/imprint">Imprint</a>
-          </li>
-        </ul>
+      <div class="collapse navbar-collapse">
         <% if godmother? -%>
-        <ul class="navbar-nav">
+        <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <%= link_to 'All', people_path, class: "nav-link" %>
           </li>
@@ -50,8 +39,7 @@
             <%= link_to 'Groups', groups_path, class: "nav-link" %>
           </li>
         </ul>
-        |
-        <ul class="navbar-nav">
+        <ul class="navbar-nav my-2 my-lg-0">
           <li class="nav-item">
           </li>
           <li class="nav-item">

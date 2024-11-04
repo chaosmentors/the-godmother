@@ -11,7 +11,7 @@ module PeopleHelper
       waiting: 'warning',
       in_group: 'primary',
       declined: 'danger',
-      done: 'sucess'
+      done: 'success'
     }
   end
 end

@@ -2,12 +2,12 @@
 <%= bootstrap_form_with(model: @group, local: true) do |form| %>
 
   <div class="align-items-end">
-    <%= form.submit 'Save', class: 'btn btn-primary' %>
-    <%= link_to 'Cancel', @group, { class: 'btn btn-secondary'} %>
+    <%= form.submit 'Save Group', class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', @group, { class: 'btn btn-secondary text-white'} %>
   </div>
 
   <p>
-    <a "btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Click to edit group mentors</a>
+    <a class="btn btn-secondary btn-sm mt-4" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Show group mentors</a>
   </p>
 
   <div class="collapse" id="collapseExample">
