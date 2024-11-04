@@ -40,19 +40,7 @@
     </div>
   <% end %>
 
-  <% if action_name == 'new' || action_name == 'create' -%>
-    <div class="form-group">
-      <label>
-        Question: <%= @captcha.last %>
-      </label><br>
-      <label for="address">Answer</label>
-      <input class="form-control" type="text" name="address" />
-      <small id="pronoun-help" class="form-text text-muted">Sorry, too many spam bots out there.</small>
-    </div>
-    <input value="<%= @captcha.first %>" type="hidden" name="number" />
-  <% end %>
-
-  <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+    <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
     Send
   <% end %>
 <% end %>

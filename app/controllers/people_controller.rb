@@ -20,7 +20,7 @@ class PeopleController < ApplicationController
 		["What comes next? 'Monday Tuesday Wednesday …'", "thursday"]
   ]
   
-  layout 'public', only: [:new, :verify_email, :create]
+  layout :determine_layout, only: [:new, :verify_email, :create]
   before_action :set_person, only: [:show, :edit, :update, :destroy, :change_password, :change_state]
   before_action :require_godmother
   skip_before_action :require_godmother, only: [:new, :create, :verify_email]
@@ -76,17 +76,21 @@ class PeopleController < ApplicationController
       @person.role = 1
     end
 
-    if params[:address].downcase != QUESTIONS[params[:number].to_i].last
+    if !current_person&.isgodmother? && params[:address].downcase != QUESTIONS[params[:number].to_i].last
       flash[:alert] = "Are you sure you are human?"
       render :new
     elsif @person.is_godmother && (current_person.nil? || !current_person.isgodmother?)
       flash[:alert] = "Nice try ;)"
       render :new
-    elsif @person.save
-      PersonMailer.with(person: @person).verification_email.deliver_now
-      redirect_to home_path, notice: "You are successfully registered. We sent you a verification mail to your address <#{@person.email}>. You may have to take a look in your junk folder."
     else
-      render :new
+      @person.save
+
+      if current_person&.isgodmother?
+        redirect_to people_url, notice: 'Person was successfully created. No verification mail was sent.'
+      else
+        PersonMailer.with(person: @person).verification_email.deliver_now
+        redirect_to home_path, notice: "You are successfully registered. We sent you a verification mail to your address <#{@person.email}>. You may have to take a look in your junk folder."
+      end
     end
   end
 
@@ -177,4 +181,13 @@ class PeopleController < ApplicationController
     captcha << QUESTIONS[captcha.first].first
     return captcha
   end
+
+  def determine_layout
+    if current_person&.isgodmother? && params[:internal].present?
+      'application'
+    else
+      'public'
+    end
+  end
 end
+

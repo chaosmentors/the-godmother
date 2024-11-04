@@ -1,3 +1,7 @@
 <h1>Register as <%= @person.role_name.to_s.humanize -%></h1>
 
-<%= render 'form_public', person: @person %>
+<% if current_person&.isgodmother? && params[:internal].present? %>
+  <%= render 'form', person: @person %>
+<% else %>
+  <%= render 'form_public', person: @person %>
+<% end %>

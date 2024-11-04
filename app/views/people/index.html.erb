@@ -14,8 +14,7 @@
 </h1>
 
 <p>
-  <%= link_to 'New Person', new_person_path, class: 'btn btn-secondary text-white' %>
-</p>
+  <%= link_to 'New Person', new_person_path(internal: true), class: 'btn btn-secondary text-white' %></p>
 
 <p>
   <% Person::STATES.each do |k, v| %>

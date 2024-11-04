@@ -30,7 +30,7 @@
 
   <%= form.hidden_field :role_id %>
 
-  <% if action_name == 'new' || action_name == 'create' -%>
+  <% if !current_person&.is_godmother && (action_name == 'new' || action_name == 'create') -%>
     <div class="block">
       <label class="block text-sm font-mono">
         Question: <%= @captcha.last %>
