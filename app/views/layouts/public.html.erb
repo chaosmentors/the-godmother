@@ -26,7 +26,7 @@
               </a>
               <p class="mt-10">TL;DR — Chaosmentors at Chaos Communication Congress offers mentorship and support for newcomers to help them feel welcome and comfortable.</p>
 
-              <% if Rails.configuration.x.basic.registration_open && sessionEnabled -%>
+              <% if Rails.configuration.x.registration_open && sessionEnabled -%>
               <div class="flex justify-center md:justify-start space-x-6 mt-10">
                 <%= render 'shared/button', url: '/people/new?r=mentee', icon: 'icon-handsup.svg' do %>
                   Register as mentee

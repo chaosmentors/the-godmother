@@ -6,7 +6,7 @@ class PersonMailer < ApplicationMailer
 
     options = {
       to: @person.email,
-      reply_to: Rails.configuration.x.basic.list_address,
+      reply_to: Rails.configuration.x.list_address,
       subject: 'Chaospatinnen - E-Mail Verification'
     }
 
@@ -17,7 +17,7 @@ class PersonMailer < ApplicationMailer
     @person = params[:person]
 
     options = {
-      to: Rails.configuration.x.basic.list_address,
+      to: Rails.configuration.x.list_address,
       reply_to: @person.email,
       subject: "New #{@person.role_name.to_s.humanize} #{@person.name} [#{@person.random_id}]"
     }
@@ -30,8 +30,8 @@ class PersonMailer < ApplicationMailer
 
     options = {
       to: @mentor.email,
-      reply_to: Rails.configuration.x.basic.list_address,
-      cc: Rails.configuration.x.basic.list_address,
+      reply_to: Rails.configuration.x.list_address,
+      cc: Rails.configuration.x.list_address,
       subject: "Chaospatinnen - Your Mentees [#{@mentor.random_id}]"
     }
 

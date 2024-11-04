@@ -16,4 +16,4 @@ Tags:
 ----------------------------------------------------------------------
 
 After replying to this mail, please update the <%= @person.role_name.to_s.humanize.downcase %>'s status.
-<%= [Rails.configuration.x.basic.app_url, 'people', @person.random_id].join('/') %>
+<%= [Rails.configuration.x.app_url, 'people', @person.random_id].join('/') %>
