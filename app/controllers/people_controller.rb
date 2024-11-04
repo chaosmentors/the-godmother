@@ -79,6 +79,9 @@ class PeopleController < ApplicationController
     if params[:address].downcase != QUESTIONS[params[:number].to_i].last
       flash[:alert] = "Are you sure you are human?"
       render :new
+    elsif @person.is_godmother && (current_person.nil? || !current_person.isgodmother?)
+      flash[:alert] = "Nice try ;)"
+      render :new
     elsif @person.save
       PersonMailer.with(person: @person).verification_email.deliver_now
       redirect_to home_path, notice: "You are successfully registered. We sent you a verification mail to your address <#{@person.email}>. You may have to take a look in your junk folder."
