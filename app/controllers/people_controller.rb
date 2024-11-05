@@ -89,7 +89,7 @@ class PeopleController < ApplicationController
         redirect_to people_url, notice: 'Person was successfully created. No verification mail was sent.'
       else
         PersonMailer.with(person: @person).verification_email.deliver_now
-        redirect_to home_path, notice: "You are successfully registered. We sent you a verification mail to your address <#{@person.email}>. You may have to take a look in your junk folder."
+        redirect_to home_path, notice: "Registration successful! A verification email has been sent to <#{@person.email}>. Please check your inbox or junk folder."
       end
     end
   end
@@ -136,15 +136,15 @@ class PeopleController < ApplicationController
         if @person.save
           PersonMailer.with(person: @person).new_person_email.deliver_now
 
-          msg = { notice: "Your e-mail address was successfuly verified.\nYour request will now be forwarded to us (the Chaospatinnen orga team) and we will send you an answer as soon as possible… which can be a while, sorry for that. ^__^" }
+          msg = { notice: "Your email address has been successfully verified! Your request is now with the Chaosmentors team, and we’ll get back to you as soon as possible... though it might take a bit. Thanks for your patience!" }
         else
-          msg = { alert: "Something went wrong. You may want to contact us." }
+          msg = { alert: "Oops, something went wrong. Please try again, or feel free to contact us if the issue persists!" }
         end
       else
         msg = { alert: "What are you trying here?!" }
       end
     else
-      msg = { alert: "Seems like your verification link is broken. Try copy and paste it by hand." }
+      msg = { alert: "It looks like the verification link isn’t working. Try copying and pasting it directly into your browser or feel free to contact us if the issue persists!" }
     end
 
     redirect_to home_path, msg

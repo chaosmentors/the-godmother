@@ -1,13 +1,12 @@
 Hi <%= @person.name %>,
 
-you have registered for Chaospatinnen as a <%= @person.role_name.to_s.humanize %>. Welcome!
+Thank you for registering with Chaosmentors as a <%= @person.role_name.to_s.humanize %> — welcome to the community!
 
-To be sure we are able to communicate with you and that you really
-registered for Chaospatinnen, you have to confirm your e-mail address
-to us.
+To confirm your registration and enable communication with us, please verify your email address by clicking the link below:
 
-To do so, please open this link: <%= [Rails.configuration.x.app_url, 'verify_email', @person.verification_token].join('/') %>
+<%= [Rails.configuration.x.app_url, 'verify_email', @person.verification_token].join('/') %>
 
-After this is done, your request will be forwarded to the Chaospatinnen orga team.
+Once verified, your request will be forwarded to the Chaosmentors team.
 
-Thank you.
+Thank you,
+The Chaosmentors Team

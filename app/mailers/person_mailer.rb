@@ -7,7 +7,7 @@ class PersonMailer < ApplicationMailer
     options = {
       to: @person.email,
       reply_to: Rails.configuration.x.list_address,
-      subject: 'Chaospatinnen - E-Mail Verification'
+      subject: 'Welcome to Chaosmentors! Please Verify Your Email'
     }
 
     mail(options)
@@ -32,7 +32,7 @@ class PersonMailer < ApplicationMailer
       to: @mentor.email,
       reply_to: Rails.configuration.x.list_address,
       cc: Rails.configuration.x.list_address,
-      subject: "Chaospatinnen - Your Mentees [#{@mentor.random_id}]"
+      subject: "Chaosmentors - Your Mentees [#{@mentor.random_id}]"
     }
 
     mail(options)
