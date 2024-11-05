@@ -13,10 +13,5 @@ class StaticController < ApplicationController
 
   def imprint
   end
-
-  def setCookie
-    cookies[:cookie_eu_consented] = 'true'
-    redirect_to request.referrer
-  end
   helper_method :setCookie
 end

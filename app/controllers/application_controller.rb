@@ -15,15 +15,6 @@ class ApplicationController < ActionController::Base
   end
   helper_method :godmother?
 
-  def sessionEnabled
-    if cookies[:cookie_eu_consented] == "true"
-      return true
-    else
-      return false
-    end
-  end
-  helper_method :sessionEnabled
-
   def registration_open
     unless Rails.configuration.x.registration_open || godmother?
       redirect_to home_path, alert: "Sorry, registration is closed."
