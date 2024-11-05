@@ -60,6 +60,7 @@
         <%= flash_messages(flash).html_safe %> 
 
         <%= yield %>
+        <% flash.clear %>
       </div>
     </main><!-- /.container -->
   </body>

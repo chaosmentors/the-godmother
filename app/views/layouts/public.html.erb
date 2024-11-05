@@ -67,6 +67,7 @@
             <div class="mx-auto max-w-lg lg:mx-0 lg:w-0 lg:max-w-xl lg:flex-auto prose prose-invert">
               <%= flash_messages(flash, class: 'bg-purple text-white px-4 py-2 mb-8') %>
               <%= yield %>
+              <% flash.clear %>
             </div>
           </div>
         </div>
