@@ -26,3 +26,10 @@ repo_ssh_key: "/home/user/.ssh/id_rsa" # Path to the SSH key which has read acce
 db_name: "changeme" # Database name
 db_username: "changeme" # Database user
 db_password: "changeme" # Database password
+
+s3_endpoint_url: ""
+s3_bucket: ""
+s3_access_key: ""
+s3_secret_key: ""
+s3_region: ""
+s3_backup_path: ""

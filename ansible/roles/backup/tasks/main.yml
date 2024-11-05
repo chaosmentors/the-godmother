@@ -1,4 +1,21 @@
 ---
+- name: Install required system packages
+  apt:
+    pkg:
+      - unzip
+    state: latest
+    update_cache: true
+  become: yes
+
+- name: Ensure AWS CLI is installed
+  shell: |
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    unzip awscliv2.zip
+    sudo ./aws/install
+  args:
+    creates: /usr/local/bin/aws
+  become: yes
+
 - name: Create backup directory
   file:
     path: /home/{{ user }}/backup
@@ -18,11 +35,28 @@
       USER="{{ user }}"
       BACKUP_DIR="/home/${USER}/backup"
       TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')
-      BACKUP_FILE="${BACKUP_DIR}/dump_${TIMESTAMP}.sql"
+      OBJECT_NAME="dump_${TIMESTAMP}.sql"
+      BACKUP_FILE="${BACKUP_DIR}/${OBJECT_NAME}"
+      S3_ENDPOINT_URL="{{ s3_endpoint_url }}"
+      S3_BUCKET="{{ s3_bucket }}"
+      S3_BACKUP_PATH="{{ s3_backup_path }}"
+      AWS_ACCESS_KEY_ID="{{ s3_access_key }}"
+      AWS_SECRET_ACCESS_KEY="{{ s3_secret_key }}"
+      AWS_DEFAULT_REGION="{{ s3_region }}"
 
       # Create backup
       cd /home/${USER}/app
       docker compose exec postgresql pg_dump -U ${DB_USERNAME} ${DB_NAME} > ${BACKUP_FILE}
+
+      # Upload backup to S3
+      export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      aws s3 --endpoint-url ${S3_ENDPOINT_URL} cp ${BACKUP_FILE} s3://${S3_BUCKET}/${S3_BACKUP_PATH}/${OBJECT_NAME} --acl private
+
+      # Cleanup old local backups (assuming we have 1 backup per hour, keep 7 days worth of backups)
+      cd ${BACKUP_DIR}
+      ls -1t | grep 'dump_.*\.sql' | tail -n +170 | xargs -r rm --
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: '0755'
