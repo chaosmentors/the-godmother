@@ -39,12 +39,12 @@
 <br>
 <div class="row">
   <div class="col-md-4">
-    <%= link_to 'Replied and okay', { action: "change_state", random_id: @person, state: 3 }, { class: 'btn btn-primary btn-lg btn-block active' } %>
-  </div>
-  <div class="col-md-4">
-    <%= link_to 'Replied and waiting for answer', { action: "change_state", random_id: @person, state: 4 }, { class: 'btn btn-secondary btn-lg btn-block active' } %>
-  </div>
-  <div class="col-md-4">
     <%= link_to 'Declined', { action: "change_state", random_id: @person, state: 23 }, { class: 'btn btn-danger btn-lg btn-block active' } %>
   </div>
+
+  <% if !current_person.nil? && (@person.isgodmother? || @person.role == 3) %>
+    <div class="col-md-4">
+      <%= button_to 'Send Password Reset Email', send_password_reset_person_path(@person), method: :post, class: "btn btn-secondary btn-lg" %>
+    </div>
+  <% end %>
 </div>

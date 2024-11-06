@@ -40,18 +40,15 @@
     </div>
   <% end %>
 
-    <%= form.hidden_field :internal, value: true %>
-    <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-    Send
+  <%= form.hidden_field :internal, value: true %>
+  <%= button_tag(type: 'submit', class: "btn btn-primary mb-4") do %>
+    <% if @person.new_record? %>
+      Create Person
+    <% else %>
+      Update Person
+    <% end %>
   <% end %>
-
 <% end %>
-
-<% if !current_person.nil? && (@person.isgodmother? || @person.role == 3) && !@person.new_record? %>
-  <%= button_to 'Send Password Reset Email', send_password_reset_person_path(@person), method: :post, class: "btn btn-secondary mt-4 mb-4" %>
-<% end %>
-
-
 
 <%= javascript_tag do %>
   $.availableTags = <%= raw tags.to_json %>;
