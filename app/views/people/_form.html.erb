@@ -34,7 +34,7 @@
     </div>
   <% end %>
 
-  <% if !current_person.nil? && (@person.isgodmother? || @person.role == 2) && @person != current_person %>
+  <% if !current_person.nil? && (@person.isgodmother? || @person.role == 2) %>
     <div class="form-group">      
       <%= form.check_box :is_godmother %>
     </div>

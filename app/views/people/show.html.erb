@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-    <%= @person.name %> (<%= @person.role_name.to_s.humanize %>)
+    <%= @person.name %> (<%= render_person_role(@person) %>)
     <span class="badge badge-<%= state_batches[@person.state_name] %> float-right"><%= @person.state_name.to_s.humanize %></span>
   </div>
   <div class="card-body">

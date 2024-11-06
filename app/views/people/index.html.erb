@@ -46,7 +46,7 @@
     <% @people.each do |person| %>
       <tr>
         <td><%= link_to person.random_id, person %></td>
-        <td><%= person.role_name %></td>
+        <td><%= render_person_role(person) %></td>
         <td>
           <span class="badge badge-<%= state_batches[person.state_name] %> float-right">
             <%= person.state_name.to_s.humanize %>
