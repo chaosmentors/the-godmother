@@ -34,16 +34,24 @@
     </div>
   <% end %>
 
-  <% if !current_person.nil? and (current_person.isgodmother? && @person != current_person  && @person.role == 2) %>
+  <% if !current_person.nil? && (@person.isgodmother? || @person.role == 2) && @person != current_person %>
     <div class="form-group">      
       <%= form.check_box :is_godmother %>
     </div>
   <% end %>
 
+    <%= form.hidden_field :internal, value: true %>
     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
     Send
   <% end %>
+
 <% end %>
+
+<% if !current_person.nil? && (@person.isgodmother? || @person.role == 3) && !@person.new_record? %>
+  <%= button_to 'Send Password Reset Email', send_password_reset_person_path(@person), method: :post, class: "btn btn-secondary mt-4 mb-4" %>
+<% end %>
+
+
 
 <%= javascript_tag do %>
   $.availableTags = <%= raw tags.to_json %>;

@@ -72,7 +72,7 @@ class PeopleController < ApplicationController
     @person = Person.new(person_params)
     @captcha = new_captcha
 
-    unless [1, 2].include?(@person.role)
+    unless [1, 2, 3].include?(@person.role)
       @person.role = 1
     end
 
@@ -82,11 +82,20 @@ class PeopleController < ApplicationController
     elsif @person.is_godmother && (current_person.nil? || !current_person.isgodmother?)
       flash[:alert] = "Nice try ;)"
       render :new
+    elsif current_person&.isgodmother? && @person.role_name == 'mentee' && params[:person][:is_godmother] == "1"
+      flash[:alert] = "A mentee cannot be a godmother."
+      render :new
     else
       @person.save
 
       if current_person&.isgodmother?
-        redirect_to people_url, notice: 'Person was successfully created. No verification mail was sent.'
+        if @person.role_name == 'godmother' || @person.is_godmother
+          @person.generate_reset_password_token!
+          PersonMailer.set_password_email(@person).deliver_now
+          redirect_to people_url, notice: 'Person was successfully created. A password email has been sent.'
+        else
+          redirect_to people_url, notice: 'Person was successfully created. No verification mail was sent.'
+        end
       else
         PersonMailer.with(person: @person).verification_email.deliver_now
         redirect_to home_path, notice: "Registration successful! A verification email has been sent to <#{@person.email}>. Please check your inbox or junk folder."
@@ -96,6 +105,11 @@ class PeopleController < ApplicationController
 
   # PATCH/PUT /people/1
   def update
+    
+    if @person.role_name == 'mentee'
+      @person.isgodmother = false
+    end
+
     if person_params[:password]
       if current_person.authenticate(params[:old_password]) && current_person.id == @person.id
         if @person.update(person_params)
@@ -108,7 +122,13 @@ class PeopleController < ApplicationController
         render :change_password
       end
     elsif @person.update(person_params)
-      redirect_to @person, notice: 'Person was successfully updated.'
+      if (@person.role_name == 'godmother' || @person.is_godmother) && @person.reset_password_token.nil? && @person.password_digest.nil?
+        @person.generate_reset_password_token!
+        PersonMailer.set_password_email(@person).deliver_now
+        redirect_to @person, notice: 'Person was successfully updated. A password email has been sent.'
+      else
+        redirect_to @person, notice: 'Person was successfully updated.'
+      end
     else
       render :edit
     end
@@ -164,6 +184,20 @@ class PeopleController < ApplicationController
     end
   end
 
+  def send_password_reset
+    @person = Person.find_by(random_id: params[:id])
+    puts params
+    if @person
+      if (@person.role_name == 'godmother' || @person.is_godmother)
+        @person.generate_reset_password_token!
+        PersonMailer.set_password_email(@person).deliver_now
+        redirect_to @person, notice: 'Password reset email sent.'
+      end
+    else
+      redirect_to @person, alert: 'Failed to send password reset email.'
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_person
@@ -183,7 +217,7 @@ class PeopleController < ApplicationController
   end
 
   def determine_layout
-    if current_person&.isgodmother? && params[:internal].present?
+    if current_person&.isgodmother? && (params[:internal].present? || params[:person]&[:internal].present?)
       'application'
     else
       'public'

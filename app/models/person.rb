@@ -33,7 +33,7 @@ class Person < ApplicationRecord
   }
 
   def role_name
-    ROLES[self.role]
+    ROLES[self.role].to_s
   end
 
   def role_id
@@ -139,6 +139,18 @@ class Person < ApplicationRecord
       ["Mentor", 2],
       ["Godmother Only", 3]
     ]
+  end
+
+  def generate_reset_password_token!
+    self.reset_password_token = SecureRandom.urlsafe_base64
+    self.reset_password_sent_at = Time.current
+    save!
+  end
+
+  def clear_reset_password_token!
+    self.reset_password_token = nil
+    self.reset_password_sent_at = nil
+    save!
   end
   
 end

@@ -39,6 +39,8 @@ module TheGodmother
     # ActionMailer Config
     config.action_mailer.perform_deliveries = true
     config.action_mailer.delivery_method = :smtp
+    uri = URI.parse(config.x.app_url)
+    config.action_mailer.default_url_options = { host: uri.host, port: uri.port }
 
     smtp_settings = config.x.smtp_settings
     config.action_mailer.smtp_settings = {
