@@ -1,13 +1,5 @@
 <h1>
-  <% if params[:r].to_i == 1 %>
-    Mentees
-  <% elsif params[:r].to_i == 2 %>
-    Mentors
-  <% elsif params[:g] == "true" %>
-    Godmothers
-  <% else %>
-    People
-  <% end %>
+  <%= render_title_by_role(params[:r])  %>
   <small>
     (<%= @people.size %>)
   </small>
@@ -17,13 +9,14 @@
   <%= link_to 'New Person', new_person_path(internal: true), class: 'btn btn-secondary text-white' %></p>
 
 <p>
-  <% Person::STATES.each do |k, v| %>
-    <% if params[:s].to_i == k %>
-      <% badge = state_batches[v] %>
+  <% Person::STATES.each do |key, state| %>
+    <% state_name = state.to_s.humanize %>
+    <% if params[:s].to_s == state.to_s %>
+      <% badge_class = state_batches[state] %>
     <% else %>
-      <% badge = 'secondary' %>
+      <% badge_class = 'secondary' %>
     <% end %>
-    <%= link_to v.to_s.humanize, { controller: 'people', action: 'index', r: params[:r], s: k }, class: "badge badge-#{badge}" %>
+    <%= link_to state_name, { controller: 'people', action: 'index', r: params[:r], s: state }, class: "badge badge-#{badge_class}" %>
   <% end %>
   <%= link_to 'X', { controller: 'people', action: 'index', r: params[:r] }, class: "badge badge-secondary" %>
 </p>
@@ -33,8 +26,14 @@
   <thead>
     <tr>
       <th scope="col">Random ID</th>
-      <th scope="col">Role</th>
-      <th scope="col">State</th>
+      <th scope="col">
+        <%= link_to 'Role', { sort_by: 'role', direction: next_direction('role') } %>
+        <%= sort_indicator('role') %>
+      </th>
+      <th scope="col">
+        <%= link_to 'State', { sort_by: 'state', direction: next_direction('state') } %>
+        <%= sort_indicator('state') %>
+      </th>
       <th scope="col">Pronoun</th>
       <th scope="col">Name</th>
       <th scope="col">Email</th>

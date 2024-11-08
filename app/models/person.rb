@@ -20,7 +20,7 @@ class Person < ApplicationRecord
     1 => :mentee,
     2 => :mentor,
     3 => :godmother # This role means, you are a godmother only, but not a mentor
-  }
+  }.freeze
 
   STATES = {
     1 => :unverified,
@@ -30,7 +30,11 @@ class Person < ApplicationRecord
     5 => :in_group,
     23 => :declined,
     42 => :done
-  }
+  }.freeze
+
+  def self.state_id(state_name)
+    STATES.key(state_name.to_sym)
+  end
 
   def role_name
     ROLES[self.role].to_s
@@ -68,6 +72,10 @@ class Person < ApplicationRecord
     end
   end
 
+  def self.role_name_to_value(name)
+    role = ROLES.key(name.to_sym)
+  end
+
   def role_all
     ROLES.collect { |k, v| k }
   end
@@ -84,6 +92,10 @@ class Person < ApplicationRecord
     else
       self.state = 1
     end
+  end
+
+  def self.state_name_to_value(name)
+    STATES.key(name.to_sym)
   end
 
   def to_param
@@ -126,7 +138,7 @@ class Person < ApplicationRecord
   def align_group_state
     unless self.state_name == :done
       if self.state_name == :in_group && self.group_id.blank?
-        self.state_name = :okay
+        self.state_name = :waiting
       elsif self.state_name != :in_group && self.group_id
         self.state_name = :in_group
       end

@@ -1,7 +1,6 @@
 class GroupsController < ApplicationController
   before_action :require_godmother
   before_action :set_group, only: [:show, :edit, :update, :destroy, :done]
-  before_action :align_person_state, only: [:edit, :new]
 
   # GET /groups
   def index
@@ -15,13 +14,13 @@ class GroupsController < ApplicationController
   # GET /groups/new
   def new
     @group = Group.new
-    @mentors = Person.where("role = 2 OR role = 3").where(state: 3)
+    @mentors = Person.where("role = 2 OR role = 3").where(state: Person.state_id(:waiting))
   end
 
   # GET /groups/1/edit
   def edit
-    @mentees = @group.mentees + Person.where(role: 1).where(state: 3)
-    @mentors = @group.mentors + Person.where("role = 2 OR role = 3").where(state: 3)
+    @mentees = @group.mentees + Person.where(role: 1).where(state: Person.state_id(:waiting))
+    @mentors = @group.mentors + Person.where("role = 2 OR role = 3").where(state: Person.state_id(:waiting))
   end
 
   # POST /groups
@@ -57,6 +56,7 @@ class GroupsController < ApplicationController
     people_ids = params[:group][:mentee_ids] + params[:group][:mentor_ids]
 
     if @group.update(mentee_ids: people_ids)
+      align_person_state
       redirect_to @group, notice: 'Group was successfully updated.'
     else
       render :edit
@@ -96,6 +96,9 @@ class GroupsController < ApplicationController
     end
 
     def align_person_state
-      Person.where("state = 5 OR state = 3").each { |p| p.save if p.align_group_state }
+      states = [Person.state_id(:waiting), Person.state_id(:in_group)]
+      Person.where(state: states).each do |p|
+        p.save if p.align_group_state
+      end
     end
 end

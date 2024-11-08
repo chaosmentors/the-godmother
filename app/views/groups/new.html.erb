@@ -4,13 +4,13 @@
 
 <%= bootstrap_form_with(model: @group, local: true) do |form| %>
 <%= form.submit "Create Group", class: "btn btn-secondary mb-4" %>
-
 <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col"></th>
       <th scope="col">Pronoun</th>
       <th scope="col">Name</th>
+      <th scope="col">About</th>
       <th scope="col">Tags</th>
     </tr>
   </thead>
@@ -21,6 +21,7 @@
         <td><%= check_box_tag "group[mentor_ids][]", mentor.id, (mentor.group_id && @group.mentors.include?(mentor)) %></td>
         <td><%= mentor.pronoun %></td>
         <td><%= link_to mentor.name, mentor %></td>
+        <td><%= mentor.about %></td>
         <td><%= mentor.tag_list %></td>
       </tr>
     <% end %>

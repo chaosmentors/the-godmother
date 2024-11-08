@@ -31,19 +31,27 @@ class PeopleController < ApplicationController
     @people = Person.all
 
     if params[:r]
-      @people = @people.where(role: params[:r])
+      if params[:r] == 'godmother'
+        @people = @people.where(isgodmother: true)
+      else
+        role = Person.role_name_to_value(params[:r])
+        @people = @people.where(role: role) if role
+      end
     end
 
     if params[:s]
-      @people = @people.where(state: params[:s])
+      state = Person.state_name_to_value(params[:s])
+      @people = @people.where(state: state) if state
     end
 
-    if params[:g]
-      @people = @people.where(isgodmother: params[:g])
+    if params[:sort_by]
+      sort_column = params[:sort_by]
+      sort_direction = params[:direction] || 'asc'
+      @people = @people.order("#{sort_column} #{sort_direction}")
     end
   end
 
-# GET /people/1
+  # GET /people/1
   def show
   end
 
@@ -94,7 +102,8 @@ class PeopleController < ApplicationController
           PersonMailer.set_password_email(@person).deliver_now
           redirect_to people_url, notice: 'Person was successfully created. A password email has been sent.'
         else
-          redirect_to people_url, notice: 'Person was successfully created. No verification mail was sent.'
+          PersonMailer.with(person: @person).verification_email.deliver_now
+          redirect_to people_url, notice: 'Person was successfully created. A verification mail has been sent.'
         end
       else
         PersonMailer.with(person: @person).verification_email.deliver_now
@@ -144,10 +153,11 @@ class PeopleController < ApplicationController
     @person = Person.find_by(verification_token: params[:verification_token])
 
     if @person
-      if (Person::STATES.values - [:unverified]).include?(@person.state_name)
+      if @person.validated_at.present?
         msg = { notice: "Your e-mail address is already verified." }
-      elsif @person.state_name == :unverified
-        @person.state_name = :verified
+      else @person.state_name == :unverified
+        @person.state_name = :waiting
+        @person.validated_at = Time.current
         @person.tags.each do |t|
           t.active = true
           t.save
@@ -160,8 +170,6 @@ class PeopleController < ApplicationController
         else
           msg = { alert: "Oops, something went wrong. Please try again, or feel free to contact us if the issue persists!" }
         end
-      else
-        msg = { alert: "What are you trying here?!" }
       end
     else
       msg = { alert: "It looks like the verification link isn’t working. Try copying and pasting it directly into your browser or feel free to contact us if the issue persists!" }

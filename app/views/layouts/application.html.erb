@@ -27,13 +27,13 @@
             <%= link_to 'All', people_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Godmothers', { controller: 'people', action: 'index', g: true, s: 3 }, class: "nav-link" %>
+            <%= link_to 'Godmothers', { controller: 'people', action: 'index', r: 'godmother' }, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Mentors', { controller: 'people', action: 'index', r: 2, s: 3 }, class: "nav-link" %>
+            <%= link_to 'Mentors', { controller: 'people', action: 'index', r: 'mentor' }, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Mentees', { controller: 'people', action: 'index', r: 1, s: 3 }, class: "nav-link" %>
+            <%= link_to 'Mentees', { controller: 'people', action: 'index', r: 'mentee' }, class: "nav-link" %>
           </li>
           <li class="nav-item">
             <%= link_to 'Groups', groups_path, class: "nav-link" %>
@@ -53,7 +53,7 @@
       </div>
     </nav>
 
-    <main role="main" class="container mt-4">
+    <main role="main" class="container-fluid mt-4">
       <div class="content">
         <%= flash_messages(flash).html_safe %> 
         <%= yield %>
