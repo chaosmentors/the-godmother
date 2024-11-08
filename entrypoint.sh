@@ -1,9 +1,12 @@
 #!/bin/sh
 set -e
 
-# Bundle install for development environment
 if [ "$RAILS_ENV" = "development" ]; then
+  # Bundle install for development environment
   bundle check || bundle install
+
+  # Remove a potentially pre-existing assets
+  rm -rf /app/public/assets
 fi
 
 # Remove a potentially pre-existing server.pid for Rails.
