@@ -15,19 +15,22 @@
 
   <body class="flex min-h-full flex-col bg-darkblue text-white">
     <!-- Fixed Sidebar -->
-    <div class="relative flex-none overflow-hidden px-6 lg:pointer-events-none lg:fixed lg:inset-0 lg:z-40 lg:flex lg:px-0">
+    <div class="relative flex-none overflow-hidden px-6 lg:pointer-events-none lg:fixed lg:inset-0 lg:z-40 lg:flex lg:px-0 border-b-2 lg:border-none border-dashed mb-10 lg:mb-0">
       <div class="relative flex w-full lg:pointer-events-auto lg:mr-[calc(max(2rem,50%-38rem)+40rem)] lg:min-w-[32rem] lg:overflow-y-auto lg:overflow-x-hidden lg:pl-[max(4rem,calc(50%-38rem))]">
         <div class="mx-auto max-w-lg lg:mx-0 lg:flex lg:w-[30rem] lg:max-w-none lg:flex-col lg:before:flex-1 lg:before:pt-6">
-          <div class="relative pb-16 pt-20 lg:py-20">
-            <%= image_tag 'mentor_mentee.png', class: 'lg:absolute lg:top-[-10rem] lg:right-0 mx-auto w-48' %>
-            <div class="relative">
-              <a href="/" class="block">
-                <%= inline_svg 'logo.svg', class: 'mx-auto w-80 lg:w-[29rem] lg:m-0' %>
-              </a>
-              <p class="mt-10">TL;DR — Chaosmentors at Chaos Communication Congress offers mentorship and support for newcomers to help them feel welcome and comfortable.</p>
-
+          <div class="relative pb-16 pt-10 lg:pt-20 lg:py-20">
+            <div class="flex justify-center gap-4 lg:block">
+              <%= image_tag 'mentor_mentee.png', class: 'w-20 lg:absolute lg:top-[-10rem] lg:right-0 lg:mx-auto lg:w-48' %>
+              <div class="relative flex lg:block">
+                <a href="/" class="self-center">
+                  <%= inline_svg 'logo.svg', class: 'lg:mx-auto w-full lg:w-[28rem] lg:m-0' %>
+                </a>
+                <p class="mt-10 hidden lg:block">TL;DR — Chaosmentors at Chaos Communication Congress offers mentorship and support for newcomers to help them feel welcome and comfortable.</p>
+              </div>
+            </div>
+            <div>
               <% if Rails.configuration.x.registration_open -%>
-              <div class="flex justify-center md:justify-start space-x-6 mt-10">
+              <div class="flex justify-center flex-col md:flex-row lg:justify-start gap-6 mt-10">
                 <%= render 'shared/button', url: '/people/new?r=mentee', icon: 'icon-handsup.svg' do %>
                   Register as mentee
                 <% end %>
@@ -43,25 +46,14 @@
               <% end %>
             </div>
           </div>
-          <div class="flex flex-1 items-end justify-center pb-4 lg:justify-start lg:pb-6">
-            <ul class="flex justify-between gap-4 font-mono">
-              <li>
-                <a href="/contact">Contact <%= inline_svg 'icon-arrow-right.svg', class: 'inline w-4' %></a>
-              </li>
-              <li>
-                <a href="/privacy">Privacy statement <%= inline_svg 'icon-arrow-right.svg', class: 'inline w-4' %></a>
-              </li>
-              <li>
-                <a href="/imprint">Imprint <%= inline_svg 'icon-arrow-right.svg', class: 'inline w-4' %></a>
-              </li>
-            </ul>
+          <div class="hidden lg:flex flex-1 items-end justify-center pb-6 lg:justify-start lg:pb-6">
+            <%= render 'shared/footer' %>
           </div>
         </div>
       </div>
     </div>
     <div class="relative flex-auto">
-      <main class="space-y-20 py-20 sm:space-y-32 sm:py-32 text-white">
-        
+      <main class="space-y-20 lg:py-20 sm:space-y-32 mb-6 lg:mb-0 text-white">
         <div class="mx-auto max-w-7xl px-6 lg:flex lg:px-8">
           <div class="lg:ml-96 lg:flex lg:w-full lg:justify-end lg:pl-32">
             <div class="mx-auto max-w-lg lg:mx-0 lg:w-0 lg:max-w-xl lg:flex-auto prose prose-invert">
@@ -71,7 +63,9 @@
             </div>
           </div>
         </div>
-        
+        <div class="block lg:hidden mx-auto max-w-lg">
+          <%= render 'shared/footer' %>
+        </div>
       </main>
     </div>
   </body>
