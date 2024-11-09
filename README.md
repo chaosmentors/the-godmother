@@ -9,6 +9,8 @@ The God Mother is a tool for organizing mentors and mentees. This is useful for 
   - [Create Configuration](#create-configuration)
   - [Provision the Server](#provision-the-server)
     - [Enable base auth](#enable-base-auth)
+  - [Backup](#backup)
+  - [Restore](#restore)
 
 # Intro
 
@@ -71,3 +73,20 @@ In `ansible/vars.yml`, set `basic_auth_enabled: true` and define a username and 
 ansible-playbook -i ansible/hosts ansible/provision.yml -u root -e host=production --tags nginx
 ```
 
+## Backup
+
+When the server has been provisioned, a backup script is created that generates an SQL dump of the database hourly in `/home/{{ user }}/backup`. If an S3 configuration is specified in `ansible/vars.yml`, the dumps will also be uploaded externally. The backup files are retained on the VPS for 7 days by default.
+
+##  Restore
+
+The latest backup in `/home/{{ user }}/backup` can be restored with the following playbook:
+
+```
+ansible-playbook -i ansible/hosts ansible/restore.yml -u root -e host=production
+```
+
+Alternatively, the SQL file can also be copied manually to `/home/{{ user }}/backup` and specified for the restore using the `backup_file=` variable.
+
+```bash
+ansible-playbook -i ansible/hosts ansible/restore.yml -u root -e host=production -e "backup_file=your_file.sql"
+```

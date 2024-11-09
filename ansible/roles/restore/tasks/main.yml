@@ -1,0 +1,72 @@
+---
+- name: Check if backups directory exists on the host
+  stat:
+    path: /home/{{ user }}/backup
+  register: backup_dir
+  become: yes
+
+- name: Fail if the backups directory does not exist
+  fail:
+    msg: "The backups directory does not exist on the host."
+  when: not backup_dir.stat.exists
+
+- name: Find the newest backup file if no backup file is provided
+  find:
+    paths: /home/{{ user }}/backup
+    patterns: "*.sql"
+    recurse: yes
+  register: found_backups
+  when: backup_file == ""
+
+- name: Set the backup file to the newest file if no backup file is provided
+  set_fact:
+    backup_file_path: "{{ found_backups.files | sort(attribute='mtime') | last | default('') }}"
+  when: backup_file == ""
+
+- name: Set the backup file to the provided file if a backup file is provided
+  set_fact:
+    backup_file: "{{ backup_file_path.path | basename }}"
+  when: backup_file_path is defined and backup_file_path != ""
+
+- name: Fail if no backup file is available
+  fail:
+    msg: "No backup file provided and no backup files found in the backup directory."
+  when: backup_file == ""
+
+- name: Check if the backup file exists
+  stat: path=/home/{{ user }}/backup/{{ backup_file }}
+  register: backup_file
+  become: yes
+
+- name: Stop all running containers
+  command: docker compose -f /home/{{ user }}/app/docker-compose.production.yml down
+  args:
+    chdir: /home/{{ user }}/app/
+  become: yes
+
+- name: Start PostgreSQL container with backup volume
+  command: docker compose -f /home/{{ user }}/app/docker-compose.production.yml up -d postgresql
+  args:
+    chdir: /home/{{ user }}/app/
+  become: yes
+
+- name: Get PostgreSQL container ID
+  command: docker compose -f /home/{{ user }}/app/docker-compose.production.yml ps -q postgresql
+  register: postgres_container_id
+  args:
+    chdir: /home/{{ user }}/app/
+  become: yes
+
+- name: Copy backup file to the PostgreSQL container
+  command: docker cp /home/{{ user }}/backup/{{ backup_file }} {{ postgres_container_id.stdout }}:/{{ backup_file }}
+  become: yes
+
+- name: Restore the backup SQL dump
+  command: docker exec -i {{ postgres_container_id.stdout }} psql -U {{ db_username }} -d {{ db_name }} -f /{{ backup_file }}
+  become: yes
+
+- name: Start all containers
+  command: docker compose -f /home/{{ user }}/app/docker-compose.production.yml up -d
+  args:
+    chdir: /home/{{ user }}/app/
+  become: yes

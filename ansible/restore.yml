@@ -1,0 +1,8 @@
+---
+- name: "Restore Database"
+  hosts: "{{ host | default('local')}}"
+  vars_files:
+    - vars.yml
+  roles:
+    - role: restore
+      tags: [ 'restore' ]
