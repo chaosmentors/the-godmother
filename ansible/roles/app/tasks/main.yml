@@ -56,11 +56,6 @@
   become: yes
   become_user: "{{ user }}"
 
-- name: Run backup script
-  shell: "/home/{{ user }}/backup/backup.sh"
-  become: yes
-  become_user: "{{ user }}"
-
 - name: Create .env file
   copy:
     dest: /home/{{ user }}/app/.env
@@ -89,6 +84,11 @@
   command: "docker compose -f docker-compose.production.yml build"
   args:
     chdir: /home/{{ user }}/app/
+  become: yes
+  become_user: "{{ user }}"
+
+- name: Run backup script
+  shell: "/home/{{ user }}/backup/backup.sh"
   become: yes
   become_user: "{{ user }}"
 

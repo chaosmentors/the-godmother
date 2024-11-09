@@ -15,7 +15,7 @@ services:
     container_name: postgres
     restart: always
     volumes:
-      - postgresql-data:/var/lib/postgresql
+      - postgresql-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
