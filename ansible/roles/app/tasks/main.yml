@@ -78,6 +78,13 @@
   become: yes
   become_user: "{{ user }}"
 
+- name: Create Docker volume for PostgreSQL data if it does not exist
+  command: "docker volume create postgresql-data"
+  register: docker_volume
+  failed_when: docker_volume.rc != 0 and 'already exists' not in docker_volume.stderr
+  changed_when: docker_volume.rc == 0
+  become: yes
+
 - name: Build new Docker image
   command: "docker compose -f docker-compose.production.yml build"
   args:
