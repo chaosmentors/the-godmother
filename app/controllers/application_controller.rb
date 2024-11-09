@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  before_action :set_locale
+  before_action :redirect_to_locale_root, if: -> { request.path == '/' }
+
 	private
 
 	def current_person
@@ -17,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   def registration_open
     unless Rails.configuration.x.registration_open || godmother?
-      redirect_to home_path, alert: "Sorry, registration is closed."
+      redirect_to root_path, alert: "Sorry, registration is closed."
     end
   end
 
@@ -27,5 +30,23 @@ class ApplicationController < ActionController::Base
       session[:last] = request.original_url
       redirect_to controller: 'sessions', action: 'new'
     end
+  end
+
+  def set_locale
+    I18n.locale = params[:locale] || extract_locale_from_accept_language_header || I18n.default_locale
+  end
+
+  def redirect_to_locale_root
+    if request.path == '/'
+      redirect_to "/#{I18n.locale}/"
+    end
+  end
+
+  def extract_locale_from_accept_language_header
+    request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first || 'en'
+  end
+
+  def default_url_options
+    { locale: I18n.locale }
   end
 end

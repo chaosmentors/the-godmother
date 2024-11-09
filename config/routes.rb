@@ -6,24 +6,24 @@ Rails.application.routes.draw do
   post 'sessions/create'
   get 'sessions/destroy'
 
-  get 'home', to: 'static#home'
-  get 'contact', to: 'static#contact'
-
   resources :people, param: :random_id
-  get 'verify_email/:verification_token', to: 'people#verify_email'
   get 'change_password', to: 'people#change_password'
   get 'change_state/:random_id/:state', to: 'people#change_state'
 
   resources :groups
   get 'done/:id', to: 'groups#done'
-  get 'static/setCookie', to: 'static#setCookie'
 
   resources :people do
     member do
       post :send_password_reset
     end
   end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  root to: 'static#home'
+  scope "(:locale)", locale: /en|de/ do
+    get 'contact', to: 'static#contact'
+    get 'verify_email/:verification_token', to: 'people#verify_email'
+    get 'people/new', to: 'people#new'
+
+    root to: 'static#home'
+  end
 end

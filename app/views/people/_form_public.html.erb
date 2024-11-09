@@ -1,50 +1,50 @@
 <%= form_with(model: person, local: true) do |form| %>
   <div class="grid grid-cols-1 gap-6 not-prose">
-  <div class="block">
-    <%= form.label :pronoun, "Pronoun", class: "block text-sm font-mono" %>
-    <%= form.text_field :pronoun, type: "text", class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400", placeholder: "e.g. She/They/Xe/He/…" %>
-    <small id="pronoun-help" class="text-sm">This information helps us create well-balanced groups.</small>
-  </div>
-
-  <div class="block">
-    <%= form.label :name, "Name", class: "block text-sm font-mono" %>
-    <%= form.text_field :name, type: "text", class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
-  </div>
-
-  <div class="block">
-    <%= form.label :email, "Email", class: "block text-sm font-mono" %>
-    <%= form.text_field :email, type: "email", class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
-    <small id="email-help" class="text-sm">We'll send you an email, so make sure it’s a real address!</small>
-  </div>
-
-  <div class="block">
-    <%= form.label :about, "About", class: "block text-sm font-mono" %>
-    <%= form.text_area :about, rows: 8, class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400", placeholder: "Something about yourself, why you registered at the chaos mentors and what your interests are." %>
-  </div>
-
-  <div class="block">
-    <%= form.label :tag_list, "Tags", class: "block text-sm font-mono" %>
-    <%= form.text_field :tag_list, placeholder: "e.g.: english, german, coding, antifa, security, freifunk, feminism, …", data: raw(tags), class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
-    <small id="tag-list-help" class="text-sm">Add a few tags about the languages you speak and your interests. This helps us create well-matched groups.</small>
-  </div>
-
-  <%= form.hidden_field :role_id %>
-
-  <% if !current_person&.is_godmother && (action_name == 'new' || action_name == 'create') -%>
     <div class="block">
-      <label class="block text-sm font-mono">
-        Question: <%= @captcha.last %>
-      </label><br>
-      <label class="block text-sm font-mono" for="address">Answer</label>
-      <input class="mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" type="text" name="address" />
-      <small id="pronoun-help" class="form-text text-muted">Sorry, too many spam bots out there.</small>
+      <%= form.label :pronoun, t('form.pronoun'), class: "block text-sm font-mono" %>
+      <%= form.text_field :pronoun, type: "text", class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400", placeholder: t('form.pronoun_placeholder') %>
+      <small id="pronoun-help" class="text-sm"><%= t('form.pronoun_help') %></small>
     </div>
-    <input value="<%= @captcha.first %>" type="hidden" name="number" />
-  <% end %>
+
+    <div class="block">
+      <%= form.label :name, t('form.name'), class: "block text-sm font-mono" %>
+      <%= form.text_field :name, type: "text", class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
+    </div>
+
+    <div class="block">
+      <%= form.label :email, t('form.email'), class: "block text-sm font-mono" %>
+      <%= form.text_field :email, type: "email", class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
+      <small id="email-help" class="text-sm"><%= t('form.email_help') %></small>
+    </div>
+
+    <div class="block">
+      <%= form.label :about, t('form.about'), class: "block text-sm font-mono" %>
+      <%= form.text_area :about, rows: 8, class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400", placeholder: t('form.about_placeholder') %>
+    </div>
+
+    <div class="block">
+      <%= form.label :tag_list, t('form.tags'), class: "block text-sm font-mono" %>
+      <%= form.text_field :tag_list, placeholder: t('form.tags_placeholder'), data: raw(tags), class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
+      <small id="tag-list-help" class="text-sm"><%= t('form.tags_help') %></small>
+    </div>
+
+    <%= form.hidden_field :role_id %>
+
+    <% if !current_person&.is_godmother && (action_name == 'new' || action_name == 'create') -%>
+      <div class="block">
+        <label class="block text-sm font-mono">
+          <%= t('form.captcha_question', question: @captcha.last) %>
+        </label><br>
+        <label class="block text-sm font-mono" for="address"><%= t('form.captcha_answer') %></label>
+        <input class="mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" type="text" name="address" />
+        <small id="pronoun-help" class="form-text text-muted"><%= t('form.captcha_help') %></small>
+      </div>
+      <input value="<%= @captcha.first %>" type="hidden" name="number" />
+    <% end %>
   </div>
 
   <%= button_tag(type: 'submit', class: "mt-10 text-white bg-purple font-mono text-sm shadow px-4 py-3 hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] inline-flex gap-2") do %>
-    Register
+    <%= t('form.register') %>
   <% end %>
 <% end %>
 

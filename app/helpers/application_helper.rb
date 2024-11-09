@@ -10,4 +10,9 @@ module ApplicationHelper
       content_tag(:div, h(msg), class: final_class)
     }.join("\n").html_safe
   end
+
+  def public_url(path)
+    locale = I18n.locale
+    "/#{locale}#{path}"
+  end
 end

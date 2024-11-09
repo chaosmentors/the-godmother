@@ -1,5 +1,11 @@
-<h1>Register as <%= @person.role_name.to_s.humanize -%></h1>
-
+<h1>
+  <%= if @person.role_name == 'mentee'
+      t('register_as_mentee')
+    elsif @person.role_name == 'mentor'
+      t('register_as_mentor')
+    end
+  -%>
+</h1>
 <% if current_person&.isgodmother? && (params[:internal].present? || params[:person]&.dig(:internal).present?) %>
   <%= render 'form', person: @person %>
 <% else %>

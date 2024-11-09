@@ -1,24 +1,5 @@
 class PeopleController < ApplicationController
-  QUESTIONS = [
-		["What is two plus two? (in digits)", "4"],
-		["What is the number before twelve? (in digits)", "11"],
-		["Five times two is what? (in digits)", "10"],
-		["Insert the next number in this sequence: 10, 11, 12, 13, 14, … (in digits)", "15"],
-		["What is five times five? (in digits)", "25"],
-		["Ten divided by two is what? (in digits)", "5"],
-		["What day comes after Monday?", "tuesday"],
-		["What is the last month of the year?", "december"],
-		["How many minutes are in an hour? (in digits)", "60"],
-		["What is the opposite of down?", "up"],
-		["What is the opposite of north?", "south"],
-		["What is the opposite of bad?", "good"],
-		["What is 4 times four? (in digits)", "16"],
-		["What number comes after 20? (in digits)", "21"],
-		["What month comes before July?", "june"],
-		["What is fifteen divided by three? (in digits)", "5"],
-		["What is 14 minus 4? (in digits)", "10"],
-		["What comes next? 'Monday Tuesday Wednesday …'", "thursday"]
-  ]
+  QUESTIONS = I18n.t('captcha_questions').map { |q| [q[:question], q[:answer]] }
   
   layout :determine_layout, only: [:new, :verify_email, :create]
   before_action :set_person, only: [:show, :edit, :update, :destroy, :change_password, :change_state]
@@ -85,16 +66,16 @@ class PeopleController < ApplicationController
     end
 
     if !current_person&.isgodmother? && params[:address].downcase != QUESTIONS[params[:number].to_i].last
-      flash[:alert] = "Are you sure you are human?"
+      flash[:alert] = t('people.human_verification_failed')
       render :new
     elsif Person.exists?(email: params[:person][:email])
-      flash[:alert] = "Email has already been registered."
+      flash[:alert] = t('people.email_registered')
       render :new
     elsif @person.is_godmother && (current_person.nil? || !current_person.isgodmother?)
       flash[:alert] = "Nice try ;)"
       render :new
     elsif current_person&.isgodmother? && @person.role_name == 'mentee' && params[:person][:is_godmother] == "1"
-      flash[:alert] = "A mentee cannot be a godmother."
+      flash[:alert] = t('people.mentee_godmother_error')
       render :new
     else
       @person.save
@@ -103,14 +84,14 @@ class PeopleController < ApplicationController
         if @person.role_name == 'godmother' || @person.is_godmother
           @person.generate_reset_password_token!
           PersonMailer.set_password_email(@person).deliver_now
-          redirect_to people_url, notice: 'Person was successfully created. A password email has been sent.'
+          redirect_to people_url, notice: t('people.person_created_password_email')
         else
           PersonMailer.with(person: @person).verification_email.deliver_now
-          redirect_to people_url, notice: 'Person was successfully created. A verification mail has been sent.'
+          redirect_to people_url, notice: t('people.person_created_verification_email')
         end
       else
         PersonMailer.with(person: @person).verification_email.deliver_now
-        redirect_to home_path, notice: "Registration successful! A verification email has been sent to <#{@person.email}>. Please check your inbox or junk folder."
+        redirect_to root_path, notice: t('people.registration_successful', email: @person.email)
       end
     end
   end
@@ -130,16 +111,16 @@ class PeopleController < ApplicationController
           render :change_password
         end
       else
-        flash[:alert] = 'Wrong old password?'
+        flash[:alert] = t('people.wrong_old_password')
         render :change_password
       end
     elsif @person.update(person_params)
       if (@person.role_name == 'godmother' || @person.is_godmother) && @person.reset_password_token.nil? && @person.password_digest.nil?
         @person.generate_reset_password_token!
         PersonMailer.set_password_email(@person).deliver_now
-        redirect_to @person, notice: 'Person was successfully updated. A password email has been sent.'
+        redirect_to @person, notice: t('people.person_updated_password_email')
       else
-        redirect_to @person, notice: 'Person was successfully updated.'
+        redirect_to @person, notice: t('people.person_updated')
       end
     else
       render :edit
@@ -149,7 +130,7 @@ class PeopleController < ApplicationController
   # DELETE /people/1
   def destroy
     @person.destroy
-    redirect_to people_url, notice: 'Person was successfully destroyed.'
+    redirect_to people_url, notice: t('people.person_destroyed')
   end
 
   def verify_email
@@ -157,7 +138,7 @@ class PeopleController < ApplicationController
 
     if @person
       if @person.validated_at.present?
-        msg = { notice: "Your e-mail address is already verified." }
+        msg = { notice: t('people.email_already_verified') }
       else @person.state_name == :unverified
         @person.state_name = :waiting
         @person.validated_at = Time.current
@@ -169,16 +150,16 @@ class PeopleController < ApplicationController
         if @person.save
           PersonMailer.with(person: @person).new_person_email.deliver_now
 
-          msg = { notice: "Your email address has been successfully verified! Your request is now with the Chaosmentors team, and we’ll get back to you as soon as possible... though it might take a bit. Thanks for your patience!" }
+          msg = { notice: t('people.email_verified') }
         else
-          msg = { alert: "Oops, something went wrong. Please try again, or feel free to contact us if the issue persists!" }
+          msg = { alert: t('people.email_verification_failed') }
         end
       end
     else
-      msg = { alert: "It looks like the verification link isn’t working. Try copying and pasting it directly into your browser or feel free to contact us if the issue persists!" }
+      msg = { alert: t('people.verification_link_invalid') }
     end
 
-    redirect_to home_path, msg
+    redirect_to root_path, msg
   end
 
   def change_state
@@ -186,12 +167,12 @@ class PeopleController < ApplicationController
       @person.state = params[:state]
 
       if @person.save
-        redirect_to @person, notice: "State was successfully updated to: #{@person.state_name.to_s.humanize}"
+        redirect_to @person, notice: t('people.state_updated', state: @person.state_name.to_s.humanize)
       else
-        redirect_to @person, alert: 'Something went wrong.'
+        redirect_to @person, alert: t('people.state_update_failed')
       end
     else
-      redirect_to @person, alert: 'Invalid state.'
+      redirect_to @person, alert: t('people.invalid_state')
     end
   end
 
@@ -202,10 +183,10 @@ class PeopleController < ApplicationController
       if (@person.role_name == 'godmother' || @person.is_godmother)
         @person.generate_reset_password_token!
         PersonMailer.set_password_email(@person).deliver_now
-        redirect_to @person, notice: 'Password reset email sent.'
+        redirect_to @person, notice: t('people.password_reset_email_sent')
       end
     else
-      redirect_to @person, alert: 'Failed to send password reset email.'
+      redirect_to @person, alert: t('people.password_reset_email_failed')
     end
   end
 
@@ -228,7 +209,7 @@ class PeopleController < ApplicationController
   end
 
   def determine_layout
-    if current_person&.isgodmother? && (params[:internal].present? || params[:person]&[:internal].present?)
+    if current_person&.isgodmother? && (params[:internal].present? || params[:person]&.dig(:internal).present?) 
       'application'
     else
       'public'

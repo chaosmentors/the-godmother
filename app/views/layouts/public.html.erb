@@ -14,7 +14,6 @@
   </head>
 
   <body class="flex min-h-full flex-col bg-darkblue text-white">
-    <!-- Fixed Sidebar -->
     <div class="relative flex-none overflow-hidden px-6 lg:pointer-events-none lg:fixed lg:inset-0 lg:z-40 lg:flex lg:px-0 border-b-2 lg:border-none border-dashed mb-10 lg:mb-0">
       <div class="relative flex w-full lg:pointer-events-auto lg:mr-[calc(max(2rem,50%-38rem)+40rem)] lg:min-w-[32rem] lg:overflow-y-auto lg:overflow-x-hidden lg:pl-[max(4rem,calc(50%-38rem))]">
         <div class="mx-auto max-w-lg lg:mx-0 lg:flex lg:w-[30rem] lg:max-w-none lg:flex-col lg:before:flex-1 lg:before:pt-6">
@@ -22,28 +21,31 @@
             <div class="flex justify-center gap-4 lg:block">
               <%= image_tag 'mentor_mentee.png', class: 'w-20 lg:absolute lg:top-[-10rem] lg:right-0 lg:mx-auto lg:w-48' %>
               <div class="relative flex lg:block">
-                <a href="/" class="self-center">
+                <a href="<%= public_url('/') %>" class="self-center">
                   <%= inline_svg 'logo.svg', class: 'lg:mx-auto w-full lg:w-[28rem] lg:m-0' %>
                 </a>
-                <p class="mt-10 hidden lg:block">TL;DR — Chaosmentors at Chaos Communication Congress offers mentorship and support for newcomers to help them feel welcome and comfortable.</p>
+                <p class="mt-10 hidden lg:block"><%= t('intro_text') %></p>
               </div>
             </div>
             <div>
               <% if Rails.configuration.x.registration_open -%>
               <div class="flex justify-center flex-col md:flex-row lg:justify-start gap-6 mt-10">
-                <%= render 'shared/button', url: '/people/new?r=mentee', icon: 'icon-handsup.svg' do %>
-                  Register as mentee
+                <%= render 'shared/button', url: public_url('/people/new?r=mentee'), icon: 'icon-handsup.svg' do %>                 
+                 <%= t('register_as_mentee') %>
                 <% end %>
-                <%= render 'shared/button', url: '/people/new?r=mentor', icon: 'icon-dino.svg' do %>
-                  Register as mentor
+                <%= render 'shared/button', url:  public_url('/people/new?r=mentor'), icon: 'icon-dino.svg' do %>
+                  <%= t('register_as_mentor') %>
                 <% end %>
               </div>
               <% else %>
               <div class="mt-10 flex gap-4">
                 <%= inline_svg 'icon-dino.svg' %>
-                <p><strong>Registration is currently closed :(</strong></p>
+                <p><strong><%= t('registration_closed') %></strong></p>
               </div>
               <% end %>
+              <div class="relative mt-10 flex justify-center gap-2 font-mono">
+                <span aria-hidden="true" class="inline"><%= inline_svg 'icon-globe.svg', class: 'fill-white mr-2' %></span>
+                <span><a href="<%= url_for(locale: 'en') %>">English</a> | <a href="<%= url_for(locale: 'de') %>">Deutsch</a></div>
             </div>
           </div>
           <div class="hidden lg:flex flex-1 items-end justify-center pb-6 lg:justify-start lg:pb-6">
