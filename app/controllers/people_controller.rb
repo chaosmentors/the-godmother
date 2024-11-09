@@ -87,6 +87,9 @@ class PeopleController < ApplicationController
     if !current_person&.isgodmother? && params[:address].downcase != QUESTIONS[params[:number].to_i].last
       flash[:alert] = "Are you sure you are human?"
       render :new
+    elsif Person.exists?(email: params[:person][:email])
+      flash[:alert] = "Email has already been registered."
+      render :new
     elsif @person.is_godmother && (current_person.nil? || !current_person.isgodmother?)
       flash[:alert] = "Nice try ;)"
       render :new
