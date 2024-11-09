@@ -61,14 +61,6 @@
   become: yes
   become_user: "{{ user }}"
 
-- name: Stop all running containers
-  command: "docker compose stop"
-  args:
-    chdir: /home/{{ user }}/app/
-  become_user: "{{ user }}"
-  become: yes
-  ignore_errors: yes
-
 - name: Create .env file
   copy:
     dest: /home/{{ user }}/app/.env
@@ -86,8 +78,22 @@
   become: yes
   become_user: "{{ user }}"
 
-- name: Build and run app
-  command: "docker compose -f docker-compose.production.yml up --build -d"
+- name: Build new Docker image
+  command: "docker compose -f docker-compose.production.yml build"
+  args:
+    chdir: /home/{{ user }}/app/
+  become: yes
+  become_user: "{{ user }}"
+
+- name: Stop old containers
+  command: "docker compose -f docker-compose.production.yml stop"
+  args:
+    chdir: /home/{{ user }}/app/
+  become: yes
+  become_user: "{{ user }}"
+
+- name: Start new containers
+  command: "docker compose -f docker-compose.production.yml up -d"
   args:
     chdir: /home/{{ user }}/app/
   become: yes
