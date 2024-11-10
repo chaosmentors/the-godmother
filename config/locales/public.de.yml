@@ -78,3 +78,14 @@ de:
     password_reset_email_sent: "Passwort-Reset-E-Mail gesendet."
     password_reset_email_failed: "Fehler beim Senden der Passwort-Reset-E-Mail."
     wrong_old_password: "Falsches bisheriges Passwort?"
+  errors:
+    messages:
+      blank: "darf nicht leer sein"
+      last_word_connector: " und "
+    attributes:
+      name:
+        blank: "Name darf nicht leer sein"
+      email:
+        blank: "E-Mail darf nicht leer sein"
+      about:
+        blank: "Über darf nicht leer sein"

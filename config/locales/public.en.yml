@@ -41,6 +41,17 @@ en:
     password_reset_email_sent: "Password reset email sent."
     password_reset_email_failed: "Failed to send password reset email."
     wrong_old_password: "Wrong old password?"
+  errors:
+    messages:
+      blank: "can't be blank"
+      last_word_connector: " and "
+    attributes:
+      name:
+        blank: "Name can't be blank"
+      email:
+        blank: "Email can't be blank"
+      about:
+        blank: "About can't be blank"
   captcha_questions:
     - question: "What is two plus two? (in digits)"
       answer: "4"

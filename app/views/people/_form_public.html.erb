@@ -8,18 +8,18 @@
 
     <div class="block">
       <%= form.label :name, t('form.name'), class: "block text-sm font-mono" %>
-      <%= form.text_field :name, type: "text", class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
+      <%= form.text_field :name, type: "text", required: true, class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
     </div>
 
     <div class="block">
       <%= form.label :email, t('form.email'), class: "block text-sm font-mono" %>
-      <%= form.text_field :email, type: "email", class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
+      <%= form.text_field :email, required: true, type: "email", class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400" %>
       <small id="email-help" class="text-sm"><%= t('form.email_help') %></small>
     </div>
 
     <div class="block">
       <%= form.label :about, t('form.about'), class: "block text-sm font-mono" %>
-      <%= form.text_area :about, rows: 8, class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400", placeholder: t('form.about_placeholder') %>
+      <%= form.text_area :about, rows: 8, required: true, class: "mt-1 block w-full bg-darkblue text-white placeholder-gray-400 border-gray-400", placeholder: t('form.about_placeholder') %>
     </div>
 
     <div class="block">

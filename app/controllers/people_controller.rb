@@ -78,21 +78,24 @@ class PeopleController < ApplicationController
       flash[:alert] = t('people.mentee_godmother_error')
       render :new
     else
-      @person.save
-
-      if current_person&.isgodmother?
-        if @person.role_name == 'godmother' || @person.is_godmother
-          @person.generate_reset_password_token!
-          PersonMailer.set_password_email(@person).deliver_now
-          redirect_to people_url, notice: t('people.person_created_password_email')
+      if @person.save
+        if current_person&.isgodmother?
+          if @person.role_name == 'godmother' || @person.is_godmother
+            @person.generate_reset_password_token!
+            PersonMailer.set_password_email(@person).deliver_now
+            redirect_to people_url, notice: t('people.person_created_password_email')
+          else
+            PersonMailer.with(person: @person).verification_email.deliver_now
+            redirect_to people_url, notice: t('people.person_created_verification_email')
+          end
         else
           PersonMailer.with(person: @person).verification_email.deliver_now
-          redirect_to people_url, notice: t('people.person_created_verification_email')
+          redirect_to root_path, notice: t('people.registration_successful', email: @person.email)
         end
       else
-        PersonMailer.with(person: @person).verification_email.deliver_now
-        redirect_to root_path, notice: t('people.registration_successful', email: @person.email)
-      end
+        flash[:alert] = @person.errors.full_messages.map { |msg| t("errors.attributes.#{msg.split(' ').first.downcase}.blank") }.to_sentence(locale: I18n.locale, last_word_connector: t('errors.messages.last_word_connector'))
+        render :new
+      end      
     end
   end
 
