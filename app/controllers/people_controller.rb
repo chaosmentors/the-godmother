@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  QUESTIONS = I18n.t('captcha_questions').map { |q| [q[:question], q[:answer]] }
+  QUESTIONS = -> { I18n.t('captcha_questions').map { |q| [q[:question], q[:answer]] } }
   
   layout :determine_layout, only: [:new, :verify_email, :create]
   before_action :set_person, only: [:show, :edit, :update, :destroy, :change_password, :change_state]
@@ -39,7 +39,7 @@ class PeopleController < ApplicationController
   # GET /people/new
   def new
     @person = Person.new
-		@captcha = new_captcha
+    @captcha = new_captcha
 
     if ['mentee', 'mentor'].include?(params[:r])
       @person.role_name = params[:r]
@@ -65,7 +65,7 @@ class PeopleController < ApplicationController
       @person.role = 1
     end
 
-    if !current_person&.isgodmother? && params[:address].downcase != QUESTIONS[params[:number].to_i].last
+    if !current_person&.isgodmother? && params[:address].downcase != QUESTIONS.call[params[:number].to_i].last
       flash[:alert] = t('people.human_verification_failed')
       render :new
     elsif Person.exists?(email: params[:person][:email])
@@ -206,8 +206,8 @@ class PeopleController < ApplicationController
 
   def new_captcha
     flash = {}
-    captcha = [rand(QUESTIONS.size)]
-    captcha << QUESTIONS[captcha.first].first
+    captcha = [rand(QUESTIONS.call.size)]
+    captcha << QUESTIONS.call[captcha.first].first
     return captcha
   end
 
