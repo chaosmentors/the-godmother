@@ -3,7 +3,8 @@ user_password: "changeme" # Password
 user_salt: "changeme" # Salt
 ssh_key_path: "/home/user/.ssh/id_rsa.pub" # Path to the public key
 
-app_url: "http://localhost:3000" # Domain of the application
+app_url: "http://localhost:3000" # App Url of the application
+domain: "example.com" # Domain of the application
 list_address: "mail@example.com" # Address for the mailing list
 validation_mail: "mail@example.com" # Mail for the Let's Encrypt validation
 secret_key_base: "changeme" # Secret key base for the Rails application, can be generated with `rails secret`
