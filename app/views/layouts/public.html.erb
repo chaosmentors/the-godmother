@@ -16,13 +16,16 @@
   <body class="flex min-h-full flex-col bg-darkblue text-white">
     <div class="relative flex-none overflow-hidden px-6 lg:pointer-events-none lg:fixed lg:inset-0 lg:z-40 lg:flex lg:px-0 border-b-2 lg:border-none border-dashed mb-10 lg:mb-0">
       <div class="relative flex w-full lg:pointer-events-auto lg:mr-[calc(max(2rem,50%-38rem)+40rem)] lg:min-w-[32rem] lg:overflow-y-auto lg:overflow-x-hidden lg:pl-[max(4rem,calc(50%-38rem))]">
-        <div class="mx-auto max-w-lg lg:mx-0 lg:flex lg:w-[30rem] lg:max-w-none lg:flex-col lg:before:flex-1 lg:before:pt-6">
+        <div class="mx-auto max-w-lg lg:mx-0 lg:flex lg:w-[34rem] lg:max-w-none lg:flex-col lg:before:flex-1 lg:before:pt-6">
           <div class="relative pb-16 pt-10 lg:pt-20 lg:py-20">
             <div class="flex justify-center gap-4 lg:block">
-              <%= image_tag 'mentor_mentee.png', class: 'w-20 lg:absolute lg:top-[-10rem] lg:right-0 lg:mx-auto lg:w-48' %>
+              <button id="chaos" aria-hidden="true">
+                <%= image_tag 'mentor_mentee.png', class: 'active:scale-[.98] w-20 lg:absolute lg:top-[-10rem] lg:right-0 lg:mx-auto lg:w-48' %>
+                <%= image_tag 'chaosmentors-desk.png', class: 'hidden active:scale-[.98] w-20 lg:absolute lg:top-[-6rem] lg:right-[3rem] lg:mx-auto lg:w-48' %>
+              </button>
               <div class="relative flex lg:block">
                 <a href="<%= public_url('/') %>" class="self-center">
-                  <%= inline_svg 'logo.svg', class: 'lg:mx-auto w-full lg:w-[28rem] lg:m-0' %>
+                  <%= inline_svg 'logo.svg', class: 'w-full lg:w-[28rem] lg:m-0' %>
                 </a>
                 <p class="mt-10 hidden lg:block"><%= t('intro_text') %></p>
               </div>
