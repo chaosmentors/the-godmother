@@ -16,7 +16,7 @@ de:
     about_placeholder: "Schreibe etwas über dich, z. B. weshalb du dich bei den Chaospat:innen anmeldest, was deine Interessen sind und was du gerne auf dem Congress machen würdest."
     tags: "Tags"
     tags_placeholder: "z.B.: englisch, deutsch, programmieren, antifa, sicherheit, freifunk, feminismus, …"
-    tags_help: "Tags über dich, z.B. deine Sprachen, die du sprichst oder Interessen. Dies hilft uns, für dich eine passende Gruppe zu finden. Die Interessen sind für andere ggf. sichtbar."
+    tags_help: "Tags über dich, wie deine Sprachen, die du sprichst oder Interessen (z.B.: englisch, deutsch, programmieren, antifa, sicherheit, freifunk, feminismus etc.). Dies hilft uns, für dich eine passende Gruppe zu finden. Die Tags sind für andere ggf. sichtbar."
     captcha_question: "Frage: %{question}"
     captcha_answer: "Antwort"
     captcha_help: "Sorry, zu viele Spam-Bots da draußen."

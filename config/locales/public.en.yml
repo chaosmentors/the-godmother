@@ -16,7 +16,7 @@ en:
     about_placeholder: "Something about yourself, why you registered at the chaos mentors and what your interests are."
     tags: "Tags"
     tags_placeholder: "e.g.: english, german, coding, antifa, security, freifunk, feminism, …"
-    tags_help: "Add a few tags about the languages you speak and your interests. This helps us create well-matched groups."
+    tags_help: "Add a few tags about the languages you speak and your interests (e.g. english, german, coding, antifa, security, freifunk, feminism, etc.). This helps us create well-matched groups. Your tags might be visible to others."
     captcha_question: "Question: %{question}"
     captcha_answer: "Answer"
     captcha_help: "Sorry, too many spam bots out there."
