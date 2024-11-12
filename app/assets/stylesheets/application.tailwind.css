@@ -20,6 +20,10 @@
     font-display: swap;
 }
 
+.ui-autocomplete  {
+  @apply max-h-40 overflow-y-auto overflow-x-hidden;
+}
+
 /*
 
 @layer components {
