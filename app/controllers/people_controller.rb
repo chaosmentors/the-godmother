@@ -132,8 +132,12 @@ class PeopleController < ApplicationController
 
   # DELETE /people/1
   def destroy
-    @person.destroy
-    redirect_to people_url, notice: t('people.person_destroyed')
+    if @person.group.present?
+      redirect_to @person, alert: 'Person is in a group and cannot be deleted.'
+    else
+      @person.destroy
+      redirect_to people_url, notice: t('people.person_destroyed')
+    end
   end
 
   def verify_email
