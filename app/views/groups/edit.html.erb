@@ -34,7 +34,7 @@
     </table>
   </div>
 
-  <div class="border border-primary" style="padding: 1rem; position: sticky; top:50px; background-color: white;">
+  <div class="border border-primary" style="padding: 1rem; position: sticky; top:50px; background-color: white; z-index:100;">
     <h4>Current group mentors</h4>
     <table class="table table-striped">
       <thead>
@@ -58,8 +58,10 @@
       </tbody>
     </table>
   </div>
-  <div class="mt-4">
-    <h4>Select one or more mentees</h4>
+  
+  <% if @group.mentees.present? %>
+  <div class="border border-primary mt-4" style="padding: 1rem;">
+    <h4>Current group mentees</h4>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -72,7 +74,7 @@
       </thead>
 
       <tbody>
-        <% @mentees.each do |mentee| %>
+        <% @group.mentees.each do |mentee| %>
           <tr>
             <td><%= check_box_tag "group[mentee_ids][]", mentee.id, (mentee.group_id && @group.mentees.include?(mentee)) %></td>
             <td><%= mentee.pronoun %></td>
@@ -81,6 +83,25 @@
             <td><%= mentee.tag_list %></td>
           </tr>
         <% end %>
+      </tbody>
+    </table>
+  </div>
+  <% end %>
+
+  <div class="mt-4">
+    <h4>Search mentees to add to this group</h4>
+    <table class="table table-striped" id="person-datatable" data-source="<%= search_path(format: :json, role: 'mentee', state: 'waiting') %>">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Pronoun</th>
+          <th>Name</th>
+          <th>E-Mail</th>
+          <th>About</th>
+          <th>Tags</th>
+        </tr>
+      </thead>
+      <tbody>
       </tbody>
     </table>
   </div>

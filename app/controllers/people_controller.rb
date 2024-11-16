@@ -199,6 +199,13 @@ class PeopleController < ApplicationController
     end
   end
 
+  def search  
+    respond_to do |format|
+      format.html
+      format.json { render json: PersonDatatable.new(params, role: params[:role], state: params[:state], view_context: view_context) }
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_person

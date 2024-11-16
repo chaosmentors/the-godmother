@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :people, param: :random_id
   get 'change_password', to: 'people#change_password'
   get 'change_state/:random_id/:state', to: 'people#change_state'
+  get 'search', to: 'people#search'
 
   resources :groups
   get 'done/:id', to: 'groups#done'

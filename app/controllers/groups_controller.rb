@@ -20,7 +20,7 @@ class GroupsController < ApplicationController
   # GET /groups/1/edit
   def edit
     @mentees = @group.mentees + Person.where(role: Person.role_name_to_value('mentee')).where(state: Person.state_id(:waiting))
-    @mentors = @group.mentors + Person.where(role: Person.role_name_to_value('mentor')).where(state: Person.state_id(:waiting)) 
+    @mentors = @group.mentors + Person.where(role: Person.role_name_to_value('mentor')).where(state: Person.state_id(:waiting))
   end
 
   # POST /groups
@@ -58,7 +58,7 @@ class GroupsController < ApplicationController
 
     if @group.update(mentee_ids: people_ids)
       PersonStateAligner.align_state
-      redirect_to @group, notice: 'Group was successfully updated.'
+      redirect_to edit_group_path(@group), notice: 'Group was successfully updated.'
     else
       render :edit
     end
