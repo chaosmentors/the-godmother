@@ -35,6 +35,7 @@ class GroupsController < ApplicationController
     @group.mentor_ids = params[:group][:mentor_ids]
 
     if @group.save
+      align_person_state
       redirect_to @group, notice: 'Group was successfully created.'
     else
       @mentors = Person.where(role: 2).where(state: 3)
