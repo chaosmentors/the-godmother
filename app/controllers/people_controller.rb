@@ -170,7 +170,9 @@ class PeopleController < ApplicationController
   end
 
   def change_state
-    if !Person::STATES.keys.include?(params[:state])
+    if @person.group.present?
+      redirect_to @person, alert: t('people.cannot_change_state_when_in_group')
+    elsif !Person::STATES.keys.include?(params[:state])
       @person.state = params[:state]
 
       if @person.save

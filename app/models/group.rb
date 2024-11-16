@@ -4,8 +4,10 @@ class Group < ApplicationRecord
 
   validates :mentors, presence: true
 
+  before_destroy :remove_group_id_from_persons
+
   def mentors
-    Person.where(group_id: self.id).where("role = 2 OR role = 3")
+    Person.where(group_id: self.id).where(role: Person.role_name_to_value('mentor'))
   end
 
   def mentor_ids
@@ -13,10 +15,19 @@ class Group < ApplicationRecord
   end
 
   def mentees
-    Person.where(group_id: self.id).where(role: 1)
+    Person.where(group_id: self.id).where(role: Person.role_name_to_value('mentee'))
   end
 
   def mentee_ids
     self.mentees.map { |m| m.id }
+  end
+
+  private
+
+  def remove_group_id_from_persons
+    mentors.update_all(group_id: nil)
+    mentees.update_all(group_id: nil)
+
+    PersonStateAligner.align_state
   end
 end

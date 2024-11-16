@@ -14,13 +14,13 @@ class GroupsController < ApplicationController
   # GET /groups/new
   def new
     @group = Group.new
-    @mentors = Person.where("role = 2 OR role = 3").where(state: Person.state_id(:waiting))
+    @mentors = Person.where(role: Person.role_name_to_value('mentor')).where(state: Person.state_id(:waiting))
   end
 
   # GET /groups/1/edit
   def edit
-    @mentees = @group.mentees + Person.where(role: 1).where(state: Person.state_id(:waiting))
-    @mentors = @group.mentors + Person.where("role = 2 OR role = 3").where(state: Person.state_id(:waiting))
+    @mentees = @group.mentees + Person.where(role: Person.role_name_to_value('mentee')).where(state: Person.state_id(:waiting))
+    @mentors = @group.mentors + Person.where(role: Person.role_name_to_value('mentor')).where(state: Person.state_id(:waiting)) 
   end
 
   # POST /groups
@@ -35,7 +35,7 @@ class GroupsController < ApplicationController
     @group.mentor_ids = params[:group][:mentor_ids]
 
     if @group.save
-      align_person_state
+      PersonStateAligner.align_state
       redirect_to @group, notice: 'Group was successfully created.'
     else
       @mentors = Person.where(role: 2).where(state: 3)
@@ -46,8 +46,8 @@ class GroupsController < ApplicationController
 
   # PATCH/PUT /groups/1
   def update
-    if params[:group].nil? || params[:group][:mentor_ids].blank? || params[:group][:mentee_ids].blank?
-      flash[:alert] = "You must select at least one mentee / mentor."
+    if params[:group].nil? || params[:group][:mentor_ids].blank?
+      flash[:alert] = "You must select at least one mentor."
       redirect_to edit_group_path(@group) and return
     end
 
@@ -57,7 +57,7 @@ class GroupsController < ApplicationController
     people_ids = params[:group][:mentee_ids] + params[:group][:mentor_ids]
 
     if @group.update(mentee_ids: people_ids)
-      align_person_state
+      PersonStateAligner.align_state
       redirect_to @group, notice: 'Group was successfully updated.'
     else
       render :edit
@@ -94,12 +94,5 @@ class GroupsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
       params.require(:group).permit(:mentor_ids, :entee_ids)
-    end
-
-    def align_person_state
-      states = [Person.state_id(:waiting), Person.state_id(:in_group)]
-      Person.where(state: states).each do |p|
-        p.save if p.align_group_state
-      end
     end
 end

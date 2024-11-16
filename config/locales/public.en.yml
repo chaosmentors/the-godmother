@@ -35,6 +35,7 @@ en:
     email_verified: "Your email address has been successfully verified! Your request is now with the Chaosmentors team, and we’ll get back to you as soon as possible... though it might take a bit. Thanks for your patience!"
     email_verification_failed: "Oops, something went wrong. Please try again, or feel free to contact us if the issue persists!"
     verification_link_invalid: "It looks like the verification link isn’t working. Try copying and pasting it directly into your browser or feel free to contact us if the issue persists!"
+    cannot_change_state_when_in_group: "You cannot change the state of a person that is in a group."
     state_updated: "State was successfully updated to: %{state}"
     state_update_failed: "Something went wrong."
     invalid_state: "Invalid state."

@@ -1,17 +1,14 @@
 <h1>Editing Group <small>(<%= @group.mentors.map { |m| m.name }.join(', ') %>)</small></h1>
 <%= bootstrap_form_with(model: @group, local: true) do |form| %>
 
-  <div class="align-items-end">
+  <div class="align-items-end mb-4">
     <%= form.submit 'Save Group', class: 'btn btn-primary' %>
     <%= link_to 'Cancel', @group, { class: 'btn btn-secondary text-white'} %>
+    <a class="btn btn-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Edit group mentors</a>
   </div>
 
-  <p>
-    <a class="btn btn-secondary btn-sm mt-4" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Show group mentors</a>
-  </p>
-
   <div class="collapse" id="collapseExample">
-    <h2>Select one or more mentors</h2>
+    <h4>Select one or more mentors</h4>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -37,29 +34,55 @@
     </table>
   </div>
 
-  <h2>Select one or more mentees</h2>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">Pronoun</th>
-        <th scope="col">Name</th>
-        <th scope="col">About</th>
-        <th scope="col">Tags</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @mentees.each do |mentee| %>
+  <div class="border border-primary" style="padding: 1rem; position: sticky; top:50px; background-color: white;">
+    <h4>Current group mentors</h4>
+    <table class="table table-striped">
+      <thead>
         <tr>
-          <td><%= check_box_tag "group[mentee_ids][]", mentee.id, (mentee.group_id && @group.mentees.include?(mentee)) %></td>
-          <td><%= mentee.pronoun %></td>
-          <td><%= link_to mentee.name, mentee %></td>
-          <td><%= mentee.about %></td>
-          <td><%= mentee.tag_list %></td>
+          <th scope="col">Pronoun</th>
+          <th scope="col">Name</th>
+          <th scope="col">About</th>
+          <th scope="col">Tags</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+
+      <tbody>
+        <% @group.mentors.each do |mentor| %>
+          <tr>
+            <td><%= mentor.pronoun %></td>
+            <td><%= link_to mentor.name, mentor %></td>
+            <td><%= mentor.about %></td>
+            <td><%= mentor.tag_list %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="mt-4">
+    <h4>Select one or more mentees</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Pronoun</th>
+          <th scope="col">Name</th>
+          <th scope="col">About</th>
+          <th scope="col">Tags</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @mentees.each do |mentee| %>
+          <tr>
+            <td><%= check_box_tag "group[mentee_ids][]", mentee.id, (mentee.group_id && @group.mentees.include?(mentee)) %></td>
+            <td><%= mentee.pronoun %></td>
+            <td><%= link_to mentee.name, mentee %></td>
+            <td><%= mentee.about %></td>
+            <td><%= mentee.tag_list %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 
 <% end %>

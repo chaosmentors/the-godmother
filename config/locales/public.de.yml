@@ -72,6 +72,7 @@ de:
     email_verified: "Deine E-Mail-Adresse wurde erfolgreich verifiziert! Das Chaospat:innen-Team wird sich so schnell wie möglich bei dir melden... es kann jedoch vielleicht auch noch etwas dauern :)"
     email_verification_failed: "Hoppla, etwas ist schief gelaufen. Bitte versuche es erneut oder schreibe uns, wenn das Problem weiterhin besteht!"
     verification_link_invalid: "Es sieht so aus, als ob der Bestätigungslink nicht funktioniert. Bitte kopiere ihn direkt in den Browser, oder schreibe uns, wenn das Problem weiterhin besteht!"
+    cannot_change_state_when_in_group: "Du kannst den Status nicht ändern, wenn die Person in einer Gruppe ist."
     state_updated: "Status wurde erfolgreich aktualisiert auf: %{state}"
     state_update_failed: "Etwas ist schief gelaufen."
     invalid_state: "Ungültiger Status."
