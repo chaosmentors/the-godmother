@@ -59,10 +59,9 @@
     </table>
   </div>
   
-  <% if @group.mentees.present? %>
   <div class="border border-primary mt-4" style="padding: 1rem;">
     <h4>Current group mentees</h4>
-    <table class="table table-striped">
+    <table id="current_group_mentees" class="table table-striped">
       <thead>
         <tr>
           <th scope="col"></th>
@@ -86,7 +85,6 @@
       </tbody>
     </table>
   </div>
-  <% end %>
 
   <div class="mt-4">
     <h4>Search mentees to add to this group</h4>
