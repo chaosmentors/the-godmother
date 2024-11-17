@@ -19,6 +19,29 @@ $ ->
       {data: 'tags'}
     ]
   
+  highlightTags = ->
+    mentorTags = []
+    $('#current_group_mentors tbody tr').each (index, row) ->
+      tags = $(row).find('td:eq(3)').text().split(', ')
+      mentorTags = mentorTags.concat(tags)
+
+    mentorTags = $.unique(mentorTags)
+
+    $('#person-datatable tbody tr').each (index, row) ->
+      tagsCell = $(row).find('td:eq(5)')
+      tags = tagsCell.text().split(', ')
+      highlightedTags = tags.map (tag) ->
+        if tag in mentorTags
+          "<mark>#{tag}</mark>"
+        else
+          tag
+      tagsCell.html(highlightedTags.join(', '))
+
+  $('#person-datatable').on 'draw.dt', ->
+    highlightTags()
+
+  highlightTags()
+
   # We really need better state management here! Maybe a different approach?
   # This is a quick and dirty way to keep track of the selected rows
 
@@ -58,3 +81,5 @@ $ ->
       rowId = $(element).val()
       # Update the corresponding checkbox in the person-datatable based on the original checkbox state
       $('#person-datatable tbody input[type="checkbox"][value="' + rowId + '"]').prop('checked', $(element).prop('checked'))
+
+    highlightTags()
