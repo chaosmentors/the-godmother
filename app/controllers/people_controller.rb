@@ -58,6 +58,7 @@ class PeopleController < ApplicationController
 
   # POST /people
   def create
+    filter_empty_tags
     @person = Person.new(person_params)
     @captcha = new_captcha
 
@@ -101,6 +102,7 @@ class PeopleController < ApplicationController
 
   # PATCH/PUT /people/1
   def update
+    filter_empty_tags
     
     if @person.role_name == 'mentee'
       @person.isgodmother = false
@@ -230,6 +232,16 @@ class PeopleController < ApplicationController
       'application'
     else
       'public'
+    end
+  end
+
+  def filter_empty_tags
+    if params[:person][:tag_list].is_a?(String)
+      params[:person][:tag_list] = params[:person][:tag_list]
+        .split(',')
+        .map(&:strip)
+        .reject(&:empty?)
+        .join(', ')
     end
   end
 end
