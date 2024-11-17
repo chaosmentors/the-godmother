@@ -2,6 +2,8 @@ require 'faker'
 
 Person.destroy_all
 Tag.destroy_all
+Group.destroy_all
+Tagging.destroy_all
 
 languages = ['german', 'deutsch', 'english', 'englisch', 'spanish', 'español', 'french', 'français']
 
