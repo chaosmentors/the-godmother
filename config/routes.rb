@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   resources :groups
   get 'done/:id', to: 'groups#done'
+  get :batch_create_groups, to: 'groups#batch_create_groups'
 
   resources :people do
     member do

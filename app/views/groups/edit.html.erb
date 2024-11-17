@@ -1,4 +1,4 @@
-<h1>Editing Group <small>(<%= @group.mentors.map { |m| m.name }.join(', ') %>)</small></h1>
+<h1>Edit Group <small>(<%= @group.mentors.map { |m| m.name }.join(', ') %>)</small></h1>
 <% if @group.done? %>
   <div class="alert alert-warning" role="alert">
     This group is already done and the mentor/s got their email. Be careful with your changes!
@@ -9,7 +9,7 @@
 
   <div class="align-items-end mb-4">
     <%= form.submit 'Save Group', class: 'btn btn-primary' %>
-    <%= link_to 'Cancel', @group, { class: 'btn btn-secondary text-white'} %>
+    <%= link_to 'Back to Group', @group, { class: 'btn btn-secondary text-white'} %>
     <a class="btn btn-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Edit group mentors</a>
   </div>
 

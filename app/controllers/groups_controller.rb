@@ -94,6 +94,21 @@ class GroupsController < ApplicationController
     redirect_to @group, notice: 'Group was successfully updated to done and an email was sent to groups mentor(s).'
   end
 
+  def batch_create_groups
+    mentors_without_groups = Person.where(role: Person.role_name_to_value('mentor')).where(group_id: nil)
+    count = mentors_without_groups.size
+
+    if count == 0
+      redirect_to groups_path, notice: "No mentors without groups found." and return
+    end
+  
+    mentors_without_groups.each do |mentor|
+      Group.create(mentors: [mentor])
+    end
+  
+    redirect_to groups_path, notice: "#{count} groups were successfully created. Now back to work!"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_group
