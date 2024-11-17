@@ -17,6 +17,8 @@ services:
     restart: always
     volumes:
       - postgresql-data:/var/lib/postgresql
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_USER=${POSTGRES_USER:-godmother}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-g0dmother}
