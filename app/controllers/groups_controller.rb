@@ -75,6 +75,11 @@ class GroupsController < ApplicationController
   end
 
   def done
+    if @group.mentees.empty?
+      flash[:alert] = 'Group must have at least one mentee.'
+      redirect_to @group and return
+    end
+
     people = @group.mentors + @group.mentees
 
     people.each do |p|

@@ -136,13 +136,13 @@ class Person < ApplicationRecord
   end
 
   def align_group_state
-    unless self.state_name == :done
       if self.state_name == :in_group && self.group_id.blank?
         self.state_name = :waiting
-      elsif self.state_name != :in_group && self.group_id
+      elsif self.state_name == :done && self.group_id.blank?
+        self.state_name = :waiting
+      elsif self.state_name != :done && self.state_name != :in_group && self.group_id
         self.state_name = :in_group
       end
-    end
   end
 
   def self.role_options

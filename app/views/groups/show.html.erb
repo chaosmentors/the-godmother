@@ -1,68 +1,91 @@
-<h1></h1>
 <div class="card">
   <div class="card-header">
+    <span><%= group_state_badge(@group) %></span>
     Group <small>(<%= @group.mentors.map { |m| m.name }.join(', ') %>)</small>
-    <span class="badge badge-<%= state_batches[@group.mentors.first.state_name] %> float-right"><%= @group.mentors.first.state_name.to_s.humanize %></span>
   </div>
   <div class="card-body">
     <%= link_to 'Edit', edit_group_path(@group), class: 'btn btn-primary active float-right' %>
 
-<h2>Mentors</h2>
+    <h2>Mentors</h2>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Random ID</th>
-      <th scope="col">Pronoun</th>
-      <th scope="col">Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">About</th>
-      <th scope="col">Tags</th>
-    </tr>
-  </thead>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Random ID</th>
+          <th scope="col">Pronoun</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">About</th>
+          <th scope="col">Tags</th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @group.mentors.each do |mentor| %>
-      <tr>
-        <td><%= link_to mentor.random_id, mentor %></td>
-        <td><%= mentor.pronoun %></td>
-        <td><%= mentor.name %></td>
-        <td><%= mentor.email %></td>
-        <td><%= mentor.about %></td>
-        <td><%= mentor.tag_list %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <tbody>
+        <% @group.mentors.each do |mentor| %>
+          <tr>
+            <td><%= link_to mentor.random_id, mentor %></td>
+            <td><%= mentor.pronoun %></td>
+            <td><%= mentor.name %></td>
+            <td><%= mentor.email %></td>
+            <td><%= mentor.about %></td>
+            <td><%= mentor.tag_list %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-<h2>Mentees</h2>
+    <h2>Mentees</h2>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Random ID</th>
-      <th scope="col">Pronoun</th>
-      <th scope="col">Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">About</th>
-      <th scope="col">Tags</th>
-    </tr>
-  </thead>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Random ID</th>
+          <th scope="col">Pronoun</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">About</th>
+          <th scope="col">Tags</th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @group.mentees.each do |mentee| %>
-      <tr>
-        <td><%= link_to mentee.random_id, mentee %></td>
-        <td><%= mentee.pronoun %></td>
-        <td><%= mentee.name %></td>
-        <td><%= mentee.email %></td>
-        <td><%= mentee.about %></td>
-        <td><%= mentee.tag_list %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+      <tbody>
+        <% @group.mentees.each do |mentee| %>
+          <tr>
+            <td><%= link_to mentee.random_id, mentee %></td>
+            <td><%= mentee.pronoun %></td>
+            <td><%= mentee.name %></td>
+            <td><%= mentee.email %></td>
+            <td><%= mentee.about %></td>
+            <td><%= mentee.tag_list %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>
-<%= link_to 'Done (send mail to mentor/s)', { action: "done", id: @group}, { class: 'btn btn-primary btn-lg btn-block active' } %>
+
+<div class="row mt-12">
+  <div class="col-md-12 mt-4 mb-4">
+    <div class="border p-4">
+      <h4 class="mb-4">Manage Group</h4>
+      <div class="d-flex" style="gap:1rem;" role="group">
+        <% if @group.done? %>
+          <%= link_to 'Resend mail to mentor/s', { action: "done", id: @group }, { class: 'btn btn-warning btn-lg', data: { confirm: 'Are you sure you want to resend the mail to the mentor(s)?' } } %>
+        <% else %>
+          <%= link_to 'Done (send mail to mentor/s)', { action: "done", id: @group }, { class: 'btn btn-success btn-lg', data: { confirm: 'Are you sure you want to send the mail to the mentor(s)?' } } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="border border-danger p-4">
+      <h4 class="mb-4 text-danger">Danger Zone</h4>
+      <div class="d-flex" style="gap:1rem;" role="group">
+        <%= link_to 'Delete', @group, method: :delete, data: { confirm: 'This will delete the entire group and set all mentors / mentees back to "waiting".' }, class: 'btn btn-danger btn-lg' %>
+      </div>
+    </div>
+  </div>
+</div>

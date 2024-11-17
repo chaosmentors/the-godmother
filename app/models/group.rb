@@ -22,6 +22,11 @@ class Group < ApplicationRecord
     self.mentees.map { |m| m.id }
   end
 
+  def done?
+    self.mentees.all? { |m| m.state == Person.state_id(:done) } &&
+    self.mentors.all? { |m| m.state == Person.state_id(:done) }
+  end
+
   private
 
   def remove_group_id_from_persons
