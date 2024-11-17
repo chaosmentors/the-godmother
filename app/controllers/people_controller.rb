@@ -174,6 +174,7 @@ class PeopleController < ApplicationController
       redirect_to @person, alert: t('people.cannot_change_state_when_in_group')
     elsif !Person::STATES.keys.include?(params[:state])
       @person.state = params[:state]
+      @person.group_id = nil
 
       if @person.save
         redirect_to @person, notice: t('people.state_updated', state: @person.state_name.to_s.humanize)
