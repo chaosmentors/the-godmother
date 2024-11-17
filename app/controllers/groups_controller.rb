@@ -26,13 +26,14 @@ class GroupsController < ApplicationController
   # POST /groups
   def create
     @group = Group.new
+    mentors = assignable_people(params[:group][:mentor_ids])
 
-    if params[:group].nil? || params[:group][:mentor_ids].blank?
+    if mentors.empty?
       flash[:alert] = "You must select at least one mentor."
       redirect_to new_group_path(@group) and return
     end
 
-    @group.mentor_ids = params[:group][:mentor_ids]
+    @group.mentor_ids = mentors
 
     if @group.save
       PersonStateAligner.align_state
@@ -46,15 +47,18 @@ class GroupsController < ApplicationController
 
   # PATCH/PUT /groups/1
   def update
-    if params[:group].nil? || params[:group][:mentor_ids].blank?
+    mentee_ids = params.dig(:group, :mentee_ids) || []
+    mentor_ids = params.dig(:group, :mentor_ids) || []
+    
+    filtered_mentees = assignable_people(mentee_ids, @group.id)
+    filtered_mentors = assignable_people(mentor_ids, @group.id)
+
+    if filtered_mentors.empty?
       flash[:alert] = "You must select at least one mentor."
       redirect_to edit_group_path(@group) and return
     end
 
-    params[:group][:mentee_ids] ||= []
-    params[:group][:mentor_ids] ||= []
-
-    people_ids = params[:group][:mentee_ids] + params[:group][:mentor_ids]
+    people_ids = filtered_mentees + filtered_mentors
 
     if @group.update(mentee_ids: people_ids)
       PersonStateAligner.align_state
@@ -94,5 +98,21 @@ class GroupsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
       params.require(:group).permit(:mentor_ids, :entee_ids)
+    end
+
+    def assignable_people(people_ids, group_id = nil)
+      assignable_people = []
+
+      if people_ids.nil?
+        return assignable_people
+      end
+
+      people_ids.each do |person_id|
+        person = Person.find(person_id)
+        if person.group_id.nil? || (group_id.present? && person.group_id == group_id)
+          assignable_people << person_id
+        end
+      end
+      assignable_people
     end
 end
