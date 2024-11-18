@@ -202,10 +202,10 @@ class PeopleController < ApplicationController
     end
   end
 
-  def search  
+  def search
     respond_to do |format|
       format.html
-      format.json { render json: PersonDatatable.new(params, role: params[:role], state: params[:state], view_context: view_context) }
+      format.json { render json: PersonDatatable.new(params, role: params[:role], state: params[:state], mentor_tags: params[:mentor_tags], view_context: view_context) }
     end
   end
 

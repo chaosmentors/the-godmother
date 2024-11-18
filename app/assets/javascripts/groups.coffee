@@ -10,13 +10,14 @@ $ ->
       url: $('#person-datatable').data('source')
     pagingType: 'simple_numbers'
     pageLength: 25
+    order: [[5, 'desc']]  # Sort by tags
     columns: [
-      {data: 'id'}
-      {data: 'pronoun'}
+      {data: 'id', orderable: false}
+      {data: 'pronoun', orderable: false}
       {data: 'name'}
       {data: 'email'}
-      {data: 'about'}
-      {data: 'tags'}
+      {data: 'about', orderable: false}
+      {data: 'tags', orderable: true}
     ]
   
   highlightTags = ->

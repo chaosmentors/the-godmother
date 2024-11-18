@@ -94,7 +94,7 @@
 
   <div class="mt-4">
     <h4>Search mentees to add to this group</h4>
-    <table class="table table-striped" id="person-datatable" data-source="<%= search_path(format: :json, role: 'mentee', state: 'waiting') %>">
+    <table class="table table-striped" id="person-datatable" data-source="<%= search_path(format: :json, role: 'mentee', state: 'waiting', mentor_tags: @group.mentor_tags) %>">
       <thead>
         <tr>
           <th></th>

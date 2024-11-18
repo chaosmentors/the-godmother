@@ -14,6 +14,10 @@ class Group < ApplicationRecord
     self.mentors.map { |m| m.id }
   end
 
+  def mentor_tags
+    self.mentors.flat_map(&:tag_list).join(', ')
+  end
+
   def mentees
     Person.where(group_id: self.id).where(role: Person.role_name_to_value('mentee'))
   end
