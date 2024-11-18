@@ -49,6 +49,6 @@
 <% end %>
 
 <%= javascript_tag do %>
-  $.availableTags = <%= raw tags.to_json %>;
+  $.availableTags = <%= raw Tag.where(ml_generated: false, active: true).pluck(:name).to_json %>;
 <% end %>
 <%= javascript_include_tag 'people' %>

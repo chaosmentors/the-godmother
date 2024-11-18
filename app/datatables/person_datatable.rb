@@ -37,7 +37,7 @@ class PersonDatatable < AjaxDatatablesRails::ActiveRecord
         name: link_to(record.name, record),
         about: record.about,
         email: record.email,
-        tags: record.tags.map(&:name).join(', ')
+        tags: record.tag_list_formatted
       }
     end
   end

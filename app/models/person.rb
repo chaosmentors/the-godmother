@@ -112,7 +112,17 @@ class Person < ApplicationRecord
   end
 
   def tag_list
-    tags.map(&:name).join(", ")
+    sorted_tags = tags.sort_by { |tag| tag.ml_generated ? 1 : 0 }
+    sorted_tags.map(&:name).join(", ")
+  end
+
+  def tag_list_formatted
+    sorted_tags = tags.sort_by { |tag| tag.ml_generated ? 1 : 0 }
+    sorted_tags.map { |tag| tag.ml_generated ? "*#{tag.name}" : tag.name }.join(", ")
+  end
+
+  def tag_list_original
+    tags.where(ml_generated: false).map(&:name).join(", ")
   end
 
   def tag_list=(names)
