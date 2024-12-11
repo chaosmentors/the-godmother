@@ -32,14 +32,21 @@
             </div>
             <div>
               <% if Rails.configuration.x.registration_open -%>
-              <div class="flex justify-center flex-col md:flex-row lg:justify-start gap-6 mt-10">
-                <%= render 'shared/button', url: public_url('/people/new?r=mentee'), icon: 'icon-handsup.svg' do %>                 
-                 <%= t('register_as_mentee') %>
-                <% end %>
-                <%= render 'shared/button', url:  public_url('/people/new?r=mentor'), icon: 'icon-dino.svg' do %>
-                  <%= t('register_as_mentor') %>
-                <% end %>
-              </div>
+                <% registration_types = Rails.configuration.x.registration_types %>
+                <% justify_class = registration_types.size == 1 ? 'lg:justify-center' : 'lg:justify-start' %>
+                
+                <div class="flex justify-center flex-col md:flex-row <%= justify_class %> gap-6 mt-10">
+                  <% if registration_types.include?('mentee') %>
+                    <%= render 'shared/button', url: public_url('/people/new?r=mentee'), icon: 'icon-handsup.svg' do %>                 
+                      <%= t('register_as_mentee') %>
+                    <% end %>
+                  <% end %>
+                  <% if registration_types.include?('mentor') %>
+                    <%= render 'shared/button', url: public_url('/people/new?r=mentor'), icon: 'icon-dino.svg' do %>
+                      <%= t('register_as_mentor') %>
+                    <% end %>
+                  <% end %>
+                </div>
               <% else %>
               <div class="mt-10 flex gap-4">
                 <%= inline_svg 'icon-dino.svg' %>
