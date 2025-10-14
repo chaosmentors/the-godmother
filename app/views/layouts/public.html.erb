@@ -32,16 +32,16 @@
             </div>
             <div>
               <% if registration_open? -%>
-                <% registration_types = Rails.configuration.x.registration_types %>
-                <% justify_class = registration_types.size == 1 ? 'lg:justify-center' : 'lg:justify-start' %>
+                <% reg_types = registration_types %>
+                <% justify_class = reg_types.size == 1 ? 'lg:justify-center' : 'lg:justify-start' %>
                 
                 <div class="flex justify-center flex-col md:flex-row <%= justify_class %> gap-6 mt-10">
-                  <% if registration_types.include?('mentee') %>
-                    <%= render 'shared/button', url: public_url('/people/new?r=mentee'), icon: 'icon-handsup.svg' do %>                 
+                  <% if reg_types.include?('mentee') %>
+                    <%= render 'shared/button', url: public_url('/people/new?r=mentee'), icon: 'icon-handsup.svg' do %>
                       <%= t('register_as_mentee') %>
                     <% end %>
                   <% end %>
-                  <% if registration_types.include?('mentor') %>
+                  <% if reg_types.include?('mentor') %>
                     <%= render 'shared/button', url: public_url('/people/new?r=mentor'), icon: 'icon-dino.svg' do %>
                       <%= t('register_as_mentor') %>
                     <% end %>

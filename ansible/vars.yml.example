@@ -3,7 +3,6 @@ user_password: "changeme" # Password
 user_salt: "changeme" # Salt
 ssh_key_path: "/home/user/.ssh/id_rsa.pub" # Path to the public key
 
-registration_types: ["mentor", "mentee"]
 app_url: "http://localhost:3000" # App Url of the application
 domain: "example.com" # Domain of the application
 list_address: "mail@example.com" # Address for the mailing list

@@ -11,7 +11,22 @@
           <%= label_tag :registration_open, 'Registration Open', class: 'custom-control-label', for: 'registration_open_switch' %>
         </div>
         <small class="form-text text-muted">
-          When enabled, new users can register as mentors or mentees. When disabled, only godmothers can access the registration pages.
+          When enabled, new users can register based on the selected registration types below. When disabled, only godmothers can access the registration pages.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>Registration Types</label>
+        <div class="custom-control custom-checkbox">
+          <%= check_box_tag 'registration_types[]', 'mentee', @registration_types.include?('mentee'), class: 'custom-control-input', id: 'registration_type_mentee' %>
+          <%= label_tag 'registration_type_mentee', 'Mentee', class: 'custom-control-label' %>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <%= check_box_tag 'registration_types[]', 'mentor', @registration_types.include?('mentor'), class: 'custom-control-input', id: 'registration_type_mentor' %>
+          <%= label_tag 'registration_type_mentor', 'Mentor', class: 'custom-control-label' %>
+        </div>
+        <small class="form-text text-muted">
+          Select which types of users can register. At least one type must be selected when registration is open.
         </small>
       </div>
 

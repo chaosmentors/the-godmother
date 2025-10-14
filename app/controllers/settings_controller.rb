@@ -3,17 +3,23 @@ class SettingsController < ApplicationController
 
   def index
     @registration_open = Setting.registration_open? rescue false
+    @registration_types = Setting.registration_types rescue ['mentee', 'mentor']
   end
 
   def update
-    if params[:registration_open].present?
-      Setting.set_registration_open(params[:registration_open] == '1')
-      flash[:notice] = 'Settings updated successfully.'
-    else
-      Setting.set_registration_open(false)
-      flash[:notice] = 'Settings updated successfully.'
+    registration_open = params[:registration_open] == '1'
+    registration_types = params[:registration_types] || []
+
+    if registration_open && registration_types.empty?
+      flash[:alert] = 'You must select at least one registration type (Mentor or Mentee) when registration is open.'
+      redirect_to settings_path
+      return
     end
 
+    Setting.set_registration_open(registration_open)
+    Setting.set_registration_types(registration_types)
+
+    flash[:notice] = 'Settings updated successfully.'
     redirect_to settings_path
   end
 end

@@ -18,4 +18,15 @@ class Setting < ApplicationRecord
   def self.set_registration_open(value)
     set('registration_open', value)
   end
+
+  def self.registration_types
+    value = get('registration_types')
+    return ['mentee', 'mentor'] if value.nil? || value.empty?
+    JSON.parse(value) rescue ['mentee', 'mentor']
+  end
+
+  def self.set_registration_types(types)
+    types = types.reject(&:blank?) if types.is_a?(Array)
+    set('registration_types', types.to_json)
+  end
 end

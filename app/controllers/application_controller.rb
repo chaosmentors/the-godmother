@@ -29,6 +29,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :registration_open?
 
+  def registration_types
+    Setting.registration_types rescue ['mentee', 'mentor']
+  end
+  helper_method :registration_types
+
   def require_godmother
     unless godmother?
       flash[:alert] = "You must be logged in."
