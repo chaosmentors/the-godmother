@@ -1,0 +1,17 @@
+Hi <%= @person.name %>,
+
+Great news — your email is verified!
+
+We’ve forwarded your request to the Chaosmentors team, and we’re excited to match you with <%= @person.role_name == 'mentor' ? 'mentees' : 'a mentor' %> soon.
+
+Important: Please confirm that you have a congress ticket. You can only be matched if you have a valid congress ticket. We’re aware that the official ticket presale hasn’t started yet — so don’t worry if you can’t update your ticket status right now. Once presale ends, we’ll send a short reminder (just once) so you won’t miss the chance to confirm your ticket.
+
+Use this link to update your congress ticket status:
+<%= [Rails.configuration.x.app_url, 'conference_ticket', @person.verification_token, 'edit'].join('/') %>
+
+If you have any questions or need help, just reply to this email.
+
+Thank you for being part of Chaosmentors!
+
+Best regards,  
+The Chaosmentors Team

@@ -15,6 +15,7 @@ class Person < ApplicationRecord
   validates :password, length: { in: 14..72 }, if: Proc.new { |p| p.isgodmother && p.password != nil }
   validates :password, confirmation: true, if: Proc.new { |p| p.isgodmother }
   validates :password_confirmation, presence: true, unless: Proc.new { |p| p.password.blank? }
+  validate :ticket_status_not_changed_when_in_group, on: :update, if: :has_conference_ticket_changed?
 
   ROLES = {
     1 => :mentee,
@@ -164,5 +165,13 @@ class Person < ApplicationRecord
     self.reset_password_sent_at = nil
     save!
   end
-  
+
+  private
+
+  def ticket_status_not_changed_when_in_group
+    if group_id.present?
+      errors.add(:has_conference_ticket, 'cannot be changed when you are in a group')
+    end
+  end
+
 end

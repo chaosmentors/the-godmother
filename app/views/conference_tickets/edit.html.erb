@@ -1,0 +1,39 @@
+<h1 class="text-4xl font-bold mb-6"><%= t('conference_ticket.title') %></h1>
+
+<p class="mb-6"><%= t('conference_ticket.description') %></p>
+
+<% if @person.group_id.present? %>
+  <div class="bg-purple text-white px-4 py-3 mb-6 border border-gray-400" role="alert">
+    <strong><%= t('conference_ticket.notice_in_group') %></strong> <%= t('conference_ticket.in_group_message') %>
+  </div>
+
+  <p class="mb-4"><strong><%= t('conference_ticket.current_status') %></strong> <%= @person.has_conference_ticket ? t('conference_ticket.has_ticket') : t('conference_ticket.no_ticket') %></p>
+<% else %>
+  <%= form_with(model: @person, url: conference_ticket_path(@person.verification_token), local: true, method: 'patch') do |form| %>
+    <div class="grid grid-cols-1 gap-6 not-prose">
+      <div class="block">
+        <label class="block mb-3 font-mono font-bold"><%= t('conference_ticket.question') %></label>
+
+        <div class="space-y-3">
+          <label class="flex items-center gap-3 cursor-pointer">
+            <%= form.radio_button :has_conference_ticket, true,
+                checked: @person.has_conference_ticket == true,
+                class: "w-5 h-5 bg-darkblue border-gray-400 text-purple focus:ring-purple focus:ring-2" %>
+            <span class="text-sm font-mono"><%= t('conference_ticket.yes_option') %></span>
+          </label>
+
+          <label class="flex items-center gap-3 cursor-pointer">
+            <%= form.radio_button :has_conference_ticket, false,
+                checked: @person.has_conference_ticket == false,
+                class: "w-5 h-5 bg-darkblue border-gray-400 text-purple focus:ring-purple focus:ring-2" %>
+            <span class="text-sm font-mono"><%= t('conference_ticket.no_option') %></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <%= button_tag(type: 'submit', class: "mt-10 text-white bg-purple font-mono text-sm shadow px-4 py-3 hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] inline-flex gap-2") do %>
+      <%= t('conference_ticket.update_button') %>
+    <% end %>
+  <% end %>
+<% end %>

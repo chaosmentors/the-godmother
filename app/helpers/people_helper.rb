@@ -46,4 +46,14 @@ module PeopleHelper
       end
     end
   end
+
+  def render_conference_ticket_badge(person)
+    if person.has_conference_ticket.nil?
+      content_tag(:span, 'Not confirmed', class: 'badge badge-warning')
+    elsif person.has_conference_ticket
+      content_tag(:span, 'Yes', class: 'badge badge-success')
+    else
+      content_tag(:span, 'No', class: 'badge badge-secondary')
+    end
+  end
 end

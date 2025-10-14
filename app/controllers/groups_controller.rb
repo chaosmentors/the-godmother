@@ -14,13 +14,13 @@ class GroupsController < ApplicationController
   # GET /groups/new
   def new
     @group = Group.new
-    @mentors = Person.where(role: Person.role_name_to_value('mentor')).where(state: Person.state_id(:waiting))
+    @mentors = Person.where(role: Person.role_name_to_value('mentor')).where(state: Person.state_id(:waiting)).where(has_conference_ticket: true)
   end
 
   # GET /groups/1/edit
   def edit
-    @mentees = @group.mentees + Person.where(role: Person.role_name_to_value('mentee')).where(state: Person.state_id(:waiting))
-    @mentors = @group.mentors + Person.where(role: Person.role_name_to_value('mentor')).where(state: Person.state_id(:waiting))
+    @mentees = @group.mentees + Person.where(role: Person.role_name_to_value('mentee')).where(state: Person.state_id(:waiting)).where(has_conference_ticket: true)
+    @mentors = @group.mentors + Person.where(role: Person.role_name_to_value('mentor')).where(state: Person.state_id(:waiting)).where(has_conference_ticket: true)
   end
 
   # POST /groups
@@ -96,7 +96,7 @@ class GroupsController < ApplicationController
   end
 
   def batch_create_groups
-    mentors_without_groups = Person.where(role: Person.role_name_to_value('mentor')).where(group_id: nil)
+    mentors_without_groups = Person.where(role: Person.role_name_to_value('mentor')).where(group_id: nil).where(has_conference_ticket: true)
     count = mentors_without_groups.size
 
     if count == 0
@@ -130,7 +130,7 @@ class GroupsController < ApplicationController
 
       people_ids.each do |person_id|
         person = Person.find(person_id)
-        if person.group_id.nil? || (group_id.present? && person.group_id == group_id)
+        if person.has_conference_ticket && (person.group_id.nil? || (group_id.present? && person.group_id == group_id))
           assignable_people << person_id
         end
       end

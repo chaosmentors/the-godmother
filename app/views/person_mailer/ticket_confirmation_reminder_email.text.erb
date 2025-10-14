@@ -1,0 +1,15 @@
+Hi <%= @person.name %>,
+
+This is a friendly reminder to confirm your ticket status for Chaosmentors.
+
+We noticed you haven't yet confirmed whether you have a conference ticket. This is important because we can only match you with <%= @person.role_name == 'mentor' ? 'mentees' : 'a mentor' %> if you have a valid conference ticket.
+
+Please take a moment to update your ticket status by clicking the link below:
+<%= [Rails.configuration.x.app_url, 'conference_ticket', @person.verification_token, 'edit'].join('/') %>
+
+If you have any questions or need help, just reply to this email.
+
+Thank you for being part of Chaosmentors!
+
+Best regards,
+The Chaosmentors Team

@@ -51,4 +51,28 @@ class PersonMailer < ApplicationMailer
 
     mail(options)
   end
+
+  def confirmation_success_email
+    @person = params[:person]
+
+    options = {
+      to: @person.email,
+      reply_to: Rails.configuration.x.list_address,
+      subject: 'Chaosmentors - Your email has been verified — Next step: update ticket status'
+    }
+
+    mail(options)
+  end
+
+  def ticket_confirmation_reminder_email
+    @person = params[:person]
+
+    options = {
+      to: @person.email,
+      reply_to: Rails.configuration.x.list_address,
+      subject: 'Chaosmentors - Reminder: Please confirm your ticket status'
+    }
+
+    mail(options)
+  end
 end

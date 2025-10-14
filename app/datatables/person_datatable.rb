@@ -46,6 +46,7 @@ class PersonDatatable < AjaxDatatablesRails::ActiveRecord
     persons = Person.includes(:tags)
       .where(role: Person.role_name_to_value(role))
       .where(state: Person.state_name_to_value(state))
+      .where(has_conference_ticket: true)
       .references(:tags).distinct
     
     # Order by tag match count

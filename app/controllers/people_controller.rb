@@ -158,6 +158,7 @@ class PeopleController < ApplicationController
 
         if @person.save
           PersonMailer.with(person: @person).new_person_email.deliver_now
+          PersonMailer.with(person: @person).confirmation_success_email.deliver_now
 
           msg = { notice: t('people.email_verified') }
         else

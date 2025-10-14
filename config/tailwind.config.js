@@ -6,6 +6,7 @@ module.exports = {
     "./app/views/static/**/*.html.erb",
     "./app/views/shared/**/*.html.erb",
     "./app/views/people/_form_public.html.erb",
+    "./app/views/conference_tickets/edit.html.erb",
   ],
   theme: {
     extend: {
