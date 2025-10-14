@@ -19,10 +19,15 @@ class ApplicationController < ActionController::Base
   helper_method :godmother?
 
   def registration_open
-    unless Rails.configuration.x.registration_open || godmother?
+    unless registration_open? || godmother?
       redirect_to root_path, alert: "Sorry, registration is closed."
     end
   end
+
+  def registration_open?
+    Setting.registration_open? rescue false
+  end
+  helper_method :registration_open?
 
   def require_godmother
     unless godmother?

@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   get 'change_state/:random_id/:state', to: 'people#change_state'
   get 'search', to: 'people#search'
 
+  get 'settings', to: 'settings#index'
+  post 'settings', to: 'settings#update'
+
   resources :groups
   get 'done/:id', to: 'groups#done'
   get :batch_create_groups, to: 'groups#batch_create_groups'

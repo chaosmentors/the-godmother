@@ -1,0 +1,23 @@
+<h1>Settings</h1>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <h5 class="card-title">Registration Settings</h5>
+
+    <%= form_tag settings_path, method: :post, class: 'form' do %>
+      <div class="form-group">
+        <div class="custom-control custom-switch">
+          <%= check_box_tag :registration_open, 1, @registration_open, class: 'custom-control-input', id: 'registration_open_switch' %>
+          <%= label_tag :registration_open, 'Registration Open', class: 'custom-control-label', for: 'registration_open_switch' %>
+        </div>
+        <small class="form-text text-muted">
+          When enabled, new users can register as mentors or mentees. When disabled, only godmothers can access the registration pages.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <%= button_tag 'Save Settings', type: 'submit', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>
