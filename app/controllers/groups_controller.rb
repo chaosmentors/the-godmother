@@ -26,7 +26,8 @@ class GroupsController < ApplicationController
   # POST /groups
   def create
     @group = Group.new
-    mentors = assignable_people(params[:group][:mentor_ids])
+    mentor_ids = params.dig(:group, :mentor_ids) || []
+    mentors = assignable_people(mentor_ids)
 
     if mentors.empty?
       flash[:alert] = "You must select at least one mentor."
