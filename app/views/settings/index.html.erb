@@ -52,3 +52,19 @@
     <% end %>
   </div>
 </div>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <h5 class="card-title">Export Registration Data</h5>
+    <p class="text-muted">
+      Export all registration data for mentees and mentors as a CSV file.
+    </p>
+    <div class="form-group">
+      <%= link_to 'Export All Registrations', settings_export_csv_path, class: 'btn btn-success' %>
+      <%= link_to 'Export Matchable Participants', settings_export_matchable_csv_path, class: 'btn btn-info ml-2' %>
+    </div>
+    <small class="form-text text-muted">
+      "Matchable Participants" are those in waiting state and with a confirmed conference ticket.
+    </small>
+  </div>
+</div>

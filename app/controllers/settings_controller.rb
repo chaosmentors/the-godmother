@@ -33,4 +33,80 @@ class SettingsController < ApplicationController
     flash[:notice] = 'Ticket confirmation reminders are being sent to users who have not confirmed their ticket status yet.'
     redirect_to settings_path
   end
+
+  def export_csv
+    # Get all mentees and mentors (exclude godmothers)
+    people = Person.where(role: [Person::ROLES.key(:mentee), Person::ROLES.key(:mentor)])
+                   .order(:created_at)
+
+    csv_string = generate_people_csv(people)
+
+    send_data csv_string,
+              filename: "mentees_mentors_export_#{Date.today.strftime('%Y%m%d')}.csv",
+              type: 'text/csv'
+  end
+
+  def export_matchable_csv
+    # Get all mentees and mentors that are matchable:
+    # - In waiting state
+    # - Have confirmed conference ticket
+    people = Person.where(role: [Person::ROLES.key(:mentee), Person::ROLES.key(:mentor)])
+                   .where(state: Person.state_id(:waiting))
+                   .where(has_conference_ticket: true)
+                   .order(:created_at)
+
+    csv_string = generate_people_csv(people)
+
+    send_data csv_string,
+              filename: "matchable_participants_export_#{Date.today.strftime('%Y%m%d')}.csv",
+              type: 'text/csv'
+  end
+
+  private
+
+  def generate_people_csv(people)
+    require 'csv'
+
+    CSV.generate(headers: true) do |csv|
+      # Define headers - all person attributes plus computed fields
+      csv << [
+        'ID',
+        'Random ID',
+        'Name',
+        'Pronoun',
+        'Email',
+        'About',
+        'Role',
+        'State',
+        'Group ID',
+        'Tags',
+        'Has Conference Ticket',
+        'Ticket Reminder Sent At',
+        'Validated At',
+        'Created At',
+        'Updated At'
+      ]
+
+      # Add each person's data
+      people.each do |person|
+        csv << [
+          person.id,
+          person.random_id,
+          person.name,
+          person.pronoun,
+          person.email,
+          person.about,
+          person.role_name,
+          person.state_name,
+          person.group_id,
+          person.tag_list,
+          person.has_conference_ticket,
+          person.ticket_reminder_sent_at,
+          person.validated_at,
+          person.created_at,
+          person.updated_at
+        ]
+      end
+    end
+  end
 end

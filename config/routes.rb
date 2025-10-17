@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get 'settings', to: 'settings#index'
   post 'settings', to: 'settings#update'
   post 'settings/send_ticket_reminders', to: 'settings#send_ticket_reminders'
+  get 'settings/export_csv', to: 'settings#export_csv', as: :settings_export_csv
+  get 'settings/export_matchable_csv', to: 'settings#export_matchable_csv', as: :settings_export_matchable_csv
 
   get 'conference_ticket/:verification_token/edit', to: 'conference_tickets#edit', as: :edit_conference_ticket
   patch 'conference_ticket/:verification_token', to: 'conference_tickets#update', as: :conference_ticket
