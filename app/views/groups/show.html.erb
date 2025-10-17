@@ -5,38 +5,40 @@
     <% if @group.label.present? %>
       <strong>"<%= @group.label %>"</strong>
     <% end %>
-    <small>(<%= @group.mentors.map { |m| m.name }.join(', ') %>)</small>
+    <small>(<%= @group.mentor&.name %>)</small>
   </div>
   <div class="card-body">
     <%= link_to 'Edit', edit_group_path(@group), class: 'btn btn-primary active float-right' %>
 
-    <h2>Mentors</h2>
+    <h2>Mentor</h2>
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Random ID</th>
-          <th scope="col">Pronoun</th>
-          <th scope="col">Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">About</th>
-          <th scope="col">Tags</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @group.mentors.each do |mentor| %>
+    <% if @group.mentor %>
+      <table class="table table-striped">
+        <thead>
           <tr>
-            <td><%= link_to mentor.random_id, mentor %></td>
-            <td><%= mentor.pronoun %></td>
-            <td><%= mentor.name %></td>
-            <td><%= mentor.email %></td>
-            <td><%= mentor.about %></td>
-            <td><%= mentor.tag_list %></td>
+            <th scope="col">Random ID</th>
+            <th scope="col">Pronoun</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">About</th>
+            <th scope="col">Tags</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><%= link_to @group.mentor.random_id, @group.mentor %></td>
+            <td><%= @group.mentor.pronoun %></td>
+            <td><%= @group.mentor.name %></td>
+            <td><%= @group.mentor.email %></td>
+            <td><%= @group.mentor.about %></td>
+            <td><%= @group.mentor.tag_list %></td>
+          </tr>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No mentor assigned to this group.</p>
+    <% end %>
 
     <h2>Mentees</h2>
 
@@ -74,9 +76,9 @@
       <h4 class="mb-4">Manage Group</h4>
       <div class="d-flex" style="gap:1rem;" role="group">
         <% if @group.done? %>
-          <%= link_to 'Resend mail to mentor/s', { action: "done", id: @group }, { class: 'btn btn-warning btn-lg', data: { confirm: 'Are you sure you want to resend the mail to the mentor(s)?' } } %>
+          <%= link_to 'Resend mail to mentor', { action: "done", id: @group }, { class: 'btn btn-warning btn-lg', data: { confirm: 'Are you sure you want to resend the mail to the mentor?' } } %>
         <% else %>
-          <%= link_to 'Done (send mail to mentor/s)', { action: "done", id: @group }, { class: 'btn btn-success btn-lg', data: { confirm: 'Are you sure you want to send the mail to the mentor(s)?' } } %>
+          <%= link_to 'Done (send mail to mentor)', { action: "done", id: @group }, { class: 'btn btn-success btn-lg', data: { confirm: 'Are you sure you want to send the mail to the mentor?' } } %>
         <% end %>
       </div>
     </div>

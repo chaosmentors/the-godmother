@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_17_124851) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_17_125933) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,7 +18,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_17_124851) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "label"
+    t.integer "mentor_id"
     t.index ["label"], name: "index_groups_on_label", unique: true
+    t.index ["mentor_id"], name: "index_groups_on_mentor_id"
   end
 
   create_table "people", force: :cascade do |t|

@@ -137,11 +137,14 @@ class Person < ApplicationRecord
   end
 
   def align_group_state
-      if self.state_name == :in_group && self.group_id.blank?
+      # Check if person is in a group (either as mentee via group_id, or as mentor via Group.mentor_id)
+      in_a_group = self.group_id.present? || Group.exists?(mentor_id: self.id)
+
+      if self.state_name == :in_group && !in_a_group
         self.state_name = :waiting
-      elsif self.state_name == :done && self.group_id.blank?
+      elsif self.state_name == :done && !in_a_group
         self.state_name = :waiting
-      elsif self.state_name != :done && self.state_name != :in_group && self.group_id
+      elsif self.state_name != :done && self.state_name != :in_group && in_a_group
         self.state_name = :in_group
       end
   end
@@ -169,7 +172,8 @@ class Person < ApplicationRecord
   private
 
   def ticket_status_not_changed_when_in_group
-    if group_id.present?
+    in_a_group = group_id.present? || Group.exists?(mentor_id: self.id)
+    if in_a_group
       errors.add(:has_conference_ticket, 'cannot be changed when you are in a group')
     end
   end

@@ -20,21 +20,27 @@ class GroupsController < ApplicationController
   # GET /groups/1/edit
   def edit
     @mentees = @group.mentees + Person.where(role: Person.role_name_to_value('mentee')).where(state: Person.state_id(:waiting)).where(has_conference_ticket: true)
-    @mentors = @group.mentors + Person.where(role: Person.role_name_to_value('mentor')).where(state: Person.state_id(:waiting)).where(has_conference_ticket: true)
+    @mentors = (@group.mentor ? [@group.mentor] : []) + Person.where(role: Person.role_name_to_value('mentor')).where(state: Person.state_id(:waiting)).where(has_conference_ticket: true)
   end
 
   # POST /groups
   def create
     @group = Group.new(label: params.dig(:group, :label))
-    mentor_ids = params.dig(:group, :mentor_ids) || []
-    mentors = assignable_people(mentor_ids)
+    mentor_id = params.dig(:group, :mentor_id)
 
-    if mentors.empty?
-      flash[:alert] = "You must select at least one mentor."
+    if mentor_id.blank?
+      flash[:alert] = "You must select a mentor."
       redirect_to new_group_path(@group) and return
     end
 
-    @group.mentor_ids = mentors
+    # Validate that the mentor is assignable
+    assignable_mentors = assignable_people([mentor_id])
+    if assignable_mentors.empty?
+      flash[:alert] = "Selected mentor is not available."
+      redirect_to new_group_path(@group) and return
+    end
+
+    @group.mentor_id = mentor_id
 
     if @group.save
       PersonStateAligner.align_state
@@ -49,24 +55,30 @@ class GroupsController < ApplicationController
   # PATCH/PUT /groups/1
   def update
     mentee_ids = params.dig(:group, :mentee_ids) || []
-    mentor_ids = params.dig(:group, :mentor_ids) || []
+    mentor_id = params.dig(:group, :mentor_id)
 
     filtered_mentees = assignable_people(mentee_ids, @group.id)
-    filtered_mentors = assignable_people(mentor_ids, @group.id)
 
-    if filtered_mentors.empty?
-      flash[:alert] = "You must select at least one mentor."
+    if mentor_id.blank?
+      flash[:alert] = "You must select a mentor."
       redirect_to edit_group_path(@group) and return
     end
 
-    people_ids = filtered_mentees + filtered_mentors
+    # Validate that the mentor is assignable
+    filtered_mentors = assignable_people([mentor_id], @group.id)
+    if filtered_mentors.empty?
+      flash[:alert] = "Selected mentor is not available."
+      redirect_to edit_group_path(@group) and return
+    end
 
-    if @group.update(label: params.dig(:group, :label), mentee_ids: people_ids)
+    people_ids = filtered_mentees
+
+    if @group.update(label: params.dig(:group, :label), mentor_id: mentor_id, mentee_ids: people_ids)
       PersonStateAligner.align_state
       redirect_to edit_group_path(@group), notice: 'Group was successfully updated.'
     else
       @mentees = @group.mentees + Person.where(role: Person.role_name_to_value('mentee')).where(state: Person.state_id(:waiting)).where(has_conference_ticket: true)
-      @mentors = @group.mentors + Person.where(role: Person.role_name_to_value('mentor')).where(state: Person.state_id(:waiting)).where(has_conference_ticket: true)
+      @mentors = (@group.mentor ? [@group.mentor] : []) + Person.where(role: Person.role_name_to_value('mentor')).where(state: Person.state_id(:waiting)).where(has_conference_ticket: true)
       flash.now[:alert] = @group.errors.full_messages.join(', ')
       render :edit
     end
@@ -84,18 +96,18 @@ class GroupsController < ApplicationController
       redirect_to @group and return
     end
 
-    people = @group.mentors + @group.mentees
+    people = (@group.mentor ? [@group.mentor] : []) + @group.mentees
 
     people.each do |p|
       p.state_name = :done
       p.save
     end
 
-    @group.mentors.each do |mentor|
-      PersonMailer.with(mentor: mentor).your_mentees.deliver_now
+    if @group.mentor
+      PersonMailer.with(mentor: @group.mentor).your_mentees.deliver_now
     end
 
-    redirect_to @group, notice: 'Group was successfully updated to done and an email was sent to groups mentor(s).'
+    redirect_to @group, notice: 'Group was successfully updated to done and an email was sent to the group mentor.'
   end
 
   def batch_create_groups
@@ -107,7 +119,7 @@ class GroupsController < ApplicationController
     end
 
     mentors_without_groups.each do |mentor|
-      Group.create(mentors: [mentor])
+      Group.create(mentor: mentor)
     end
 
     redirect_to groups_path, notice: "#{count} groups were successfully created. Now back to work!"
@@ -187,7 +199,7 @@ class GroupsController < ApplicationController
       created_count = 0
       groups_data.each do |label, data|
         group = Group.new(label: label)
-        group.mentor_ids = data[:mentors].map(&:id)
+        group.mentor_id = data[:mentors].first&.id
         group.mentee_ids = data[:mentees].map(&:id)
 
         if group.save

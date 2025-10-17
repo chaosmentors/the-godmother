@@ -8,7 +8,7 @@
   <thead>
     <tr>
       <th scope="col">Label</th>
-      <th scope="col">Mentor names</th>
+      <th scope="col">Mentor name</th>
       <th scope="col">Mentees count</th>
       <th scope="col">Status</th>
       <th scope="col" colspan="1"></th>
@@ -19,7 +19,7 @@
     <% @groups.each do |group| %>
       <tr>
         <td><%= link_to group.label, group %></td>
-        <td><%= group.mentors.map { |m| m.name }.join(', ') %></td>
+        <td><%= group.mentor&.name %></td>
         <td><%= group.mentees.size %></td>
         <td><%= group_state_badge(group) %></td>
         <td>
