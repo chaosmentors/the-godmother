@@ -58,7 +58,7 @@ class PersonMailer < ApplicationMailer
     options = {
       to: @person.email,
       reply_to: Rails.configuration.x.list_address,
-      subject: 'Chaosmentors - Your email has been verified — Next step: update ticket status'
+      subject: 'Your registration with the Chaosmentors'
     }
 
     mail(options)
@@ -70,7 +70,7 @@ class PersonMailer < ApplicationMailer
     options = {
       to: @person.email,
       reply_to: Rails.configuration.x.list_address,
-      subject: 'Chaosmentors - Reminder: Please confirm your ticket status'
+      subject: 'Your registration with the Chaosmentors: Please confirm your ticket status'
     }
 
     mail(options)

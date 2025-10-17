@@ -1,17 +1,46 @@
+(english version below)
+
 Hi <%= @person.name %>,
 
-Great news — your email is verified!
+super – wir haben deine Registrierung erhalten und deine E-Mail-Adresse erfolgreich bestätigt!
 
-We’ve forwarded your request to the Chaosmentors team, and we’re excited to match you with <%= @person.role_name == 'mentor' ? 'mentees' : 'a mentor' %> soon.
+Bevor es richtig losgeht, gibt es noch **eine wichtige Sache**, die du erledigen musst:
 
-Important: Please confirm that you have a congress ticket. You can only be matched if you have a valid congress ticket. We’re aware that the official ticket presale hasn’t started yet — so don’t worry if you can’t update your ticket status right now. Once presale ends, we’ll send a short reminder (just once) so you won’t miss the chance to confirm your ticket.
+Damit wir dich beim 39C3 mit einer passenden Person matchen können, brauchst du ein gültiges **Congress-Ticket**.
+Alle Details zum Ticketverkauf findest du auf der offiziellen Infoseite:
+https://events.ccc.de/congress/2025/infos/tickets.html
 
-Use this link to update your congress ticket status:
+**Wichtig für den Abschluss deiner Registrierung***
+Deine Anmeldung bei den Chaospat:innen ist erst vollständig, wenn du dein Ticket hast **und uns das über folgenden Link mitteilst**:
+
 <%= [Rails.configuration.x.app_url, 'conference_ticket', @person.verification_token, 'edit'].join('/') %>
 
-If you have any questions or need help, just reply to this email.
+Falls du im Presale kein Ticket bekommst oder doch nicht zum Congress kommen kannst, gib uns bitte kurz über denselben Link Bescheid. <% if @person.role_name == 'mentee' %>So können wir deinen Platz an jemand anderen weitergeben, der oder die noch auf der Warteliste steht.<% elsif @person.role_name == 'mentor' %>So können wir noch rechtzeitig eine:n andere:n Chaosmentor:in für deine Mentees finden.<% end %>
 
-Thank you for being part of Chaosmentors!
+Wenn du Fragen hast oder etwas unklar ist, antworte einfach auf diese E-Mail.
 
-Best regards,  
-The Chaosmentors Team
+
+Deine Chaospat:innen
+
+-------
+
+Hi <%= @person.name %>,
+
+great news – we’ve received your registration and successfully verified your email address!
+
+Before we get started, there’s **one important thing** you still need to do:
+
+To match you with a suitable person for 39C3, you’ll need a valid **Congress ticket**.
+You can find all details about this year’s ticket presale on the official information page:
+https://events.ccc.de/congress/2025/infos/tickets.html
+
+**Important for completing your registration**
+Your registration with the Chaosmentors is only complete once you have your ticket **and update your ticket status using the following link**:
+
+<%= [Rails.configuration.x.app_url, 'conference_ticket', @person.verification_token, 'edit'].join('/') %>
+
+If you don’t get a ticket in the presale or decide not to attend the Congress, please let us know using the same link. <% if @person.role_name == 'mentee' %>This helps us offer your spot to someone still on the waiting list.<% elsif @person.role_name == 'mentor' %>This helps us find another Chaos Mentor for your mentees in time.<% end %>
+
+If you have any questions or something’s unclear, just reply to this email.
+
+Your Chaosmentors Team

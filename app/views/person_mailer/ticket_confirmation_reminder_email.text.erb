@@ -1,3 +1,20 @@
+(english version below)
+
+Hi <%= @person.name %>,
+
+dies ist eine kurze Erinnerung, um deinen Ticket-Status für die Chaospat:innen zu bestätigen.
+
+Wir haben gesehen, dass du bisher noch nicht angegeben hast, ob du ein Ticket für den Congress hast. Das ist wichtig, weil wir dich nur mit <%= @person.role_name == 'mentor' ? 'Mentees' : 'einer:m Mentor:in' %> matchen können, wenn du ein gültiges Ticket besitzt.
+
+Bitte nimm dir kurz Zeit und aktualisiere deinen Ticket-Status über den folgenden Link:
+<%= [Rails.configuration.x.app_url, 'conference_ticket', @person.verification_token, 'edit'].join('/') %>
+
+Wenn du Fragen hast oder Hilfe brauchst, kannst du einfach auf diese E-Mail antworten.
+
+Deine Chaospat:innen
+
+-------
+
 Hi <%= @person.name %>,
 
 This is a friendly reminder to confirm your ticket status for Chaosmentors.
@@ -9,7 +26,4 @@ Please take a moment to update your ticket status by clicking the link below:
 
 If you have any questions or need help, just reply to this email.
 
-Thank you for being part of Chaosmentors!
-
-Best regards,
-The Chaosmentors Team
+Your Chaosmentors Team

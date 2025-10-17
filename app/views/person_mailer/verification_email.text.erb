@@ -1,12 +1,28 @@
+(english version below)
+
 Hi <%= @person.name %>,
 
-Thank you for registering with Chaosmentors as a <%= @person.role_name.to_s.humanize %> — welcome to the community!
+vielen Dank für deine Registrierung bei den Chaospat:innen als <%= @person.role_name == 'mentor' ? 'Mentor:in' : 'Mentee' %> - toll, dass du dabei bist!
 
-To confirm your registration and enable communication with us, please verify your email address by clicking the link below:
+Um deine Registrierung abzuschließen und sicherzustellen, dass wir dich zuverlässig erreichen können, bestätige bitte deine E-Mail-Adresse über den folgenden Link:
 
 <%= [Rails.configuration.x.app_url, 'verify_email', @person.verification_token].join('/') %>
 
-Once verified, your request will be forwarded to the Chaosmentors team.
+Sobald deine E-Mail bestätigt ist, wird deine Anmeldung automatisch an das Chaospat:innen-Team weitergeleitet. Bitte achte auch auf die Hinweise, die wir dir nach Bestätigung schicken.
 
-Thank you,
-The Chaosmentors Team
+Deine Chaospat:innen
+
+----
+
+Hi <%= @person.name %>,
+
+Thank you for registering with Chaosmentors as a <%= @person.role_name == 'mentor' ? 'mentor' : 'mentee' %> — we’re excited to have you on board!
+
+To complete your registration and ensure we can reach you reliably, please verify your email address by clicking the link below:
+
+<%= [Rails.configuration.x.app_url, 'verify_email', @person.verification_token].join('/') %>
+
+Once your email has been verified, your registration will be automatically forwarded to the Chaosmentors team.  
+Please also keep an eye out for the follow-up information we’ll send you after confirmation.
+
+Your Chaosmentors Team
