@@ -1,17 +1,51 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  link: MyString
-  name: MyString
-  pronoun: MyString
-  email: MyString
-  about: MyText
-  special_needs: MyText
+godmother:
+  name: Jane Admin
+  pronoun: she/her
+  email: godmother@example.com
+  about: I am a godmother who helps organize the mentorship program
+  password_digest: <%= BCrypt::Password.create('test_password_123456', cost: 4) %>
+  role: 3  # godmother role
+  isgodmother: true
+  state: 3  # okay state
+  validated_at: <%= 2.days.ago %>
+  random_id: godmother_random_id_123
+  verification_token: godmother_verification_token
 
-two:
-  link: MyString
-  name: MyString
-  pronoun: MyString
-  email: MyString
-  about: MyText
-  special_needs: MyText
+mentor_waiting:
+  name: Alice Mentor
+  pronoun: she/her
+  email: alice@example.com
+  about: I am an experienced Ruby developer willing to help newcomers
+  role: 2  # mentor role
+  isgodmother: false
+  state: 4  # waiting state
+  validated_at: <%= 1.day.ago %>
+  random_id: mentor_random_id_456
+  verification_token: already_verified_token_123
+  has_conference_ticket: true
+
+mentee_waiting:
+  name: Bob Mentee
+  pronoun: he/him
+  email: bob@example.com
+  about: I am new to Ruby and looking for guidance
+  role: 1  # mentee role
+  isgodmother: false
+  state: 4  # waiting state
+  validated_at: <%= 1.day.ago %>
+  random_id: mentee_random_id_789
+  verification_token: mentee_verification_token
+  has_conference_ticket: true
+
+mentor_unverified:
+  name: Charlie Unverified
+  pronoun: they/them
+  email: charlie@example.com
+  about: I want to be a mentor
+  role: 2  # mentor role
+  isgodmother: false
+  state: 1  # unverified state
+  random_id: unverified_random_id_abc
+  verification_token: unverified_verification_token

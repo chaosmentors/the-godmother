@@ -1,9 +1,2 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  tag: one
-  person: one
-
-two:
-  tag: two
-  person: two
+# Empty - we'll create taggings in tests as needed

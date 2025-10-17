@@ -1,20 +1,13 @@
 class Group < ApplicationRecord
   belongs_to :mentor, class_name: 'Person', optional: true
-  has_many :mentees, class_name: 'Person'
+  has_many :mentees, -> { where(role: Person.role_name_to_value('mentee')) }, class_name: 'Person', foreign_key: 'group_id'
 
   validates :mentor, presence: true
   validates :label, presence: true, uniqueness: true
 
   before_destroy :remove_group_id_from_persons
+  after_destroy :align_person_states
   after_save :update_mentor_group_id
-
-  def mentees
-    Person.where(group_id: self.id).where(role: Person.role_name_to_value('mentee'))
-  end
-
-  def mentee_ids
-    self.mentees.map { |m| m.id }
-  end
 
   def mentor_tags
     mentor&.tag_list || ''
@@ -33,7 +26,9 @@ class Group < ApplicationRecord
     if mentor.present?
       mentor.update_column(:group_id, nil)
     end
+  end
 
+  def align_person_states
     PersonStateAligner.align_state
   end
 

@@ -1,7 +1,6 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  database: "<%= Rails.application.config.x.db_name %>"
   host: "<%= Rails.application.config.x.db_host %>"
   port: "<%= Rails.application.config.x.db_port %>"
   username: "<%= Rails.application.config.x.db_username %>"
@@ -9,9 +8,12 @@ default: &default
 
 development:
   <<: *default
+  database: godmother_development
 
 test:
   <<: *default
+  database: godmother_test
 
 production:
   <<: *default
+  database: "<%= Rails.application.config.x.db_name %>"

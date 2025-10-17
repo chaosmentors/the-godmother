@@ -54,7 +54,7 @@ class GroupsController < ApplicationController
 
   # PATCH/PUT /groups/1
   def update
-    mentee_ids = params.dig(:group, :mentee_ids) || []
+    mentee_ids = (params.dig(:group, :mentee_ids) || []).reject(&:blank?)
     mentor_id = params.dig(:group, :mentor_id)
 
     filtered_mentees = assignable_people(mentee_ids, @group.id)
