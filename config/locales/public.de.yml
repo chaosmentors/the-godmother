@@ -98,6 +98,7 @@ de:
   errors:
     messages:
       blank: "darf nicht leer sein"
+      taken: "ist bereits vergeben"
       last_word_connector: " und "
     attributes:
       name:

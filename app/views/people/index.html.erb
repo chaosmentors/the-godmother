@@ -35,6 +35,7 @@
         <%= sort_indicator('state') %>
       </th>
       <th scope="col">Conference Ticket</th>
+      <th scope="col">Group</th>
       <th scope="col">Pronoun</th>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
@@ -54,6 +55,13 @@
         </td>
         <td>
           <%= render_conference_ticket_badge(person) %>
+        </td>
+        <td>
+          <% if person.group.present? %>
+            <%= link_to person.group.label, person.group %>
+          <% else %>
+            -
+          <% end %>
         </td>
         <td><%= person.pronoun %></td>
         <td><%= person.name %></td>

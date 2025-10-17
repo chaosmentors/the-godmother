@@ -1,0 +1,34 @@
+<h1>Batch Create Groups from CSV</h1>
+
+<div class="alert alert-warning" role="alert">
+  <strong>Warning:</strong> This action will delete ALL existing groups and create new ones from the CSV file.
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">CSV File Requirements</h5>
+    <ul>
+      <li>CSV must be semicolon-separated (;)</li>
+      <li>Must include headers: <code>Random ID</code> and <code>Group Label</code></li>
+      <li>The <code>Random ID</code> column should contain the person's unique random ID (e.g., "zTiJfpfKRH3pbZmDKxo4jKRb")</li>
+      <li>The <code>Group Label</code> column contains the group label (e.g., "geocaching", "board game enthusiasts") - <strong>required, must not be empty, and must be unique</strong></li>
+      <li>Each group must have exactly one mentor</li>
+      <li>Each group must have at least one mentee</li>
+      <li>You can export a CSV with the current structure using the Settings page, then add the <code>Group Label</code> column</li>
+    </ul>
+  </div>
+</div>
+
+<div class="mt-4">
+  <%= form_tag csv_batch_create_groups_path, method: :post, multipart: true do %>
+    <div class="form-group">
+      <%= label_tag :csv_file, "Select CSV File" %>
+      <%= file_field_tag :csv_file, accept: '.csv', class: 'form-control-file', required: true %>
+    </div>
+
+    <div class="mt-3">
+      <%= submit_tag "Upload and Create Groups", class: "btn btn-primary", data: { confirm: "Are you sure? This will DELETE all existing groups and create new ones from the CSV file." } %>
+      <%= link_to 'Cancel', groups_path, class: 'btn btn-secondary' %>
+    </div>
+  <% end %>
+</div>

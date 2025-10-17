@@ -2,10 +2,12 @@
 
 <%= link_to 'New Group', new_group_path, class: 'btn btn-secondary text-white mb-4' %>
 <%= link_to 'Batch Create Groups (1 Mentor = 1 Group)', batch_create_groups_path, class: 'btn btn-secondary text-white mb-4' %>
+<%= link_to 'Batch Create Groups from CSV', csv_batch_create_groups_path, class: 'btn btn-warning text-white mb-4' %>
 
 <table class="table table-striped">
   <thead>
     <tr>
+      <th scope="col">Label</th>
       <th scope="col">Mentor names</th>
       <th scope="col">Mentees count</th>
       <th scope="col">Status</th>
@@ -16,7 +18,8 @@
   <tbody>
     <% @groups.each do |group| %>
       <tr>
-        <td><%= link_to group.mentors.map { |m| m.name }.join(', '), group %></td>
+        <td><%= link_to group.label, group %></td>
+        <td><%= group.mentors.map { |m| m.name }.join(', ') %></td>
         <td><%= group.mentees.size %></td>
         <td><%= group_state_badge(group) %></td>
         <td>

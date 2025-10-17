@@ -3,6 +3,7 @@ class Group < ApplicationRecord
   has_many :mentees, class_name: 'Person'
 
   validates :mentors, presence: true
+  validates :label, presence: true, uniqueness: true
 
   before_destroy :remove_group_id_from_persons
 

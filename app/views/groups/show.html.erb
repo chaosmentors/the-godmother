@@ -1,7 +1,11 @@
 <div class="card">
   <div class="card-header">
     <span><%= group_state_badge(@group) %></span>
-    Group <small>(<%= @group.mentors.map { |m| m.name }.join(', ') %>)</small>
+    Group
+    <% if @group.label.present? %>
+      <strong>"<%= @group.label %>"</strong>
+    <% end %>
+    <small>(<%= @group.mentors.map { |m| m.name }.join(', ') %>)</small>
   </div>
   <div class="card-body">
     <%= link_to 'Edit', edit_group_path(@group), class: 'btn btn-primary active float-right' %>

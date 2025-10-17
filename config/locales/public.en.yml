@@ -61,6 +61,7 @@ en:
   errors:
     messages:
       blank: "can't be blank"
+      taken: "has already been taken"
       last_word_connector: " and "
     attributes:
       name:

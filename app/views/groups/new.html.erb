@@ -3,7 +3,8 @@
 <p>Select one or more mentors</p>
 
 <%= bootstrap_form_with(model: @group, local: true) do |form| %>
-<%= form.submit "Create Group", class: "btn btn-secondary mb-4" %>
+  <%= form.text_field :label, placeholder: "Enter group label (e.g., 'board game enthusiasts')", required: true %>
+  <%= form.submit "Create Group", class: "btn btn-secondary mb-4" %>
 <table class="table table-striped">
   <thead>
     <tr>

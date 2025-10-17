@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   resources :groups
   get 'done/:id', to: 'groups#done'
   get :batch_create_groups, to: 'groups#batch_create_groups'
+  get :csv_batch_create_groups, to: 'groups#csv_batch_create_groups'
+  post :csv_batch_create_groups, to: 'groups#csv_batch_create_groups_process'
 
   resources :people do
     member do
