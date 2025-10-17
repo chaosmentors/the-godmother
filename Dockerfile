@@ -1,5 +1,5 @@
-FROM ruby:3.3.5 AS base
-RUN apt-get update -qq && apt-get install -y postgresql-client nodejs vim
+FROM ruby:3.3.9-alpine3.22 AS base
+RUN apk add --no-cache postgresql-client nodejs vim build-base postgresql-dev tzdata yaml-dev
 
 # Install specific Bundler version to match Gemfile.lock
 RUN gem install bundler -v 2.7.2
