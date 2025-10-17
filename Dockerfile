@@ -1,6 +1,9 @@
 FROM ruby:3.3.5 AS base
 RUN apt-get update -qq && apt-get install -y postgresql-client nodejs vim
 
+# Install specific Bundler version to match Gemfile.lock
+RUN gem install bundler -v 2.7.2
+
 RUN mkdir /app
 WORKDIR /app
 
