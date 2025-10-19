@@ -48,7 +48,7 @@ en:
     person_updated: "Person was successfully updated."
     person_destroyed: "Person was successfully destroyed."
     email_already_verified: "Your e-mail address is already verified."
-    email_verified: "Your email address has been successfully verified! Your request is now with the Chaosmentors team, and we'll get back to you as soon as possible... though it might take a bit. Thanks for your patience!"
+    email_verified: "Your email address has been successfully verified! Please confirm after the Congress presale that you’ve received a ticket using the link we just sent you — only then can we match you."
     email_verification_failed: "Oops, something went wrong. Please try again, or feel free to contact us if the issue persists!"
     verification_link_invalid: "It looks like the verification link isn't working. Try copying and pasting it directly into your browser or feel free to contact us if the issue persists!"
     cannot_change_state_when_in_group: "You cannot change the state of a person that is in a group."
