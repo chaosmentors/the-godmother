@@ -64,6 +64,8 @@ class PersonDatatable < AjaxDatatablesRails::ActiveRecord
         search_value = params[:search][:value]
         persons = persons.left_joins(:tags).where("CAST(people.id AS VARCHAR) ILIKE :search OR CAST(people.pronoun AS VARCHAR) ILIKE :search OR CAST(people.name AS VARCHAR) ILIKE :search OR CAST(people.about AS VARCHAR) ILIKE :search OR CAST(people.email AS VARCHAR) ILIKE :search OR CAST(tags.name AS VARCHAR) ILIKE :search", search: "%#{search_value}%").distinct
       end
+    else
+      persons = persons.order(created_at: :desc)
     end
 
     persons

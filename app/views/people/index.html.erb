@@ -27,6 +27,10 @@
     <tr>
       <th scope="col">Random ID</th>
       <th scope="col">
+        <%= link_to 'Created At', { sort_by: 'created_at', direction: next_direction('created_at') } %>
+        <%= sort_indicator('created_at') %>
+      </th>
+      <th scope="col">
         <%= link_to 'Role', { sort_by: 'role', direction: next_direction('role') } %>
         <%= sort_indicator('role') %>
       </th>
@@ -47,6 +51,7 @@
     <% @people.each do |person| %>
       <tr>
         <td><%= link_to person.random_id, person %></td>
+        <td><%= person.created_at.strftime('%Y-%m-%d %H:%M') %></td>
         <td><%= render_person_role(person) %></td>
         <td>
           <span class="badge badge-<%= state_batches[person.state_name] %>">

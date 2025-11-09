@@ -29,6 +29,8 @@ class PeopleController < ApplicationController
       sort_column = params[:sort_by]
       sort_direction = params[:direction] || 'asc'
       @people = @people.order("#{sort_column} #{sort_direction}")
+    else
+      @people = @people.order(created_at: :desc)
     end
   end
 
