@@ -13,6 +13,7 @@
     <h2>Mentor</h2>
 
     <% if @group.mentor %>
+      <div class="table-responsive">
       <table class="table table-striped">
         <thead>
           <tr>
@@ -36,12 +37,14 @@
           </tr>
         </tbody>
       </table>
+      </div>
     <% else %>
       <p>No mentor assigned to this group.</p>
     <% end %>
 
     <h2>Mentees</h2>
 
+    <div class="table-responsive">
     <table class="table table-striped">
       <thead>
         <tr>
@@ -67,6 +70,7 @@
         <% end %>
       </tbody>
     </table>
+    </div>
   </div>
 </div>
 
