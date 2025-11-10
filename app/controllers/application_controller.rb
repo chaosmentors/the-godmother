@@ -53,11 +53,15 @@ class ApplicationController < ActionController::Base
   end
 
   def extract_locale_from_accept_language_header
-    if request.env['HTTP_ACCEPT_LANGUAGE']
-      request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first || 'en'
-    else
-      'en'
-    end
+    return 'en' unless request.env['HTTP_ACCEPT_LANGUAGE']
+
+    supported_locales = %w[en de]
+
+    # Extract all language codes (e.g., "nl" from "nl-NL", "en" from "en-US")
+    accepted_locales = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/([a-z]{2})(?:-[A-Z]{2})?/i).flatten
+    supported_locale = accepted_locales.find { |locale| supported_locales.include?(locale.downcase) }
+
+    supported_locale&.downcase || 'en'
   end
 
   def default_url_options
