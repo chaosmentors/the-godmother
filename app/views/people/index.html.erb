@@ -1,7 +1,11 @@
 <h1>
   <%= render_title_by_role(params[:r])  %>
   <small>
-    (<%= @people.size %>)
+    <% if params[:r] == 'godmother' %>
+      (<%= @people.size %>)
+    <% else %>
+      (<%= @people.where.not(state: Person.state_id(:unverified)).where(has_conference_ticket: true).count %>/<%= @people.size %>)
+    <% end %>
   </small>
 </h1>
 
