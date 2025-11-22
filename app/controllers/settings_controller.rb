@@ -53,7 +53,7 @@ class SettingsController < ApplicationController
     people = Person.where(role: [Person::ROLES.key(:mentee), Person::ROLES.key(:mentor)])
                    .where(state: Person.state_id(:waiting))
                    .where(has_conference_ticket: true)
-                   .order(:created_at)
+                   .order(role: :desc, created_at: :asc)
 
     csv_string = generate_people_csv(people)
 
