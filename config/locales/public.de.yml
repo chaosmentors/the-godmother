@@ -74,6 +74,7 @@ de:
     updated_successfully: "Dein Congress-Ticket-Status wurde erfolgreich aktualisiert."
     cannot_change_in_group: "Du kannst deinen Ticket-Status nicht ändern, weil du bereits in einer Gruppe bist."
     invalid_link: "Ungültiger oder abgelaufener Link."
+    please_select_option: "Bitte wähle aus, ob du ein Congress-Ticket hast oder nicht."
   people:
     human_verification_failed: "Bist du sicher, dass du ein Mensch bist?"
     email_registered: "E-Mail wurde bereits registriert."

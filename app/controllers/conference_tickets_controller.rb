@@ -18,6 +18,9 @@ class ConferenceTicketsController < ApplicationController
 
     if @person.group_id.present?
       redirect_to edit_conference_ticket_path(@person.verification_token), alert: t('conference_ticket.cannot_change_in_group')
+    elsif params[:person].blank? || params[:person][:has_conference_ticket].blank?
+      flash.now[:alert] = t('conference_ticket.please_select_option')
+      render :edit
     elsif @person.update(has_conference_ticket: params[:person][:has_conference_ticket])
       redirect_to edit_conference_ticket_path(@person.verification_token), notice: t('conference_ticket.updated_successfully')
     else

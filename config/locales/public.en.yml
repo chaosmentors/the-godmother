@@ -37,6 +37,7 @@ en:
     updated_successfully: "Your congress ticket status has been updated successfully."
     cannot_change_in_group: "You cannot change your ticket status because you are already in a group."
     invalid_link: "Invalid or expired link."
+    please_select_option: "Please select whether you have a Congress ticket or not."
   people:
     human_verification_failed: "Are you sure you are human?"
     email_registered: "Email has already been registered."
