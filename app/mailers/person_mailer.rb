@@ -33,7 +33,7 @@ class PersonMailer < ApplicationMailer
       to: @mentor.email,
       reply_to: Rails.configuration.x.list_address,
       cc: Rails.configuration.x.list_address,
-      subject: "Chaosmentors - Your Mentees [#{@mentor.random_id}]"
+      subject: "Chaosmentors: Matching Completed – Meet Your Mentees"
     }
 
     mail(options)
