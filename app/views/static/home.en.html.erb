@@ -1,5 +1,30 @@
 <h1>Are you ready for 39c3?</h1>
 
+<% if registration_open? -%>
+<h2>Registration is now open!</h2>
+
+<p><strong>Register by 25 November 2025, 23:59 UTC+1</strong> and tell us a bit about yourself:</p>
+
+<ul>
+  <li>What brings you to Congress?</li>
+  <li>What interests you most?</li>
+  <li>Do you have specific needs we should consider?</li>
+</ul>
+
+<p>This helps us match you with a mentor and group that fits your vibe. Your mentor will reach out before Congress so you can already get to know each other — and once Congress starts, you'll have friendly faces to meet, explore, and share the experience with.</p>
+
+<hr />
+
+<% else %>
+<h2>The Chaosmentors registration and matching for 39C3 has closed!</h2>
+
+<p>All Chaos Mentors were informed by email on December 15, 2025 and received all relevant information about their mentees. <strong>If you are a mentee, please be patient for a little while until your mentor gets in touch with you.</strong> If you have not received any email, please contact us at<br />39c3-chaosmentors&nbsp;[at]&nbsp;cccv&nbsp;[dot]&nbsp;de.</p>
+
+<p><strong>Missed the registration?</strong> On day 1 and day 2 we can still assign a few mentees to groups on site. Just come to our assembly and talk to the Chaos Mentors. You’ll recognize us by our colorful propeller hats. Shortly before Congress, we will appear in <a target="_blank" href="https://39c3.c3nav.de/">C3Nav</a> – it will guide you straight to our assembly.</p>
+<% end %>
+
+<hr />
+
 <p>At <strong>Chaos Mentors</strong>, we connect experienced mentors with people attending Congress for the first time. Our goal is to make the Congress experience welcoming, smooth, and inspiring, whether you're new to the community, curious but unsure, or just want some company to explore this huge and exciting event.</p>
 
 <h2>Why are we doing this?</h2>
@@ -25,24 +50,3 @@
 <h2>Call for Mentors</h2>
 
 <p>We're once again looking for friendly, reliable mentors to guide newcomers. If you are an experienced Congress-goer and enjoy sharing your knowledge and helping others discover this amazing event, consider signing up. Your support helps build a more open, connected, and welcoming community.</p>
-
-<% if registration_open? -%>
-<h2>Registration is now open!</h2>
-
-<p><strong>Register by 25 November 2025, 23:59 UTC+1</strong> and tell us a bit about yourself:</p>
-
-<ul>
-  <li>What brings you to Congress?</li>
-  <li>What interests you most?</li>
-  <li>Do you have specific needs we should consider?</li>
-</ul>
-
-<p>This helps us match you with a mentor and group that fits your vibe. Your mentor will reach out before Congress so you can already get to know each other — and once Congress starts, you'll have friendly faces to meet, explore, and share the experience with.</p>
-
-<% else %>
-<h2>The Chaosmentors registration for the 39C3 is now closed!</h2>
-
-<p>We are now starting the matching process. As a mentor, you will receive an email in the coming days with all the information about your mentees. If you are a mentee, please be patient until your mentor reaches out to you.</p>
-
-<p><strong>Missed the registration?</strong> On day 1 and day 2 we can still assign a few mentees to groups on site. Just come to our assembly and talk to the Chaos Mentors. You’ll recognize us by our colorful propeller hats. Shortly before Congress, we will appear in <a target="_blank" href="https://c3nav.de/">C3Nav</a> – it will guide you straight to our assembly.</p>
-<% end %>
