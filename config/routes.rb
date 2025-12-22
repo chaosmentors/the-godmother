@@ -20,7 +20,11 @@ Rails.application.routes.draw do
   get 'conference_ticket/:verification_token/edit', to: 'conference_tickets#edit', as: :edit_conference_ticket
   patch 'conference_ticket/:verification_token', to: 'conference_tickets#update', as: :conference_ticket
 
-  resources :groups
+  resources :groups do
+    member do
+      post :mark_as_handed_off
+    end
+  end
   get 'done/:id', to: 'groups#done'
   get :batch_create_groups, to: 'groups#batch_create_groups'
   get :csv_batch_create_groups, to: 'groups#csv_batch_create_groups'

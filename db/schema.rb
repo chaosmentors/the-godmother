@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_22_155747) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_22_184941) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_22_155747) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "label"
     t.integer "mentor_id"
+    t.boolean "handed_off", default: false
     t.index ["label"], name: "index_groups_on_label", unique: true
     t.index ["mentor_id"], name: "index_groups_on_mentor_id"
   end

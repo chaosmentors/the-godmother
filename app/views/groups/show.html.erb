@@ -79,6 +79,9 @@
     <div class="border p-4">
       <h4 class="mb-4">Manage Group</h4>
       <div class="d-flex" style="gap:1rem;" role="group">
+        <% if @group.done? && !@group.handed_off? %>
+          <%= button_to 'Mark as Handed Off', mark_as_handed_off_group_path(@group), method: :post, class: 'btn btn-success btn-lg' %>
+        <% end %>
         <% if @group.done? %>
           <%= link_to 'Resend mail to mentor', { action: "done", id: @group }, { class: 'btn btn-warning btn-lg', data: { confirm: 'Are you sure you want to resend the mail to the mentor?' } } %>
         <% else %>

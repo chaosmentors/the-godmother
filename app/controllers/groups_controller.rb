@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :require_godmother
-  before_action :set_group, only: [:show, :edit, :update, :destroy, :done]
+  before_action :set_group, only: [:show, :edit, :update, :destroy, :done, :mark_as_handed_off]
 
   # GET /groups
   def index
@@ -108,6 +108,11 @@ class GroupsController < ApplicationController
     end
 
     redirect_to @group, notice: 'Group was successfully updated to done and an email was sent to the group mentor.'
+  end
+
+  def mark_as_handed_off
+    @group.update(handed_off: true)
+    redirect_to @group, notice: 'Group marked as handed off.'
   end
 
   def batch_create_groups
