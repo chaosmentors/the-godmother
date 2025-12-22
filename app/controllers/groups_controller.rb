@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :require_godmother
-  before_action :set_group, only: [:show, :edit, :update, :destroy, :done, :mark_as_handed_off]
+  before_action :set_group, only: [:show, :edit, :update, :destroy, :done, :mark_as_handed_off, :send_mentor_reminder]
 
   # GET /groups
   def index
@@ -113,6 +113,15 @@ class GroupsController < ApplicationController
   def mark_as_handed_off
     @group.update(handed_off: true)
     redirect_to @group, notice: 'Group marked as handed off.'
+  end
+
+  def send_mentor_reminder
+    if @group.mentor
+      PersonMailer.with(mentor: @group.mentor).mentor_contact_reminder.deliver_now
+      redirect_to @group, notice: 'Reminder email sent to mentor.'
+    else
+      redirect_to @group, alert: 'No mentor assigned to this group.'
+    end
   end
 
   def batch_create_groups

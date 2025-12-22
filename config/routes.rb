@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :groups do
     member do
       post :mark_as_handed_off
+      post :send_mentor_reminder
     end
   end
   get 'done/:id', to: 'groups#done'

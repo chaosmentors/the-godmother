@@ -75,4 +75,17 @@ class PersonMailer < ApplicationMailer
 
     mail(options)
   end
+
+  def mentor_contact_reminder
+    @mentor = params[:mentor]
+
+    options = {
+      to: @mentor.email,
+      reply_to: Rails.configuration.x.list_address,
+      cc: Rails.configuration.x.list_address,
+      subject: 'Chaosmentors: Friendly Reminder – Have You Contacted Your Mentees?'
+    }
+
+    mail(options)
+  end
 end

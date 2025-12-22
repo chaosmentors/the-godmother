@@ -1,0 +1,28 @@
+(english version below)
+
+Hallo <%= @mentor.name %>,
+
+wir hoffen, dass es dir gut geht und du dich auf den 39C3 freust!
+
+Dies ist eine freundliche Erinnerung, dich bei deinen Mentees zu melden, falls du das noch nicht getan hast. Deine Mentees sind: <%= @mentor.group.mentees.map { |m| m.name }.join(', ') %>.
+
+Falls du bereits Kontakt aufgenommen hast, antworte bitte kurz auf diese E-Mail. Bitte denke daran, uns via 39c3-chaosmentors@cccv.de in CC zu setzen, wenn du deinen Mentees schreibst, damit wir wissen, dass der Kontakt hergestellt wurde.
+
+Falls du Fragen hast oder Unterstützung benötigst, melde dich jederzeit bei uns per Mail.
+
+
+Deine Chaospat:innen
+---
+
+Dear <%= @mentor.name %>,
+
+We hope you're doing well and looking forward to 39C3!
+
+This is a friendly reminder to reach out to your mentees if you haven't already. Your mentees are: <%= @mentor.group.mentees.map { |m| m.name }.join(', ') %>.
+
+If you've already made contact, please let us know. Remember to CC us at 39c3-chaosmentors@cccv.de when you write to your mentees, so we know that contact has been established.
+
+If you have any questions or need support, feel free to reach out to us anytime.
+
+
+Your Chaosmentors Team
