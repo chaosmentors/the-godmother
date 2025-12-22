@@ -105,3 +105,11 @@
     chdir: /home/{{ user }}/app/
   become: yes
   become_user: "{{ user }}"
+
+- name: Setup email sync cron job
+  cron:
+    name: "Sync emails from IMAP"
+    minute: "*/15"
+    job: "cd /home/{{ user }}/app && docker compose -f docker-compose.production.yml exec -T web bin/rails emails:sync >> /var/log/email_sync.log 2>&1"
+    user: "{{ user }}"
+  become: yes

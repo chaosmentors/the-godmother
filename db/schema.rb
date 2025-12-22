@@ -10,9 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_17_125933) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_22_155747) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "emails", force: :cascade do |t|
+    t.bigint "person_id"
+    t.string "message_id", null: false
+    t.string "in_reply_to"
+    t.string "from_address", null: false
+    t.string "to_addresses"
+    t.string "subject"
+    t.text "body_plain"
+    t.text "body_html"
+    t.datetime "sent_at"
+    t.string "direction"
+    t.string "imap_uid"
+    t.string "mailbox"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["direction"], name: "index_emails_on_direction"
+    t.index ["from_address"], name: "index_emails_on_from_address"
+    t.index ["mailbox", "imap_uid"], name: "index_emails_on_mailbox_and_imap_uid"
+    t.index ["message_id"], name: "index_emails_on_message_id", unique: true
+    t.index ["person_id"], name: "index_emails_on_person_id"
+    t.index ["sent_at"], name: "index_emails_on_sent_at"
+  end
 
   create_table "groups", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
@@ -71,6 +94,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_17_125933) do
     t.boolean "active"
   end
 
+  add_foreign_key "emails", "people"
   add_foreign_key "taggings", "people"
   add_foreign_key "taggings", "tags"
 end

@@ -41,6 +41,109 @@
   </div>
 </div>
 
+<div class="card mt-4">
+  <div class="card-header">
+    <h5 class="mb-0">Communication History</h5>
+  </div>
+  <div class="card-body">
+    <% if @person.emails.any? %>
+      <table class="table table-sm table-hover">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Direction</th>
+            <th>Subject</th>
+            <th>From</th>
+            <th>To</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @person.emails.recent.limit(20).each do |email| %>
+            <tr>
+              <td><%= email.sent_at&.strftime("%Y-%m-%d %H:%M") || "Unknown" %></td>
+              <td>
+                <span class="badge badge-<%= email.inbound? ? 'info' : 'success' %>">
+                  <%= email.direction %>
+                </span>
+              </td>
+              <td><%= truncate(email.subject, length: 50) %></td>
+              <td><%= truncate(email.from_address, length: 40) %></td>
+              <td><%= truncate(email.to_addresses, length: 40) %></td>
+              <td>
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#emailModal"
+                  data-email-date="<%= email.sent_at&.strftime("%Y-%m-%d %H:%M") || "Unknown" %>"
+                  data-email-direction="<%= email.direction %>"
+                  data-email-subject="<%= h email.subject %>"
+                  data-email-from="<%= h email.from_address %>"
+                  data-email-to="<%= h email.to_addresses %>"
+                  data-email-body="<%= h email.body_plain %>">
+                  View
+                </button>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% if @person.emails.count > 20 %>
+        <p class="text-muted">Showing 20 of <%= @person.emails.count %> emails.</p>
+      <% end %>
+    <% else %>
+      <p class="text-muted mb-0">No emails found for this person.</p>
+    <% end %>
+  </div>
+</div>
+
+<div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="emailModalLabel">Email Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <dl class="row mb-0">
+          <dt class="col-sm-2">Date</dt>
+          <dd class="col-sm-10" id="emailModalDate"></dd>
+
+          <dt class="col-sm-2">Direction</dt>
+          <dd class="col-sm-10" id="emailModalDirection"></dd>
+
+          <dt class="col-sm-2">Subject</dt>
+          <dd class="col-sm-10" id="emailModalSubject"></dd>
+
+          <dt class="col-sm-2">From</dt>
+          <dd class="col-sm-10" id="emailModalFrom"></dd>
+
+          <dt class="col-sm-2">To</dt>
+          <dd class="col-sm-10" id="emailModalTo"></dd>
+        </dl>
+        <hr>
+        <pre id="emailModalBody" class="mb-0" style="white-space: pre-wrap; word-wrap: break-word; font-family: inherit;"></pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#emailModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+
+    modal.find('#emailModalDate').text(button.data('email-date'));
+    modal.find('#emailModalDirection').text(button.data('email-direction'));
+    modal.find('#emailModalSubject').text(button.data('email-subject'));
+    modal.find('#emailModalFrom').text(button.data('email-from'));
+    modal.find('#emailModalTo').text(button.data('email-to'));
+    modal.find('#emailModalBody').text(button.data('email-body') || '(No body content)');
+  });
+</script>
+
 <div class="row mt-12">
   <div class="col-md-12 mt-4 mb-4">
     <div class="border p-4">

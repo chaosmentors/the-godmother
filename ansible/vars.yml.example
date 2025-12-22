@@ -17,6 +17,12 @@ smtp_password: '' # SMTP password
 smtp_authentication: 'plain' # SMTP authentication
 smtp_enable_starttls_auto: true # SMTP starttls
 
+imap_address: 'imap.example.com' # IMAP server for email sync
+imap_port: 993 # IMAP port
+imap_user_name: '' # IMAP user
+imap_password: '' # IMAP password
+imap_enable_ssl: true # IMAP SSL
+
 basic_auth_enabled: false
 basic_auth_user: "changeme"
 basic_auth_password: "changeme"
