@@ -14,7 +14,6 @@ services:
   postgresql:
     image: "postgres:latest"
     container_name: postgres
-    restart: always
     volumes:
       - postgresql-data:/var/lib/postgresql
     ports:
@@ -22,7 +21,7 @@ services:
     environment:
       - POSTGRES_USER=${POSTGRES_USER:-godmother}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-g0dmother}
-      - POSTGRES_DB=${POSTGRES_DB:-dev_godmother}
+      - POSTGRES_DB=${POSTGRES_DB:-godmother_development}
       - POSTGRES_EXTENSION=pg_trgm,btree_gist
   mail:
     image: "mailhog/mailhog"
