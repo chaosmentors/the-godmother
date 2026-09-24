@@ -28,6 +28,9 @@ ENV RAILS_ENV=production
 
 COPY . /app
 
+# Fail the build on Gemfile.lock drift instead of silently re-resolving to
+# versions that were never tested.
+RUN bundle config set --local frozen true
 RUN bundle install
 RUN SECRET_KEY_BASE=dummy bundle exec rake assets:precompile
 
