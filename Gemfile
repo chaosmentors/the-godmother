@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.11'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 8.0.5', '>= 8.0.5.1'
+gem 'rails', '~> 8.1.3', '>= 8.1.3.1'
 # Use Puma as the app server
 gem 'puma', '>= 5.0'
 # Use SCSS for stylesheets
@@ -38,6 +38,16 @@ gem 'csv'
 
 # Transitive via rdoc; pinned for CVE-2026-41316
 gem 'erb', '>= 6.0.4'
+
+# Rails 8.1 added `json` as an explicit activesupport dependency (it replaced
+# `benchmark`), which is the first time this app resolves the json *gem* rather
+# than Ruby's default. json 3.0 (2026-09-07) postdates Rails 8.1.3.1
+# (2026-07-29) and changed JSON.parse to `parse(source, **options)`, but
+# activesupport 8.1.3.1 still calls `::JSON.parse(json, options)` with a
+# positional hash, so every ActiveSupport::JSON.decode raises ArgumentError --
+# including the cookie session store's metadata path, i.e. every request.
+# Held on the 2.x line until Rails ships a json 3 compatible decode.
+gem 'json', '~> 2.21'
 
 # Hold the 0.5 API for EmailSyncService; 0.5.15 carries the CVE fixes
 gem 'net-imap', '~> 0.5.15'
