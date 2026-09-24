@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.4.11'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.2.3', '>= 7.2.3.2'
+gem 'rails', '~> 8.0.5', '>= 8.0.5.1'
 # Use Puma as the app server
 gem 'puma', '>= 5.0'
 # Use SCSS for stylesheets
@@ -59,6 +59,12 @@ group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a console.
   # bin/dev already exports RUBY_DEBUG_OPEN/RUBY_DEBUG_LAZY for this.
   gem 'debug', require: false
+
+  # Rails 8.0 dropped railties' `minitest < 6` ceiling, so minitest 6 arrives
+  # transitively. Held at 5.x for the duration of the Rails upgrade: the suite
+  # is the only instrument verifying each step, so it should not change major
+  # version in the same commits it is being used to validate. Revisit after 8.1.
+  gem 'minitest', '~> 5.27'
 end
 
 group :development do
