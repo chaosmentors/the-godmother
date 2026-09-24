@@ -10,24 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_22_184941) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_22_184941) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
 
   create_table "emails", force: :cascade do |t|
-    t.bigint "person_id"
-    t.string "message_id", null: false
-    t.string "in_reply_to"
-    t.string "from_address", null: false
-    t.string "to_addresses"
-    t.string "subject"
-    t.text "body_plain"
     t.text "body_html"
-    t.datetime "sent_at"
-    t.string "direction"
-    t.string "imap_uid"
-    t.string "mailbox"
+    t.text "body_plain"
     t.datetime "created_at", null: false
+    t.string "direction"
+    t.string "from_address", null: false
+    t.string "imap_uid"
+    t.string "in_reply_to"
+    t.string "mailbox"
+    t.string "message_id", null: false
+    t.bigint "person_id"
+    t.datetime "sent_at"
+    t.string "subject"
+    t.string "to_addresses"
     t.datetime "updated_at", null: false
     t.index ["direction"], name: "index_emails_on_direction"
     t.index ["from_address"], name: "index_emails_on_from_address"
@@ -39,60 +39,60 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_22_184941) do
 
   create_table "groups", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.boolean "handed_off", default: false
     t.string "label"
     t.integer "mentor_id"
-    t.boolean "handed_off", default: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["label"], name: "index_groups_on_label", unique: true
     t.index ["mentor_id"], name: "index_groups_on_mentor_id"
   end
 
   create_table "people", force: :cascade do |t|
-    t.string "name"
-    t.string "pronoun"
-    t.string "email"
     t.text "about"
     t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.string "verification_token"
+    t.string "email"
+    t.integer "group_id"
+    t.boolean "has_conference_ticket"
+    t.boolean "isgodmother"
+    t.string "name"
+    t.string "password_digest"
+    t.string "pronoun"
     t.string "random_id"
+    t.datetime "reset_password_sent_at"
+    t.string "reset_password_token"
     t.integer "role", default: 1
     t.integer "state", default: 1
-    t.string "password_digest"
-    t.integer "group_id"
-    t.boolean "isgodmother"
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "validated_at"
-    t.boolean "has_conference_ticket"
     t.datetime "ticket_reminder_sent_at"
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "validated_at"
+    t.string "verification_token"
     t.index ["email"], name: "index_people_on_email", unique: true
     t.index ["random_id"], name: "index_people_on_random_id", unique: true
     t.index ["verification_token"], name: "index_people_on_verification_token", unique: true
   end
 
   create_table "settings", force: :cascade do |t|
-    t.string "key", null: false
-    t.text "value"
     t.datetime "created_at", null: false
+    t.string "key", null: false
     t.datetime "updated_at", null: false
+    t.text "value"
     t.index ["key"], name: "index_settings_on_key", unique: true
   end
 
   create_table "taggings", force: :cascade do |t|
-    t.bigint "tag_id"
-    t.bigint "person_id"
     t.datetime "created_at", precision: nil, null: false
+    t.bigint "person_id"
+    t.bigint "tag_id"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["person_id"], name: "index_taggings_on_person_id"
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
     t.boolean "active"
+    t.datetime "created_at", precision: nil, null: false
+    t.string "name"
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   add_foreign_key "emails", "people"
