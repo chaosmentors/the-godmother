@@ -9,8 +9,6 @@ Bundler.require(*Rails.groups)
 module TheGodmother
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    # See config/initializers/new_framework_defaults_7_1.rb for the two
-    # message-serializer flags deliberately held at 7.0 behaviour.
     config.load_defaults 7.2
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
