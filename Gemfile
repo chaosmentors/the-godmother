@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.3.9'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.2.1'
+gem 'rails', '~> 7.2.3', '>= 7.2.3.2'
 # Use Puma as the app server
 gem 'puma', '>= 5.0'
 # Use SCSS for stylesheets
@@ -37,6 +37,12 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Ruby 3.4+ compatibility gems
 gem 'ostruct'
 gem 'mutex_m'
+
+# Transitive via rdoc; pinned for CVE-2026-41316
+gem 'erb', '>= 6.0.4'
+
+# Hold the 0.5 API for EmailSyncService; 0.5.15 carries the CVE fixes
+gem 'net-imap', '~> 0.5.15'
 
 gem 'sprockets-rails'
 gem 'bootstrap', '~> 4.5'
