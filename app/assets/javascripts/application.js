@@ -18,5 +18,4 @@
 //= require activestorage
 //= require datatables
 //= require_tree .
-//= stub turbolinks
 //= stub static

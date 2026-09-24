@@ -9,17 +9,11 @@ gem 'rails', '~> 7.2.3', '>= 7.2.3.2'
 gem 'puma', '>= 5.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '~> 4.2', '>= 4.2.1'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 5.0'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5.2', '>= 5.2.1'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -58,14 +52,14 @@ gem 'jquery-datatables'
 gem 'ajax-datatables-rails'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :windows]
+  # Call 'debugger' anywhere in the code to stop execution and get a console.
+  # bin/dev already exports RUBY_DEBUG_OPEN/RUBY_DEBUG_LAZY for this.
+  gem 'debug', require: false
 end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
 
   gem 'faker'
 end
