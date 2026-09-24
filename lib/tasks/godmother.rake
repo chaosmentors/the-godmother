@@ -24,13 +24,14 @@ namespace :godmother do
 
     person.role_name = :godmother
 
-    if person.save(validate: false)
+    if person.save
       puts "Godmother created successfully."
     else
       puts "Failed to create godmother:"
       person.errors.full_messages.each do |message|
         puts "  - #{message}"
       end
+      exit 1
     end
   end
 end
