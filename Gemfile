@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.3.9'
+ruby '3.4.11'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.2.3', '>= 7.2.3.2'
@@ -31,6 +31,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Ruby 3.4+ compatibility gems
 gem 'ostruct'
 gem 'mutex_m'
+
+# Bundled gem since Ruby 3.4 - must be declared or `require "csv"` in
+# SettingsController/GroupsController raises LoadError at runtime
+gem 'csv'
 
 # Transitive via rdoc; pinned for CVE-2026-41316
 gem 'erb', '>= 6.0.4'

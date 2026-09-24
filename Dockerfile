@@ -1,4 +1,4 @@
-FROM ruby:3.3.9-alpine3.22 AS base
+FROM ruby:3.4.11-alpine3.24 AS base
 RUN apk add --no-cache postgresql-client nodejs vim build-base postgresql-dev tzdata yaml-dev
 
 # Install specific Bundler version to match Gemfile.lock
