@@ -1,5 +1,5 @@
 de:
-  registration_closed: "Die Registrierung für den 39C3 ist bereits beendet."
+  registration_closed: "Die Registrierung für den 40C3 ist bereits beendet."
   register_as_mentee: "Als Mentee registrieren"
   register_as_mentor: "Als Mentor registrieren"
   contact: "Kontakt"
@@ -59,10 +59,10 @@ de:
     - question: "Was kommt als nächstes? 'Montag Dienstag Mittwoch …'"
       answer: "donnerstag"
   conference_ticket:
-    title: "39c3-Ticket Status"
-    description: "Bitte teile uns mit, ob du ein Congress-Ticket hast und beim 39c3 dabei bist. Du kannst nur einer Gruppe hinzugefügt werden, wenn du ein Ticket hast. Du kannst diesen Status jederzeit aktualisieren."
+    title: "40c3-Ticket Status"
+    description: "Bitte teile uns mit, ob du ein Congress-Ticket hast und beim 40C3 dabei bist. Du kannst nur einer Gruppe hinzugefügt werden, wenn du ein Ticket hast. Du kannst diesen Status jederzeit aktualisieren."
     notice_in_group: "Hinweis:"
-    in_group_message: "Du bist bereits in einer Gruppe und kannst deinen Ticket-Status nicht mehr ändern. Melde dich per E-Mail 39c3-chaosmentors@cccv.de, falls sich an deiner Planung etwas geändert hat."
+    in_group_message: "Du bist bereits in einer Gruppe und kannst deinen Ticket-Status nicht mehr ändern. Melde dich per E-Mail 40c3-chaosmentors@cccv.de, falls sich an deiner Planung etwas geändert hat."
     current_status: "Aktueller Status:"
     has_ticket: "Ich habe ein Ticket"
     no_ticket: "Ich habe noch kein Ticket"
